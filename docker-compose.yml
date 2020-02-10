@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  jj:
+    image: page/jj
+    build: .
+    restart: always
+    container_name: page-jj
+    ports:
+      - "5000:5000"
