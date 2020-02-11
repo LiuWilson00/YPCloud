@@ -10,7 +10,7 @@
               <v-card-title>{{data.callerName}}</v-card-title>
               <v-card-subtitle class="pb-0">{{data.callerTel}}</v-card-subtitle>
               <v-card-actions>
-                <v-btn color="primary" depressed>
+                <v-btn color="primary" depressed @click="deleteBtnHandle(data.id)">
                   <v-icon left>{{ icons.mdiDelete }}</v-icon>Delete
                 </v-btn>
               </v-card-actions>
@@ -24,6 +24,8 @@
 
 <script>
 import { mdiAccount, mdiPencil, mdiShareVariant, mdiDelete } from "@mdi/js";
+import config from "../config";
+import axios from "axios";
 export default {
   name: "Form123List",
   data() {
@@ -42,11 +44,34 @@ export default {
     },
     formDatas() {
       return this.$store.state.formDatas;
+    },
+    userData() {
+      return this.$store.state.userDatas;
+      
     }
   },
-
+  methods: {
+    deleteBtnHandle(target) {
+      console.log(target, `${config.webConfig.apiUrl}FormData`);
+      axios
+        .delete(`${config.webConfig.apiUrl}FormData/${target}`)
+        .then(function(response) {
+          alert("刪除成功");
+        })
+        .catch(function(response) {
+          console.log(response);
+        });
+      this.updateStore();
+    },
+    updateStore() {
+      this.$store.dispatch("INIT_FORM_DATAS");
+      this.$forceUpdate();
+    }
+  },
   mounted() {
+    // this.$store.getters.getUserNameById(1)
     this.$store.dispatch("INIT_FORM_DATAS");
+    this.$store.dispatch("INIT_USER_DATAS");
   }
 };
 </script>
