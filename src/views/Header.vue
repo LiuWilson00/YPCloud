@@ -5,7 +5,7 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
         <v-toolbar-title>{{modName}}</v-toolbar-title>
-
+       
         <v-spacer></v-spacer>
       </v-toolbar>
       <slot></slot>
@@ -33,7 +33,7 @@ export default {
       drawer: null,
       group: false,
       itemList: [
-        { routeName: "Create Form", routeLink: "/" },
+        { routeName: "Create Form", routeLink: "/form123" },
         { routeName: "Maneger", routeLink: "/manager" }
       ]
     };

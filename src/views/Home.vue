@@ -1,47 +1,29 @@
 <template>
-
-      <div id="home">
-        <Form123 /> 
-
-
-      </div>
+  <div id="home">
+    
+      <img class="icon" :src="icon" alt="icon" />
+   
+  </div>
 </template>
 
-<script>
-import Form123 from "../components/Form123"
-export default{
-  methods: {
-    hello(){
-      this.$router.push({name: 'HelloWorld'})
-    },
-    about(){
-      this.$router.push({name: 'About'})  
-    },
+<style lang="scss" scoped>
 
-    
-  },
-   components:{
-      Form123
-    }
-}
-</script>
-
-<style scoped>
-.home
-{
-  width: 400px;
+.home{
   text-align: center;
-  float: left;
-  position: absolute;
-  left: 50%;
-  margin-left: -200px;
 }
-.home h3
-{
-  color:#603A2E;
-}
-.home h3:hover
-{
-  color:#F0A118;
-}
+
+
 </style>
+
+
+<script>
+import icon from "@/assets/gitpage_icon.png";
+export default {
+  name: "home",
+  data() {
+    return {
+      icon
+    };
+  }
+};
+</script>
