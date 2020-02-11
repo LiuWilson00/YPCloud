@@ -12,8 +12,8 @@
     </v-card>
     <v-navigation-drawer v-model="drawer" absolute bottom temporary>
       <v-list nav dense>
-        <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-          <v-list-item v-for="(item) in itemList" :key="item">
+        <v-list-item-group  active-class="deep-purple--text text--accent-4">
+          <v-list-item v-for="(item) in itemList" :key="item.routeName">
             <router-link :to="item.routeLink">{{item.routeName}}</router-link>
           </v-list-item>
         </v-list-item-group>
@@ -31,7 +31,7 @@ export default {
     return {
       modName: "Form123",
       drawer: null,
-      group: false,
+    
       itemList: [
         { routeName: "Create Form", routeLink: "/form123" },
         { routeName: "Maneger", routeLink: "/manager" }
@@ -39,9 +39,7 @@ export default {
     };
   },
   computed: {
-    userData() {
-      return this.$store.state.userDatas;
-    }
+  
   },
   methods: {
     group() {
@@ -49,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("INIT_USER_DATAS");
+
   }
 };
 </script>

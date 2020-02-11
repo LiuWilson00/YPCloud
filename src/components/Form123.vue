@@ -4,12 +4,12 @@
       <form>
         <v-select
           v-model="ANNname"
-          :error-messages="nameErrors"
+          :error-messages="ANNnameErrors"
           :items="names"
           label=" ANN Name"
           required
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
+          @input="$v.ANNname.$touch()"
+          @blur="$v.ANNname.$touch()"
         ></v-select>
         <v-select
           v-model="calledName"
@@ -17,16 +17,25 @@
           :items="names"
           label=" Called Name"
           required
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
+          @input="$v.calledName.$touch()"
+          @blur="$v.calledName.$touch()"
+        ></v-select>
+        <v-select
+          v-model="contactName"
+          :error-messages="calledNameErrors"
+          :items="names"
+          label=" Contact Name"
+          required
+          @input="$v.calledName.$touch()"
+          @blur="$v.calledName.$touch()"
         ></v-select>
         <v-text-field
           v-model="callerName"
           :error-messages="callerNameErrors"
           label="Caller Name"
           required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
+          @input="$v.callerName.$touch()"
+          @blur="$v.callerName.$touch()"
         ></v-text-field>
         <v-menu
           ref="menu"
@@ -53,11 +62,11 @@
 
         <v-text-field
           v-model="tel"
-          :error-messages="emailErrors"
+          :error-messages="telErrors"
           label="Tel"
           required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
+          @input="$v.tel.$touch()"
+          @blur="$v.tel.$touch()"
         ></v-text-field>
         <v-textarea v-model="lMsg" solo name="input-7-4" label="leave comments"></v-textarea>
 
@@ -84,7 +93,7 @@ export default {
     ANNname: { required },
     callerName: { required },
     calledName: { required },
-    tel: { required, email },
+    tel: { required },
     select: { required }
   },
   data(vm) {
@@ -92,7 +101,8 @@ export default {
       ANNname: "",
       calledName: "",
       callerName: "",
-
+      contactName: "",
+      menu: "",
       tel: "",
       lMsg: "",
 
@@ -107,7 +117,7 @@ export default {
       !this.$v.select.required && errors.push("Item is required");
       return errors;
     },
-    nameErrors() {
+    ANNnameErrors() {
       const errors = [];
       if (!this.$v.ANNname.$dirty) return errors;
 
@@ -129,15 +139,18 @@ export default {
       return errors;
     },
 
-    emailErrors() {
+    telErrors() {
       const errors = [];
       if (!this.$v.tel.$dirty) return errors;
 
-      !this.$v.tel.required && errors.push("E-mail is required");
+      !this.$v.tel.required && errors.push("tel is required");
       return errors;
     },
     userData() {
       return this.$store.state.userDatas;
+    },
+    maxIdOfFormDatas() {
+      return this.$store.state.maxIdOfFormDatas;
     },
     names() {
       var listOfName = [];
@@ -146,6 +159,7 @@ export default {
       });
       return listOfName;
     },
+
     computedDateFormatted() {
       return this.formatDate(this.date);
     }
@@ -158,22 +172,28 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
-      Axios.post(`${config.webConfig.apiUrl}/FormData`, {
-        id: 2,
+      Axios.post(`${config.webConfig.apiUrl}FormData`, {
+        id: this.maxIdOfFormDatas + 1,
         time: this.date,
-        userId: 1,
+        ANNname: this.getUserIdByName(this.ANNname),
+        callerTel: this.tel,
         msg: this.lMsg,
         callerName: this.callerName,
-        calledUserId: 3,
-        contactUserId: 4,
-        resultId: 0
+        calledUserId: this.getUserIdByName(this.calledName),
+        contactUserId: this.getUserIdByName(this.contactName),
+        resultId: 0,
+        other: ""
       })
         .then(res => {
           console.table(res.data);
+          alert("表單已送出");
         })
         .catch(error => {
           console.error(error);
         });
+      this.clear();
+      this.$store.dispatch("INIT_USER_DATAS");
+      this.$store.dispatch("INIT_FORM_DATAS");
     },
     clear() {
       this.$v.$reset();
@@ -184,6 +204,15 @@ export default {
       this.calledName = "";
       this.tel = "";
       this.lMsg = "";
+    },
+    getUserIdByName(name) {
+      var id = [];
+      this.userData.forEach(element => {
+        if (element.userName == name) {
+          id.push(element.id);
+        }
+      });
+      return id[0];
     },
     formatDate(date) {
       if (!date) return null;
@@ -200,6 +229,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("INIT_USER_DATAS");
+    this.$store.dispatch("INIT_FORM_DATAS");
   }
 };
 </script>

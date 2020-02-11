@@ -9,14 +9,32 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userDatas: 'app'
+    userDatas: [],
+    maxIdOfUserData:0,
+    formDatas:[],
+    maxIdOfFormDatas:0
   },
   getters: {
 
   },
   mutations: {
     SET_USER_DATAS(state, data) {
+      var tempId=0;
       state.userDatas = data;
+      data.forEach(element => {
+        if(element.id>tempId) tempId=element.id
+      });
+      state.maxIdOfUserData=tempId
+    },
+    SET_FORM_DATAS(state, data){
+
+      var tempId=0;
+      state.formDatas = data;
+      data.forEach(element => {
+        if(element.id>tempId) tempId=element.id
+      });
+      state.maxIdOfFormDatas=tempId
+
     }
   },
   actions: {
@@ -27,6 +45,15 @@ export default new Vuex.Store({
       .get(`${config.webConfig.apiUrl}UserData`)
       .then(res => {
         this.commit("SET_USER_DATAS", res.data)
+      })
+    },
+    INIT_FORM_DATAS() {
+      // Read Json
+      
+      axios
+      .get(`${config.webConfig.apiUrl}FormData`)
+      .then(res => {
+        this.commit("SET_FORM_DATAS", res.data)
       })
     }
   }
