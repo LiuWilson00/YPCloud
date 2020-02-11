@@ -1,0 +1,17 @@
+stages:
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+jj:
+  stage: deploy
+  script:
+    - npm install
+    - npm run build
+    - docker-compose up -d --build
+    - docker image prune -f
+  only:
+    - master
+  tags:
+    - h2

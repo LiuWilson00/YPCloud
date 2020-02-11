@@ -33,7 +33,7 @@ export default {
       drawer: null,
       group: false,
       itemList: [
-        { routeName: "Create Form", routeLink: "/form123" },
+        { routeName: "Create Form", routeLink: "/" },
         { routeName: "Maneger", routeLink: "/manager" }
       ]
     };

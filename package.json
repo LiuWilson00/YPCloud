@@ -1,8 +1,8 @@
 {
-  "name": "page0",
+  "name": "pagewei",
   "version": "0.1.0",
   "description": "A Vue.js project",
-  "author": "Yenting <fhsi5794@gmail.com>",
+  "author": "Wilson <Liuwei811007@gmail.com>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 8084",
