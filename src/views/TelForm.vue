@@ -1,8 +1,10 @@
 <template>
-  <h1>I an Tel Page</h1>
+  <div class="TelForm">
+    <h1>I an Tel Page</h1>
+  </div>
 </template>
 <script>
 export default {
-  name: Memo
+  name: "tel"
 };
 </script>

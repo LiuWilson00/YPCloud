@@ -20,7 +20,7 @@ const routes = [
     }
   },
   {
-    path: '/Memo',
+    path: '/tel',
     name: 'Tel',
     components: {
       default: Tel,
@@ -28,7 +28,7 @@ const routes = [
     }
   },
   {
-    path: '/Tel',
+    path: '/memo',
     name: 'Memo',
     components: {
       default: Memo,
