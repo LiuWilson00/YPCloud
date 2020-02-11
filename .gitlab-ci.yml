@@ -12,6 +12,6 @@ jj:
     - docker-compose up -d --build
     - docker image prune -f
   only:
-    - master
+    - dev
   tags:
     - h2
