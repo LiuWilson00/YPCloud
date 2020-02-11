@@ -8,7 +8,7 @@
 
 <style lang="scss" scoped>
 
-.home{
+#home{
   text-align: center;
 }
 

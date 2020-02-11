@@ -1,4 +1,4 @@
-const HelloWorld = () => import('@/views/HelloWorld.vue');
+
 const About = () => import('@/views/About.vue');
 const Home = () => import('@/views/Home.vue');
 const Mote = () => import('@/views/Mote.vue');
@@ -34,11 +34,7 @@ const routes = [
       nav: Header
     }
   },
-  {
-    path: '/hello',
-    name: 'HelloWorld',
-    component: HelloWorld
-  },
+
   {
     path: '/about',
     name: 'About',

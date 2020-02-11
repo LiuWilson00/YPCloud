@@ -3,14 +3,31 @@
     <v-container fluid>
       <form>
         <v-select
-          v-model="names"
+          v-model="ANNname"
           :error-messages="nameErrors"
           :items="names"
-          label="Name"
+          label=" ANN Name"
           required
           @input="$v.name.$touch()"
           @blur="$v.name.$touch()"
         ></v-select>
+        <v-select
+          v-model="calledName"
+          :error-messages="calledNameErrors"
+          :items="names"
+          label=" Called Name"
+          required
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
+        ></v-select>
+        <v-text-field
+          v-model="callerName"
+          :error-messages="callerNameErrors"
+          label="Caller Name"
+          required
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+        ></v-text-field>
         <v-menu
           ref="menu"
           v-model="menu"
@@ -35,22 +52,14 @@
         </v-menu>
 
         <v-text-field
-          v-model="email"
+          v-model="tel"
           :error-messages="emailErrors"
           label="Tel"
           required
           @input="$v.email.$touch()"
           @blur="$v.email.$touch()"
         ></v-text-field>
-        <v-select
-          v-model="select"
-          :items="items"
-          :error-messages="selectErrors"
-          label="Item"
-          required
-          @change="$v.select.$touch()"
-          @blur="$v.select.$touch()"
-        ></v-select>
+        <v-textarea v-model="lMsg" solo name="input-7-4" label="leave comments"></v-textarea>
 
         <v-btn class="mr-4" @click="submit">submit</v-btn>
         <v-btn @click="clear">clear</v-btn>
@@ -66,39 +75,32 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, maxLength, email } from "vuelidate/lib/validators";
-
+import Axios from "axios";
+import config from "../config";
 export default {
   name: "Form123",
   mixins: [validationMixin],
   validations: {
-    name: { required, maxLength: maxLength(10) },
-    email: { required, email },
-    select: { required },
-    checkbox: {
-      checked(val) {
-        return val;
-      }
-    }
+    ANNname: { required },
+    callerName: { required },
+    calledName: { required },
+    tel: { required, email },
+    select: { required }
   },
   data(vm) {
     return {
-      name: "",
-      email: "",
-      select: null,
-      items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-      checkbox: false,
+      ANNname: "",
+      calledName: "",
+      callerName: "",
+
+      tel: "",
+      lMsg: "",
+
       date: new Date().toISOString().substr(0, 10),
-      dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-      menu: ""
+      dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10))
     };
   },
   computed: {
-    checkboxErrors() {
-      const errors = [];
-      if (!this.$v.checkbox.$dirty) return errors;
-      !this.$v.checkbox.checked && errors.push("You must agree to continue!");
-      return errors;
-    },
     selectErrors() {
       const errors = [];
       if (!this.$v.select.$dirty) return errors;
@@ -107,17 +109,31 @@ export default {
     },
     nameErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.maxLength &&
-        errors.push("Name must be at most 10 characters long");
-      !this.$v.name.required && errors.push("Name is required.");
+      if (!this.$v.ANNname.$dirty) return errors;
+
+      !this.$v.ANNname.required && errors.push("Name is required.");
       return errors;
     },
+    calledNameErrors() {
+      const errors = [];
+      if (!this.$v.calledName.$dirty) return errors;
+
+      !this.$v.calledName.required && errors.push("Called name is required.");
+      return errors;
+    },
+    callerNameErrors() {
+      const errors = [];
+      if (!this.$v.callerName.$dirty) return errors;
+
+      !this.$v.callerName.required && errors.push("Caller name is required.");
+      return errors;
+    },
+
     emailErrors() {
       const errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Must be valid e-mail");
-      !this.$v.email.required && errors.push("E-mail is required");
+      if (!this.$v.tel.$dirty) return errors;
+
+      !this.$v.tel.required && errors.push("E-mail is required");
       return errors;
     },
     userData() {
@@ -142,13 +158,32 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
+      Axios.post(`${config.webConfig.apiUrl}/FormData`, {
+        id: 2,
+        time: this.date,
+        userId: 1,
+        msg: this.lMsg,
+        callerName: this.callerName,
+        calledUserId: 3,
+        contactUserId: 4,
+        resultId: 0
+      })
+        .then(res => {
+          console.table(res.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     clear() {
       this.$v.$reset();
       this.name = "";
       this.email = "";
-      this.select = null;
-      this.checkbox = false;
+      this.ANNname = "";
+      this.callerName = "";
+      this.calledName = "";
+      this.tel = "";
+      this.lMsg = "";
     },
     formatDate(date) {
       if (!date) return null;
