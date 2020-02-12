@@ -30,6 +30,7 @@ export default {
   name: "Form123List",
   data() {
     return {
+      
       icons: {
         mdiAccount,
         mdiPencil,
@@ -47,7 +48,6 @@ export default {
     },
     userData() {
       return this.$store.state.userDatas;
-      
     }
   },
   methods: {
@@ -72,6 +72,8 @@ export default {
     // this.$store.getters.getUserNameById(1)
     this.$store.dispatch("INIT_FORM_DATAS");
     this.$store.dispatch("INIT_USER_DATAS");
+
+   
   }
 };
 </script>

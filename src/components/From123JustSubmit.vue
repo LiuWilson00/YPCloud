@@ -2,40 +2,13 @@
   <div id="form">
     <v-container fluid>
       <form>
-        <v-select
+        <v-text-field
           v-model="ANNname"
           :error-messages="ANNnameErrors"
-          :items="names"
-          label=" ANN Name"
+          label="(ANN)"
           required
           @input="$v.ANNname.$touch()"
           @blur="$v.ANNname.$touch()"
-        ></v-select>
-        <v-select
-          v-model="calledName"
-          :error-messages="calledNameErrors"
-          :items="names"
-          label=" Called Name"
-          required
-          @input="$v.calledName.$touch()"
-          @blur="$v.calledName.$touch()"
-        ></v-select>
-        <v-select
-          v-model="contactName"
-          :error-messages="calledNameErrors"
-          :items="names"
-          label=" Contact Name"
-          required
-          @input="$v.calledName.$touch()"
-          @blur="$v.calledName.$touch()"
-        ></v-select>
-        <v-text-field
-          v-model="callerName"
-          :error-messages="callerNameErrors"
-          label="Caller Name"
-          required
-          @input="$v.callerName.$touch()"
-          @blur="$v.callerName.$touch()"
         ></v-text-field>
         <v-menu
           ref="menu"
@@ -49,7 +22,7 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="date"
-              label="Date"
+              label=" Time"
               hint="MM/DD/YYYY format"
               persistent-hint
               prepend-icon="event"
@@ -59,17 +32,39 @@
           </template>
           <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
         </v-menu>
-
         <v-text-field
-          v-model="tel"
-          :error-messages="telErrors"
-          label="Tel"
+          v-model="callerName"
+          :error-messages="callerNameErrors"
+          label=" Caller No (A)"
           required
-          @input="$v.tel.$touch()"
-          @blur="$v.tel.$touch()"
+          @input="$v.callerName.$touch()"
+          @blur="$v.callerName.$touch()"
         ></v-text-field>
-        <v-textarea v-model="lMsg" solo name="input-7-4" label="leave comments"></v-textarea>
-
+        <v-text-field
+          v-model="calledName"
+          :error-messages="calledNameErrors"
+          label=" Called No (B)"
+          required
+          @input="$v.calledName.$touch()"
+          @blur="$v.calledName.$touch()"
+        ></v-text-field>
+        <v-text-field
+          v-model="contactName"
+          :error-messages="calledNameErrors"
+          label=" Contact (C)"
+          required
+          @input="$v.calledName.$touch()"
+          @blur="$v.calledName.$touch()"
+        ></v-text-field>
+        <v-textarea v-model="lMsg" solo name="input-7-4" label="Question (Q)"></v-textarea>
+        <v-text-field
+          v-model="res"
+          :error-messages="resErrors"
+          label="Result (R)"
+          required
+          @input="$v.res.$touch()"
+          @blur="$v.res.$touch()"
+        ></v-text-field>
         <v-btn class="mr-4" @click="submit">submit</v-btn>
         <v-btn @click="clear">clear</v-btn>
       </form>
@@ -89,13 +84,13 @@ import { set as setCookie, get as getCookie } from "es-cookie";
 import Axios from "axios";
 import config from "../config";
 export default {
-  name: "Form123",
+  name: "Form123JustSubmit",
   mixins: [validationMixin],
   validations: {
     ANNname: { required },
     callerName: { required },
     calledName: { required },
-    tel: { required },
+    res: { required },
     select: { required }
   },
   data(vm) {
@@ -105,7 +100,7 @@ export default {
       callerName: "",
       contactName: "",
       menu: "",
-      tel: "",
+      res: "",
       lMsg: "",
       mms: null,
       eiInfo: {
@@ -151,11 +146,11 @@ export default {
       return errors;
     },
 
-    telErrors() {
+    resErrors() {
       const errors = [];
-      if (!this.$v.tel.$dirty) return errors;
+      if (!this.$v.res.$dirty) return errors;
 
-      !this.$v.tel.required && errors.push("tel is required");
+      !this.$v.res.required && errors.push("res is required");
       return errors;
     },
     userData() {
@@ -163,17 +158,6 @@ export default {
     },
     maxIdOfFormDatas() {
       return this.$store.state.maxIdOfFormDatas;
-    },
-    names() {
-      var listOfName = [];
-      this.$store.state.userDatas.forEach(userData => {
-        listOfName.push(userData.userName);
-      });
-      return listOfName;
-    },
-
-    computedDateFormatted() {
-      return this.formatDate(this.date);
     }
   },
   watch: {
@@ -184,33 +168,22 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
-      Axios.post(`${config.webConfig.apiUrl}FormData`, {
-        id: this.maxIdOfFormDatas + 1,
-        time: this.date,
-        ANNname: this.getUserIdByName(this.ANNname),
-        callerTel: this.tel,
-        msg: this.lMsg,
-        callerName: this.callerName,
-        calledUserId: this.getUserIdByName(this.calledName),
-        contactUserId: this.getUserIdByName(this.contactName),
-        resultId: 0,
-        other: ""
-      })
-        .then(res => {
-          console.table(res.data);
-          alert("表單已送出");
-        })
-        .catch(error => {
-          console.error(error);
-        });
-
-      this.submitToTG();
-      this.clear();
-      this.$store.dispatch("INIT_USER_DATAS");
-      this.$store.dispatch("INIT_FORM_DATAS");
+    //   console.log(this.$v.$invalid)
+      if (this.$v.$invalid) {
+        this.submitToTG();
+        this.clear();
+      }
     },
     submitToTG() {
-      (async (sANNName, sCalledName, sLMsg, sCallerName, sTel) => {
+      (async (
+        sANNName,
+        sDate,
+        sCalledName,
+        sCallerName,
+        sContactName,
+        sLMsg,
+        sRes
+      ) => {
         await this.mms.sendMMS({
           topic: config.webConfig.tgTopic,
           DDN: config.webConfig.tgDDN,
@@ -218,35 +191,39 @@ export default {
           payload: {
             type: "message",
             content: `
-            123客服電話表單,內容如下:
-            ANN Name:${sANNName},
-            Called Name:${sCalledName},
-            Caller Name${sCallerName},
-            Caller Tel:${sTel},
-            Msg:${sLMsg}`
+            123 Customer Service:
+             ANN:${sANNName},
+             Time:${sDate},
+             Caller No (A):${sCallerName},
+             Called No (B):${sCalledName},
+             Contact (C):${sContactName},
+             Question (Q):${sLMsg},
+             Result (R):${sRes}
+            `
           }
         });
-      })(this.ANNname, this.calledName, this.lMsg, this.callerName, this.tel);
+      })(
+        this.ANNname,
+        this.date,
+        this.calledName,
+        this.callerName,
+        this.contactName,
+        this.lMsg,
+        this.res
+      );
     },
     clear() {
       this.$v.$reset();
       this.name = "";
       this.email = "";
       this.ANNname = "";
+      this.contactName = "";
       this.callerName = "";
       this.calledName = "";
-      this.tel = "";
+      this.res = "";
       this.lMsg = "";
     },
-    getUserIdByName(name) {
-      var id = [];
-      this.userData.forEach(element => {
-        if (element.userName == name) {
-          id.push(element.id);
-        }
-      });
-      return id[0];
-    },
+
     formatDate(date) {
       if (!date) return null;
 
@@ -261,17 +238,14 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("INIT_USER_DATAS");
-    this.$store.dispatch("INIT_FORM_DATAS");
-
     this.webmmsOptions.EiToken = getCookie("EiToken") || "";
     this.webmmsOptions.SToken = getCookie("SToken") || "";
 
     let tempEiToken = this.webmmsOptions.EiToken;
     let tempSToken = this.webmmsOptions.EiToken;
-
+    let tempWsurl = config.webConfig.wsurl;
     console.log({ tempEiToken, tempSToken });
-    this.mms = webmms({ tempEiToken, tempSToken });
+    this.mms = webmms({ tempWsurl, tempEiToken, tempSToken });
     this.mms.on("registered", reply => {
       console.log(reply);
       let {

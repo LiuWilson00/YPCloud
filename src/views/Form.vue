@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Form123 from "../components/Form123"
+import Form123 from "../components/From123JustSubmit"
 export default{
   methods: {
     hello(){
