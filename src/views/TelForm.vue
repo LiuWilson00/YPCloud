@@ -1,10 +1,15 @@
 <template>
   <div class="TelForm">
-    <h1>I an Tel Page</h1>
+    <h1>Tel Page</h1>
+    <TelForm></TelForm>
   </div>
 </template>
 <script>
+import TelForm from "../components/TelForm";
 export default {
-  name: "tel"
+  name: "tel",
+  components: {
+    TelForm
+  }
 };
 </script>
