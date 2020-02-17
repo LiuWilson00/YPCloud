@@ -87,7 +87,7 @@ import { set as setCookie, get as getCookie } from "es-cookie";
 import Axios from "axios";
 import config from "../config";
 export default {
-  name: "Memo00",
+  name: "TelForm",
   mixins: [validationMixin],
   validations: {
     ANNname: { required },
@@ -267,7 +267,11 @@ export default {
     let tempSToken = this.webmmsOptions.EiToken;
     let tempWsurl = config.webConfig.wsurl;
     console.log({ tempWsurl, tempEiToken, tempSToken });
-    this.mms = webmms({ tempWsurl, tempEiToken, tempSToken });
+    this.mms = webmms({
+      wsurl: tempWsurl,
+      EiToken: tempEiToken,
+      SToken: tempSToken
+    });
     this.mms.on("registered", reply => {
       console.log(reply);
       let {

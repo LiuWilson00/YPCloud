@@ -267,7 +267,11 @@ export default {
     let tempSToken = this.webmmsOptions.EiToken;
     let tempWsurl = config.webConfig.wsurl;
     console.log({ tempWsurl, tempEiToken, tempSToken });
-    this.mms = webmms({ tempWsurl, tempEiToken, tempSToken });
+    this.mms = webmms({
+      wsurl: tempWsurl,
+      EiToken: tempEiToken,
+      SToken: tempSToken
+    });
     this.mms.on("registered", reply => {
       console.log(reply);
       let {
