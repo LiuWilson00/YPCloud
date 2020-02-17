@@ -1,16 +1,16 @@
 <template>
   <div id="form">
     <v-card color="grey lighten-4" flat tile>
-      <v-toolbar dense collapse>
+      <!-- <v-toolbar dense collapse>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
         <v-toolbar-title>{{modName}}</v-toolbar-title>
        
         <v-spacer></v-spacer>
-      </v-toolbar>
+      </v-toolbar> -->
       <slot></slot>
     </v-card>
-    <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+    <!-- <v-navigation-drawer v-model="drawer" absolute bottom temporary>
       <v-list nav dense>
         <v-list-item-group  active-class="deep-purple--text text--accent-4">
           <v-list-item v-for="(item) in itemList" :key="item.routeName">
@@ -18,7 +18,7 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
   </div>
 </template>
 

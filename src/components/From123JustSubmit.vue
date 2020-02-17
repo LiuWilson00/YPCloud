@@ -26,6 +26,9 @@
               hint="MM/DD/YYYY format"
               persistent-hint
               prepend-icon="event"
+              :error-messages="dateErrors"
+              required
+              @input="$v.date.$touch()"
               @blur="date = parseDate(dateFormatted)"
               v-on="on"
             ></v-text-field>
@@ -91,7 +94,7 @@ export default {
     callerName: { required },
     calledName: { required },
     res: { required },
-    select: { required }
+    date: { required }
   },
   data(vm) {
     return {
@@ -118,12 +121,21 @@ export default {
     };
   },
   computed: {
-    selectErrors() {
+    dataValidation() {
+      for (let i in this.$v) {
+        if (i.indexOf("$") < 0) {
+          if (this.$v[i].$invalid == true) return true;
+        }
+      }
+      return false;
+    },
+    dateErrors() {
       const errors = [];
-      if (!this.$v.select.$dirty) return errors;
-      !this.$v.select.required && errors.push("Item is required");
+      if (!this.$v.date.$dirty) return errors;
+      !this.$v.date.required && errors.push("Time is required");
       return errors;
     },
+
     ANNnameErrors() {
       const errors = [];
       if (!this.$v.ANNname.$dirty) return errors;
@@ -168,11 +180,13 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
-    //   console.log(this.$v.$invalid)
-      if (this.$v.$invalid) {
+
+      if (!this.dataValidation) {
         this.submitToTG();
         this.clear();
       }
+
+      //
     },
     submitToTG() {
       (async (
@@ -184,13 +198,14 @@ export default {
         sLMsg,
         sRes
       ) => {
-        await this.mms.sendMMS({
-          topic: config.webConfig.tgTopic,
-          DDN: config.webConfig.tgDDN,
-          func: "",
-          payload: {
-            type: "message",
-            content: `
+        await this.mms
+          .sendMMS({
+            topic: config.webConfig.tgTopic,
+            DDN: config.webConfig.tgDDN,
+            func: "",
+            payload: {
+              type: "message",
+              content: `
             123 Customer Service:
              ANN:${sANNName},
              Time:${sDate},
@@ -200,8 +215,15 @@ export default {
              Question (Q):${sLMsg},
              Result (R):${sRes}
             `
-          }
-        });
+            }
+          })
+          .then(function(res) {
+            console.log(res[0].IN.State.ErrCode);
+            if (res[0].IN.State.ErrCode != 0) {
+              console.log(res[0].IN.State.ErrMsg);
+              alert(`Error ${res[0].IN.State.ErrMsg}`);
+            }
+          });
       })(
         this.ANNname,
         this.date,
@@ -244,7 +266,7 @@ export default {
     let tempEiToken = this.webmmsOptions.EiToken;
     let tempSToken = this.webmmsOptions.EiToken;
     let tempWsurl = config.webConfig.wsurl;
-    console.log({ tempEiToken, tempSToken });
+    console.log({ tempWsurl, tempEiToken, tempSToken });
     this.mms = webmms({ tempWsurl, tempEiToken, tempSToken });
     this.mms.on("registered", reply => {
       console.log(reply);

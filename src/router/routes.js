@@ -37,8 +37,8 @@ const routes = [
   },
 
   {
-    path: '/form',
-    name: 'Form',
+    path: '/form123',
+    name: 'Form123',
     components: {
       default: Form,
       nav: Header
