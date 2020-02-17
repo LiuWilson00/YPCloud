@@ -20,8 +20,8 @@ const routes = [
     }
   },
   {
-    path: '/tel',
-    name: 'Tel',
+    path: '/form',
+    name: 'TelForm',
     components: {
       default: Tel,
       nav: Header
@@ -37,7 +37,7 @@ const routes = [
   },
 
   {
-    path: '/form123',
+    path: '/123',
     name: 'Form123',
     components: {
       default: Form,
