@@ -12,7 +12,9 @@ export default new Vuex.Store({
     userDatas: [],
     maxIdOfUserData: 0,
     formDatas: [],
-    maxIdOfFormDatas: 0
+    maxIdOfFormDatas: 0,
+    mmsMsg:""
+
   },
   getters: {
     getUserNameById: state => {

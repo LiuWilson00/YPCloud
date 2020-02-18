@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import {i18n} from './i18n';
+import { i18n } from './i18n';
 import axios from 'axios'
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
@@ -20,7 +20,7 @@ Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
 
-Vue.prototype.makeId = function(length){
+Vue.prototype.makeId = function (length) {
   var result = '';
   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var charactersLength = characters.length;
@@ -32,11 +32,11 @@ Vue.prototype.makeId = function(length){
 
 const DEFAULT_TITLE = 'YpCloud';
 router.afterEach((to, from) => {
-    document.title = to.meta.title || DEFAULT_TITLE;
+  document.title = to.meta.title || DEFAULT_TITLE;
 });
 
 new Vue({
-  vuetify : new Vuetify(opts),
+  vuetify: new Vuetify(opts),
   router,
   store,
   i18n,

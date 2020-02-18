@@ -1,6 +1,6 @@
 <template>
   <div class="meme">
-    <h1>Memo</h1>
+   
     <PageMemo></PageMemo>
   </div>
 </template>

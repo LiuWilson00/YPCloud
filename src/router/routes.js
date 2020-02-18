@@ -33,15 +33,22 @@ const routes = [
     components: {
       default: Memo,
       nav: Header
+    },
+    meta: {
+      title: 'Memo',
     }
   },
 
   {
     path: '/123',
+
     name: 'Form123',
     components: {
       default: Form,
       nav: Header
+    },
+    meta: {
+      title: '123',
     }
   },
   {

@@ -1,11 +1,13 @@
 <template>
   <div id="form">
+    <AccountInfo :MMSMsg="MMSMsg" :isRegistered="MMSRegistered" LoginData="Wilson Liu"></AccountInfo>
     <v-container fluid>
       <form>
         <v-text-field
           v-model="ANNname"
           :error-messages="ANNnameErrors"
           label="(ANN)"
+          disabled
           required
           @input="$v.ANNname.$touch()"
           @blur="$v.ANNname.$touch()"
@@ -24,6 +26,7 @@
               v-model="date"
               label=" Time"
               hint="MM/DD/YYYY format"
+              disabled
               persistent-hint
               prepend-icon="event"
               :error-messages="dateErrors"
@@ -39,7 +42,7 @@
           v-model="callerName"
           :error-messages="callerNameErrors"
           label=" Caller No (A)"
-          required
+          
           @input="$v.callerName.$touch()"
           @blur="$v.callerName.$touch()"
         ></v-text-field>
@@ -47,7 +50,7 @@
           v-model="calledName"
           :error-messages="calledNameErrors"
           label=" Called No (B)"
-          required
+          
           @input="$v.calledName.$touch()"
           @blur="$v.calledName.$touch()"
         ></v-text-field>
@@ -55,7 +58,7 @@
           v-model="contactName"
           :error-messages="calledNameErrors"
           label=" Contact (C)"
-          required
+          
           @input="$v.calledName.$touch()"
           @blur="$v.calledName.$touch()"
         ></v-text-field>
@@ -64,7 +67,7 @@
           v-model="res"
           :error-messages="resErrors"
           label="Result (R)"
-          required
+          
           @input="$v.res.$touch()"
           @blur="$v.res.$touch()"
         ></v-text-field>
@@ -80,6 +83,8 @@
 </style>
 
 <script>
+import AccountInfo from "./AccountInfo";
+
 import { validationMixin } from "vuelidate";
 import { required, maxLength, email } from "vuelidate/lib/validators";
 import webmms from "webmms-client";
@@ -91,14 +96,17 @@ export default {
   mixins: [validationMixin],
   validations: {
     ANNname: { required },
-    callerName: { required },
-    calledName: { required },
-    res: { required },
+    // callerName: { required },
+    // calledName: { required },
+    // res: { required },
     date: { required }
   },
   data(vm) {
     return {
-      ANNname: "",
+      MMSMsg: "", // Return MMS Err Msg to AccountInfo component
+      MMSRegistered: false,
+
+      ANNname: "Wilson Liu",
       calledName: "",
       callerName: "",
       contactName: "",
@@ -116,55 +124,59 @@ export default {
         SToken: "",
         UToken: ""
       },
-      date: new Date().toISOString().substr(0, 10),
+      date: new Date().toString().substr(0, 25),
       dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10))
     };
   },
   computed: {
-    dataValidation() {
-      for (let i in this.$v) {
-        if (i.indexOf("$") < 0) {
-          if (this.$v[i].$invalid == true) return true;
-        }
-      }
-      return false;
-    },
-    dateErrors() {
-      const errors = [];
-      if (!this.$v.date.$dirty) return errors;
-      !this.$v.date.required && errors.push("Time is required");
-      return errors;
-    },
+    // 2020 02 17 Steven: not need validation
 
-    ANNnameErrors() {
-      const errors = [];
-      if (!this.$v.ANNname.$dirty) return errors;
+    // dataValidation() {
+    //   for (let i in this.$v) {
+    //     if (i.indexOf("$") < 0) {
+    //       if (this.$v[i].$invalid == true) return true;
+    //     }
+    //   }
+    //   return false;
+    // },
+    // dateErrors() {
+    //   const errors = [];
+    //   if (!this.$v.date.$dirty) return errors;
+    //   !this.$v.date.required && errors.push("Time is required");
+    //   return errors;
+    // },
 
-      !this.$v.ANNname.required && errors.push("Name is required.");
-      return errors;
-    },
-    calledNameErrors() {
-      const errors = [];
-      if (!this.$v.calledName.$dirty) return errors;
+    // ANNnameErrors() {
+    //   const errors = [];
+    //   if (!this.$v.ANNname.$dirty) return errors;
 
-      !this.$v.calledName.required && errors.push("Called name is required.");
-      return errors;
-    },
-    callerNameErrors() {
-      const errors = [];
-      if (!this.$v.callerName.$dirty) return errors;
+    //   !this.$v.ANNname.required && errors.push("Name is required.");
+    //   return errors;
+    // },
+    // calledNameErrors() {
+    //   const errors = [];
+    //   if (!this.$v.calledName.$dirty) return errors;
 
-      !this.$v.callerName.required && errors.push("Caller name is required.");
-      return errors;
-    },
+    //   !this.$v.calledName.required && errors.push("Called name is required.");
+    //   return errors;
+    // },
+    // callerNameErrors() {
+    //   const errors = [];
+    //   if (!this.$v.callerName.$dirty) return errors;
 
-    resErrors() {
-      const errors = [];
-      if (!this.$v.res.$dirty) return errors;
+    //   !this.$v.callerName.required && errors.push("Caller name is required.");
+    //   return errors;
+    // },
 
-      !this.$v.res.required && errors.push("res is required");
-      return errors;
-    },
+    // resErrors() {
+    //   const errors = [];
+    //   if (!this.$v.res.$dirty) return errors;
+
+    //   !this.$v.res.required && errors.push("res is required");
+    //   return errors;
+    // },
+
+    // validation end
     userData() {
       return this.$store.state.userDatas;
     },
@@ -198,7 +210,7 @@ export default {
         sLMsg,
         sRes
       ) => {
-        await this.mms
+        var msg = await this.mms
           .sendMMS({
             topic: config.webConfig.tgTopic,
             DDN: config.webConfig.tgDDN,
@@ -218,12 +230,18 @@ export default {
             }
           })
           .then(function(res) {
-            console.log(res[0].IN.State.ErrCode);
-            if (res[0].IN.State.ErrCode != 0) {
-              console.log(res[0].IN.State.ErrMsg);
-              alert(`Error ${res[0].IN.State.ErrMsg}`);
+            if (typeof res == "object") {
+              if (res.ErrCode != 0) {
+                return `Error: ${res.ErrMsg}`;
+              }
+            } else {
+              if (res[0].IN.State.ErrCode != 0) {
+                return `Error: ${res[0].IN.State.ErrMsg}`;
+              }
             }
           });
+
+        this.MMSMsg = msg;
       })(
         this.ANNname,
         this.date,
@@ -263,17 +281,27 @@ export default {
     this.webmmsOptions.EiToken = getCookie("EiToken") || "";
     this.webmmsOptions.SToken = getCookie("SToken") || "";
 
+    // create mms
+
     let tempEiToken = this.webmmsOptions.EiToken;
     let tempSToken = this.webmmsOptions.EiToken;
     let tempWsurl = config.webConfig.wsurl;
+
+    // dev code
     console.log({ tempWsurl, tempEiToken, tempSToken });
+    //dev code
+
     this.mms = webmms({
       wsurl: tempWsurl,
       EiToken: tempEiToken,
       SToken: tempSToken
     });
     this.mms.on("registered", reply => {
+      //dev
       console.log(reply);
+      //dev
+
+      this.MMSRegistered = true;
       let {
         result: { DDN, EiToken, SToken }
       } = reply;
@@ -282,6 +310,9 @@ export default {
       setCookie("EiToken", EiToken, { expires: 7, path: "" });
       setCookie("SToken", SToken, { expires: 7, path: "" });
     });
+  },
+  components: {
+    AccountInfo
   }
 };
 </script>

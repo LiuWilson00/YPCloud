@@ -83,6 +83,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
+
 import { required, maxLength, email } from "vuelidate/lib/validators";
 import webmms from "webmms-client";
 import { set as setCookie, get as getCookie } from "es-cookie";
