@@ -1,5 +1,5 @@
 <template>
-  <div id="form">
+  <div id="pagememo">
     <AccountInfo :MMSMsg="MMSMsg" :isRegistered="MMSRegistered" LoginData="Wilson Liu"></AccountInfo>
     <v-container fluid>
       <form>

@@ -3,8 +3,9 @@ const About = () => import('@/views/About.vue');
 const Home = () => import('@/views/Home.vue');
 const Mote = () => import('@/views/Mote.vue');
 const Form = () => import('@/views/Form.vue');
-const Tel = () => import('@/views/TelForm.vue');
+const CustomForm = () => import('@/views/CustomForm.vue');
 const Memo = () => import('@/views/Memo.vue');
+const HelloWorld = () => import('@/views/HelloWorld.vue');
 
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
@@ -20,10 +21,18 @@ const routes = [
     }
   },
   {
-    path: '/form',
-    name: 'TelForm',
+    path: '/hello',
+    name: 'Hello',
     components: {
-      default: Tel,
+      default: HelloWorld,
+      nav: Header
+    }
+  },
+  {
+    path: '/form',
+    name: 'CustomForm',
+    components: {
+      default: CustomForm,
       nav: Header
     }
   },

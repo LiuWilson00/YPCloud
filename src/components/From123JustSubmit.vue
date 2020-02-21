@@ -5,7 +5,6 @@
       <form>
         <v-text-field
           v-model="ANNname"
-      
           label="(ANN)"
           disabled
           required
@@ -29,7 +28,6 @@
               disabled
               persistent-hint
               prepend-icon="event"
-            
               required
               @input="$v.date.$touch()"
               @blur="date = parseDate(dateFormatted)"
@@ -40,34 +38,26 @@
         </v-menu>
         <v-text-field
           v-model="callerName"
-         
           label=" Caller No (A)"
-          
           @input="$v.callerName.$touch()"
           @blur="$v.callerName.$touch()"
         ></v-text-field>
         <v-text-field
           v-model="calledName"
-     
           label=" Called No (B)"
-          
           @input="$v.calledName.$touch()"
           @blur="$v.calledName.$touch()"
         ></v-text-field>
         <v-text-field
           v-model="contactName"
-          
           label=" Contact (C)"
-          
           @input="$v.calledName.$touch()"
           @blur="$v.calledName.$touch()"
         ></v-text-field>
         <v-textarea v-model="lMsg" solo name="input-7-4" label="Question (Q)"></v-textarea>
         <v-text-field
           v-model="res"
-       
           label="Result (R)"
-          
           @input="$v.res.$touch()"
           @blur="$v.res.$touch()"
         ></v-text-field>
@@ -129,9 +119,8 @@ export default {
     };
   },
   computed: {
-
-    tempErr(){
-      return true
+    tempErr() {
+      return true;
     },
 
     // 2020 02 17 Steven: not need validation
@@ -198,9 +187,10 @@ export default {
     submit() {
       this.$v.$touch();
 
-      if (true
+      if (
+        true
         // !this.dataValidation
-        ) {
+      ) {
         this.submitToTG();
         this.clear();
       }

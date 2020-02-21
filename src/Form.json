@@ -1,0 +1,34 @@
+{
+    "name": "My Form",
+    "depiction": "This is Wilson Form",
+    "data": [
+        {
+            "type": "text",
+            "name": "name",
+            "depiction": "plz input you name",
+            "data": "your name"
+        },
+        {
+            "type": "checkBox",
+            "name": "sex",
+            "depiction": "sex",
+            "data": [
+                {
+                    "type": "item",
+                    "name": "man",
+                    "depiction": "",
+                    "data": "man"
+                },
+                {
+                    "type": "item",
+                    "name": "woman",
+                    "depiction": "plz input you name",
+                    "data": "woman"
+                }
+            ]
+        }
+    ],
+    "setting":{
+        "style":"dark"
+    }
+}
