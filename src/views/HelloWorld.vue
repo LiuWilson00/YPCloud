@@ -1,12 +1,5 @@
 <template >
   <v-layout justify-cente align-center column class="mt-12">
-    <img :src="icon" width="255px" class="mt-12" />
-
-    <div class="hello__title text-xs-center mb-3">
-      <p>Hello</p>
-      <p>Gitpage</p>
-    </div>
-    <div class="hello__hint">Les start your page!</div>
     <HelloWorld />
   </v-layout>
 </template>
