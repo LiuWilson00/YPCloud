@@ -1,6 +1,15 @@
 <template>
   <div id="CustomForm">
-    
+    <v-card class="mx-auto" :max-width="this.json.setting.maxWidth" outlined>
+      <coustomHeader :formName="json.name" :formColor="json.header.color"></coustomHeader>
+      <component
+        v-for="component in componentList"
+        :key="component.name"
+        :is="component.type"
+        :jsonData="component"
+        @setResData="setResData"
+      ></component>
+    </v-card>
   </div>
 </template>
 
@@ -15,202 +24,70 @@ import webmms from "webmms-client";
 import { set as setCookie, get as getCookie } from "es-cookie";
 import Axios from "axios";
 import config from "../config";
+import rules from "./FormComponents/rules";
+import jsonData from '../form';
+
+
+
+import coustomHeader from "./FormComponents/CustomHeader";
+import vTextField from "./FormComponents/vTextField";
+import vTreeView from "./FormComponents/vTreeView";
+
 export default {
-  name: "TelForm",
+  name: "CustomForm",
   mixins: [validationMixin],
-  validations: {
-    ANNname: { required },
-    callerName: { required },
-    calledName: { required },
-    res: { required },
-    date: { required }
-  },
-  data(vm) {
+  validations: {},
+  data() {
     return {
-      ANNname: "",
-      calledName: "",
-      callerName: "",
-      contactName: "",
-      menu: "",
-      res: "",
-      lMsg: "",
-      mms: null,
-      eiInfo: {
-        eiName: "",
-        eiTag: "",
-        ddn: ""
-      },
-      webmmsOptions: {
-        EiToken: "",
-        SToken: "",
-        UToken: ""
-      },
-      date: new Date().toISOString().substr(0, 10),
-      dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10))
+      com: "",
+      views: [],
+    
+      json:jsonData,
+      resData: {}
     };
   },
   computed: {
-    dataValidation() {
-      for (let i in this.$v) {
-        if (i.indexOf("$") < 0) {
-          if (this.$v[i].$invalid == true) return true;
-        }
-      }
-      return false;
-    },
-    dateErrors() {
-      const errors = [];
-      if (!this.$v.date.$dirty) return errors;
-      !this.$v.date.required && errors.push("Time is required");
-      return errors;
-    },
-
-    ANNnameErrors() {
-      const errors = [];
-      if (!this.$v.ANNname.$dirty) return errors;
-
-      !this.$v.ANNname.required && errors.push("Name is required.");
-      return errors;
-    },
-    calledNameErrors() {
-      const errors = [];
-      if (!this.$v.calledName.$dirty) return errors;
-
-      !this.$v.calledName.required && errors.push("Called name is required.");
-      return errors;
-    },
-    callerNameErrors() {
-      const errors = [];
-      if (!this.$v.callerName.$dirty) return errors;
-
-      !this.$v.callerName.required && errors.push("Caller name is required.");
-      return errors;
-    },
-
-    resErrors() {
-      const errors = [];
-      if (!this.$v.res.$dirty) return errors;
-
-      !this.$v.res.required && errors.push("res is required");
-      return errors;
-    },
-    userData() {
-      return this.$store.state.userDatas;
-    },
-    maxIdOfFormDatas() {
-      return this.$store.state.maxIdOfFormDatas;
+    componentList() {
+      let newDataLiat = this.json.data;
+      const vm = this;
+      newDataLiat.forEach(function(element) {
+        element.type = vm.getComponentNameByTypeName(element.type);
+      });
+      return newDataLiat;
     }
   },
-  watch: {
-    date(val) {
-      this.dateFormatted = this.formatDate(this.date);
-    }
-  },
+  watch: {},
   methods: {
-    submit() {
-      this.$v.$touch();
-
-      if (!this.dataValidation) {
-        this.submitToTG();
-        this.clear();
-      }
-
-      //
+    changeView(viewName) {
+      this.view = viewName;
     },
-    submitToTG() {
-      (async (
-        sANNName,
-        sDate,
-        sCalledName,
-        sCallerName,
-        sContactName,
-        sLMsg,
-        sRes
-      ) => {
-        await this.mms
-          .sendMMS({
-            topic: config.webConfig.tgTopic,
-            DDN: config.webConfig.tgDDN,
-            func: "",
-            payload: {
-              type: "message",
-              content: `
-            123 Customer Service:
-             ANN:${sANNName},
-             Time:${sDate},
-             Caller No (A):${sCallerName},
-             Called No (B):${sCalledName},
-             Contact (C):${sContactName},
-             Question (Q):${sLMsg},
-             Result (R):${sRes}
-            `
-            }
-          })
-          .then(function(res) {
-            console.log(res[0].IN.State.ErrCode);
-            if (res[0].IN.State.ErrCode != 0) {
-              console.log(res[0].IN.State.ErrMsg);
-              alert(`Error ${res[0].IN.State.ErrMsg}`);
-            }
-          });
-      })(
-        this.ANNname,
-        this.date,
-        this.calledName,
-        this.callerName,
-        this.contactName,
-        this.lMsg,
-        this.res
-      );
+    creatVuetifyComponentTemplate(jsonDataItem) {
+      return `<v-${jsonDataItem.type} label=${jsonDataItem.name}>`;
     },
-    clear() {
-      this.$v.$reset();
-      this.name = "";
-      this.email = "";
-      this.ANNname = "";
-      this.contactName = "";
-      this.callerName = "";
-      this.calledName = "";
-      this.res = "";
-      this.lMsg = "";
+    getComponentNameByTypeName(TypeName) {
+      let lowCaseTypeName = TypeName.toLowerCase();
+      return Object.keys(rules).find(key => {
+        let lowCaseKey = key.toLowerCase();
+        return rules[key].indexOf(lowCaseTypeName) >= 0;
+      });
     },
-
-    formatDate(date) {
-      if (!date) return null;
-
-      const [year, month, day] = date.split("-");
-      return `${month}/${day}/${year}`;
-    },
-    parseDate(date) {
-      if (!date) return null;
-
-      const [month, day, year] = date.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    setResData(name,value) {
+      console.log(name,value)
+      this.$set(this.resData, name, value);
     }
   },
   mounted() {
-    this.webmmsOptions.EiToken = getCookie("EiToken") || "";
-    this.webmmsOptions.SToken = getCookie("SToken") || "";
-
-    let tempEiToken = this.webmmsOptions.EiToken;
-    let tempSToken = this.webmmsOptions.EiToken;
-    let tempWsurl = config.webConfig.wsurl;
-    console.log({ tempWsurl, tempEiToken, tempSToken });
-    this.mms = webmms({
-      wsurl: tempWsurl,
-      EiToken: tempEiToken,
-      SToken: tempSToken
+    this.com = this.creatVuetifyComponentTemplate(this.json.data[0]);
+    // console.log(rules,this.getComponentNameByTypeName("text"))
+    this.json.data.forEach(item => {
+      this.views.push(this.getComponentNameByTypeName(item.type));
     });
-    this.mms.on("registered", reply => {
-      console.log(reply);
-      let {
-        result: { DDN, EiToken, SToken }
-      } = reply;
-      let id = 0;
-      // document.getElementById('DDN').innerText = `DDN: ${DDN}`
-      setCookie("EiToken", EiToken, { expires: 7, path: "" });
-      setCookie("SToken", SToken, { expires: 7, path: "" });
-    });
+    console.log(jsonData)
+  },
+  components: {
+    coustomHeader,
+    vTextField,
+    vTreeView
   }
 };
 </script>

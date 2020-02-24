@@ -15,6 +15,7 @@ module.exports = {
       },
     },
   },
+  runtimeCompiler: true,
   // lintOnSave: true,
   publicPath: process.env.NODE_ENV === 'production'
     ? '/wei'
