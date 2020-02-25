@@ -1,10 +1,12 @@
 <template>
-  <v-text-field :label="jsonData.name" v-model="inputValue"></v-text-field>
+
+    <v-textarea :label="jsonData.name" v-model="inputValue"></v-textarea>
+
 </template>
 
 <script>
 export default {
-  name: "VTF",
+  name: "VTA",
   data() {
     return {
       inputValue: ""
@@ -16,8 +18,7 @@ export default {
   },
   watch: {
     inputValue: function() {
-      this.$emit("setResData", this.jsonData.name ,this.inputValue);
-      
+      this.$emit("setResData", this.jsonData.name, this.inputValue);
     }
   }
 };

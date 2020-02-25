@@ -1,5 +1,5 @@
 <template>
-  <v-text-field :label="jsonData.name" v-model="inputValue"></v-text-field>
+  <v-textarea :label="jsonData.name" v-model="inputValue"></v-textarea>
 </template>
 
 <script>
@@ -16,8 +16,13 @@ export default {
   },
   watch: {
     inputValue: function() {
-      this.$emit("setResData", this.jsonData.name ,this.inputValue);
-      
+      this.$emit(
+        "setResData",
+        this.jsonData.varName === undefined
+          ? this.jsonData.name
+          : this.jsonData.name,
+        this.inputValue
+      );
     }
   }
 };

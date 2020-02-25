@@ -30,3 +30,15 @@ npm run test:unit
 ## vuetify using ##
 
 1. v-spacer 將物件至該行最底
+
+
+
+
+## vuetify from Json ##
+
+1. create a Component in src/component/FormComponents
+    (have a template in this folder)
+
+2. import and insert new Component at CoustomForm
+
+3. setting rules.js

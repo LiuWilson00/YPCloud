@@ -9,6 +9,7 @@
         :jsonData="component"
         @setResData="setResData"
       ></component>
+     
     </v-card>
   </div>
 </template>
@@ -25,13 +26,20 @@ import { set as setCookie, get as getCookie } from "es-cookie";
 import Axios from "axios";
 import config from "../config";
 import rules from "./FormComponents/rules";
-import jsonData from '../form';
+import jsonData from "../form";
 
 
 
 import coustomHeader from "./FormComponents/CustomHeader";
-import vTextField from "./FormComponents/vTextField";
-import vTreeView from "./FormComponents/vTreeView";
+import jvTextField from "./FormComponents/vTextField";
+import jvTreeView from "./FormComponents/vTreeView";
+import jvTextarea from "./FormComponents/vTextarea";
+import jvSilder from "./FormComponents/vSlider";
+import jvCheckBox from "./FormComponents/vCheckBox";
+import jvDatePicker from "./FormComponents/vDatePicker";
+import jvTimePicker from "./FormComponents/vTimePicker"
+
+
 
 export default {
   name: "CustomForm",
@@ -41,8 +49,8 @@ export default {
     return {
       com: "",
       views: [],
-    
-      json:jsonData,
+
+      json: jsonData,
       resData: {}
     };
   },
@@ -59,35 +67,49 @@ export default {
   watch: {},
   methods: {
     changeView(viewName) {
+      //not using
       this.view = viewName;
     },
     creatVuetifyComponentTemplate(jsonDataItem) {
+      // not using
       return `<v-${jsonDataItem.type} label=${jsonDataItem.name}>`;
     },
     getComponentNameByTypeName(TypeName) {
+      //read rule js to mapping right type name
       let lowCaseTypeName = TypeName.toLowerCase();
       return Object.keys(rules).find(key => {
         let lowCaseKey = key.toLowerCase();
         return rules[key].indexOf(lowCaseTypeName) >= 0;
       });
     },
-    setResData(name,value) {
-      console.log(name,value)
+    setResData(name, value) {
+      //to set data from childrean component
       this.$set(this.resData, name, value);
     }
   },
   mounted() {
     this.com = this.creatVuetifyComponentTemplate(this.json.data[0]);
+    //de but//
     // console.log(rules,this.getComponentNameByTypeName("text"))
+    //de but//
     this.json.data.forEach(item => {
       this.views.push(this.getComponentNameByTypeName(item.type));
     });
-    console.log(jsonData)
+  
+  },
+  created() {},
+  beforeCreate() {
+   
   },
   components: {
     coustomHeader,
-    vTextField,
-    vTreeView
+    jvTextField,
+    jvTreeView,
+    jvTextarea,
+    jvSilder,
+    jvCheckBox,
+    jvDatePicker,
+    jvTimePicker
   }
 };
 </script>

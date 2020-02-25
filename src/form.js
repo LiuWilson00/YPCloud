@@ -11,8 +11,8 @@ const json = {
             defaultValue: "plz input you name"
         },
         {
-            type: "checkBox",
-            name: "sex",
+            type: "tv",
+            name: "TreeView",
             depiction: "sex",
             data: [
                 {
@@ -32,8 +32,48 @@ const json = {
         },
         {
             type: "ta",
-            name: "ta test",
+            name: "tatest",
             defaultValue: "Hello World"
+        },
+        {
+            type: "slider",
+            varName: "sliderVar",
+            name: "slider test",
+            defaultValue: "15",
+            thumbLabel: true
+        },
+        {
+            type: "checkBox",
+            name: "sex",
+            depiction: "sex",
+            data: [
+                {
+                    id: 1,
+                    name: "Man",
+                    value:"M"
+                },
+                {
+                    id: 2,
+                    name: "Womon",
+                    value:"W"
+                }
+            ]
+        },
+        {
+            type: "date",
+            varName: "Date",
+            label:"plz input your date",
+            name: "Date Time",
+          
+            thumbLabel: true
+        },
+        {
+            type: "time",
+            varName: "time",
+            label:"plz input your time",
+            name: "Time",
+          
+            thumbLabel: true
         }
     ],
     setting: {

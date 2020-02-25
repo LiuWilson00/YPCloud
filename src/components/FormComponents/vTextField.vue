@@ -16,8 +16,13 @@ export default {
   },
   watch: {
     inputValue: function() {
-      this.$emit("setResData", this.jsonData.name ,this.inputValue);
-      
+      this.$emit(
+        "setResData",
+        this.jsonData.varName === undefined
+          ? this.jsonData.name
+          : this.jsonData.name,
+        this.inputValue
+      );
     }
   }
 };
