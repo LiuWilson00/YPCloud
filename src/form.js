@@ -50,29 +50,29 @@ const json = {
                 {
                     id: 1,
                     name: "Man",
-                    value:"M"
+                    value: "M"
                 },
                 {
                     id: 2,
                     name: "Womon",
-                    value:"W"
+                    value: "W"
                 }
             ]
         },
         {
             type: "date",
             varName: "Date",
-            label:"plz input your date",
+            label: "plz input your date",
             name: "Date Time",
-          
+            col: 6,
             thumbLabel: true
         },
         {
             type: "time",
             varName: "time",
-            label:"plz input your time",
+            label: "plz input your time",
             name: "Time",
-          
+            col: 6,
             thumbLabel: true
         }
     ],

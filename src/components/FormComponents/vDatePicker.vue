@@ -26,6 +26,15 @@
 </template>
 
 <script>
+import basicTemplate from "./vtemplate";
+
+const dateMethods = basicTemplate.methods;
+
+dateMethods.inputDate = function() {
+  this.$refs.menu.save(this.inputValue);
+  this.menu = false;
+};
+
 export default {
   name: "VDP",
   data() {
@@ -36,27 +45,9 @@ export default {
       menu: false
     };
   },
-  props: ["jsonData"],
-  mounted() {
-    this.inputValue = this.jsonData.defaultValue;
-  },
-  methods:{
-      inputDate(){
-          this.$refs.menu.save(this.inputValue);
-          this.menu = false;
-          
-      }
-  },
-  watch: {
-    inputValue: function() {
-      this.$emit(
-        "setResData",
-        this.jsonData.varName === undefined
-          ? this.jsonData.name
-          : this.jsonData.name,
-        this.inputValue
-      );
-    }
-  }
+  props:basicTemplate.props,
+  mounted:basicTemplate.mounted,
+  methods: dateMethods,
+  watch: basicTemplate.watch
 };
 </script>

@@ -8,12 +8,13 @@
         :label="item.name"
         :value="item.value===undefined?item.name:item.value"
       ></v-radio>
-  
     </v-radio-group>
   </v-container>
 </template>
 
 <script>
+import basicTemplate from "./vtemplate";
+
 export default {
   name: "VCB",
   data() {
@@ -21,14 +22,9 @@ export default {
       inputValue: ""
     };
   },
-  props: ["jsonData"],
-  mounted() {
-    this.inputValue = this.jsonData.defaultValue;
-  },
-  watch: {
-    inputValue: function() {
-      this.$emit("setResData", this.jsonData.name, this.inputValue);
-    }
-  }
+  methods: basicTemplate.methods,
+  props: basicTemplate.props,
+  mounted: basicTemplate.mounted,
+  watch: basicTemplate.watch
 };
 </script>

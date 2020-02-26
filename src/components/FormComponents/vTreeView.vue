@@ -3,22 +3,16 @@
 </template>
 
 <script>
+import basicTemplate from "./vtemplate";
+
 export default {
   name: "VTV",
   data: () => ({
     inputValue: []
   }),
-  props: ["jsonData"],
-  watch: {
-    inputValue: function() {
-      this.$emit(
-        "setResData",
-        this.jsonData.varName === undefined
-          ? this.jsonData.name
-          : this.jsonData.name,
-        this.inputValue
-      );
-    }
-  }
+  methods: basicTemplate.methods,
+  props: basicTemplate.props,
+  mounted: basicTemplate.mounted,
+  watch: basicTemplate.watch
 };
 </script>

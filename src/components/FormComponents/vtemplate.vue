@@ -14,6 +14,16 @@ export default {
   mounted() {
     this.inputValue = this.jsonData.defaultValue;
   },
+  methods: {
+    resetData() {
+      this.inputValue =
+        this.jsonData.defaultValue === undefined
+          ? this.localDefaulValue === undefined
+            ? ""
+            : this.localDefaulValue
+          : this.jsonData.defaultValue;
+    }
+  },
   watch: {
     inputValue: function() {
       this.$emit(

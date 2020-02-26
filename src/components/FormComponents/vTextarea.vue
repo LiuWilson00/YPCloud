@@ -1,10 +1,9 @@
 <template>
-
-    <v-textarea :label="jsonData.name" v-model="inputValue"></v-textarea>
-
+  <v-textarea :label="jsonData.name" v-model="inputValue"></v-textarea>
 </template>
 
 <script>
+import basicTemplate from "./vtemplate";
 export default {
   name: "VTA",
   data() {
@@ -12,14 +11,9 @@ export default {
       inputValue: ""
     };
   },
-  props: ["jsonData"],
-  mounted() {
-    this.inputValue = this.jsonData.defaultValue;
-  },
-  watch: {
-    inputValue: function() {
-      this.$emit("setResData", this.jsonData.name, this.inputValue);
-    }
-  }
+  methods: basicTemplate.methods,
+  props: basicTemplate.props,
+  mounted: basicTemplate.mounted,
+  watch: basicTemplate.watch
 };
 </script>

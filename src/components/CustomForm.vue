@@ -1,21 +1,44 @@
 <template>
   <div id="CustomForm">
     <v-card class="mx-auto" :max-width="this.json.setting.maxWidth" outlined>
-      <coustomHeader :formName="json.name" :formColor="json.header.color"></coustomHeader>
-      <component
-        v-for="component in componentList"
-        :key="component.name"
-        :is="component.type"
-        :jsonData="component"
-        @setResData="setResData"
-      ></component>
-     
+      <v-row>
+        <v-col col="12">
+          <coustomHeader :formName="json.name" :formColor="json.header.color"></coustomHeader>
+        </v-col>
+
+        <v-col
+          v-for="component in componentList"
+          :key="component.name"
+          :cols="component.col===undefined?12:component.col"
+        >
+          <component
+            :is="component.type"
+            :jsonData="component"
+            @setResData="setResData"
+            :ref="component.name"
+          ></component>
+        </v-col>
+        <v-row>
+          <v-col col="1" align-self="end"></v-col>
+          <v-col col="1" align-self="end">
+            <v-btn class="SubmitBtn ml-4" text @click="submitHandler">Submit</v-btn>
+
+            <v-btn class="CancelBtn mr-4" text @click="cancelHandler">Cancel</v-btn>
+          </v-col>
+        </v-row>
+      </v-row>
     </v-card>
   </div>
 </template>
 
 
 <style lang="scss" scoped>
+.v-card {
+  padding: 0 20px;
+}
+.v-application .align-self-end {
+  text-align: end;
+}
 </style>
 
 <script>
@@ -28,8 +51,6 @@ import config from "../config";
 import rules from "./FormComponents/rules";
 import jsonData from "../form";
 
-
-
 import coustomHeader from "./FormComponents/CustomHeader";
 import jvTextField from "./FormComponents/vTextField";
 import jvTreeView from "./FormComponents/vTreeView";
@@ -37,9 +58,7 @@ import jvTextarea from "./FormComponents/vTextarea";
 import jvSilder from "./FormComponents/vSlider";
 import jvCheckBox from "./FormComponents/vCheckBox";
 import jvDatePicker from "./FormComponents/vDatePicker";
-import jvTimePicker from "./FormComponents/vTimePicker"
-
-
+import jvTimePicker from "./FormComponents/vTimePicker";
 
 export default {
   name: "CustomForm",
@@ -66,6 +85,10 @@ export default {
   },
   watch: {},
   methods: {
+    submitCallback: function() {
+      console.log(this.resData);
+      alert(this.resData);
+    },
     changeView(viewName) {
       //not using
       this.view = viewName;
@@ -85,6 +108,21 @@ export default {
     setResData(name, value) {
       //to set data from childrean component
       this.$set(this.resData, name, value);
+    },
+    cancelHandler() {
+      console.log(this.$refs, Object.keys(this.$refs), this.$refs["name"][0]);
+      Object.keys(this.$refs).forEach(key => {
+        if (typeof( this.$refs[key][0].resetData) != 'function') {
+          // console.log('False',key,this.$refs[key][0].resetData);
+          return;
+        } else {
+          //  console.log('OK',key,this.$refs[key][0].resetData);
+          this.$refs[key][0].resetData();
+        }
+      });
+    },
+    submitHandler() {
+      this.submitCallback();
     }
   },
   mounted() {
@@ -95,12 +133,9 @@ export default {
     this.json.data.forEach(item => {
       this.views.push(this.getComponentNameByTypeName(item.type));
     });
-  
   },
   created() {},
-  beforeCreate() {
-   
-  },
+  beforeCreate() {},
   components: {
     coustomHeader,
     jvTextField,

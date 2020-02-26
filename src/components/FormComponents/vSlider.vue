@@ -15,36 +15,18 @@
 
 
 <script>
+import basicTemplate from "./vtemplate";
 export default {
   name: "VSL",
-  template:'',
+  template: "",
   data() {
     return {
       inputValue: 0
     };
   },
-  props: ["jsonData"],
-  mounted() {
-    this.inputValue = this.jsonData.defaultValue;
-    console.log( this.$options);
-  },
-  beforeCreate() {
-    console.log(this.$el);
-  },
-  created() {
-    
-  },
-
-  watch: {
-    inputValue: function() {
-      this.$emit(
-        "setResData",
-        this.jsonData.varName === undefined
-          ? this.jsonData.name
-          : this.jsonData.name,
-        this.inputValue
-      );
-    }
-  }
+  methods: basicTemplate.methods,
+  props: basicTemplate.props,
+  mounted: basicTemplate.mounted,
+  watch: basicTemplate.watch
 };
 </script>
