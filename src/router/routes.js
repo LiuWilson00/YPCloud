@@ -29,12 +29,16 @@ const routes = [
     }
   },
   {
-    path: '/form',
+    path: '/form/:formName',
     name: 'CustomForm',
     components: {
       default: CustomForm,
       nav: Header
-    }
+    },
+    meta: {
+      title: 'form',
+    },
+    props: { default: true, nav: false }
   },
   {
     path: '/memo',

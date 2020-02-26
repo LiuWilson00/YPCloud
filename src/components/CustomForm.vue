@@ -69,10 +69,11 @@ export default {
       com: "",
       views: [],
 
-      json: jsonData,
+      json: '',
       resData: {}
     };
   },
+  props: ["formName"],
   computed: {
     componentList() {
       let newDataLiat = this.json.data;
@@ -112,7 +113,7 @@ export default {
     cancelHandler() {
       console.log(this.$refs, Object.keys(this.$refs), this.$refs["name"][0]);
       Object.keys(this.$refs).forEach(key => {
-        if (typeof( this.$refs[key][0].resetData) != 'function') {
+        if (typeof this.$refs[key][0].resetData != "function") {
           // console.log('False',key,this.$refs[key][0].resetData);
           return;
         } else {
@@ -126,6 +127,11 @@ export default {
     }
   },
   mounted() {
+    Axios.get(`/FormData/${this.formName}.json`).then(res => {
+      console.log(res.data);
+      this.json=res.data;
+    });
+
     this.com = this.creatVuetifyComponentTemplate(this.json.data[0]);
     //de but//
     // console.log(rules,this.getComponentNameByTypeName("text"))
