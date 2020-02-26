@@ -127,10 +127,14 @@ export default {
     }
   },
   mounted() {
-    Axios.get(`/FormData/${this.formName}.json`).then(res => {
+    Axios.get(`/wei/FormData/${this.formName}.json`).then(res => {
       console.log(res.data);
       this.json=res.data;
-    });
+    }).catch(
+      err=>{
+        console.log(err)
+      }
+    );
 
     this.com = this.creatVuetifyComponentTemplate(this.json.data[0]);
     //de but//
