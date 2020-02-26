@@ -19,7 +19,7 @@
           ></component>
         </v-col>
         <v-row>
-          <v-col col="1" align-self="end"></v-col>
+          
           <v-col col="1" align-self="end">
             <v-btn class="SubmitBtn ml-4" text @click="submitHandler">Submit</v-btn>
 
