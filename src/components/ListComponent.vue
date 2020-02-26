@@ -20,7 +20,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/wei/ListData/PageData.json")
+      .get("/wei/ListDataSet/PageData.json")
       .then(res => {
         this.data = res.data;
       })
