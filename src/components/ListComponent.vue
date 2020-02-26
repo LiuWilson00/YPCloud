@@ -20,7 +20,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/ListData/PageData.json")
+      .get("/wei/ListData/PageData.json")
       .then(res => {
         this.data = res.data;
       })
@@ -29,7 +29,7 @@ export default {
       });
 
     axios
-      .get("/ListHeaders/PageHeader.json")
+      .get("/wei/ListHeaders/PageHeader.json")
       .then(res => {
         this.headers = res.data;
       })
