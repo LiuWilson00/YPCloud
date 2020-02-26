@@ -2,7 +2,7 @@
     "name": "My Form",
     "depiction": "This is Wilson Form",
     "header": {
-        "color": "blue-grey lighten-5"
+        "color": "transparent"
     },
     "data": [
         {

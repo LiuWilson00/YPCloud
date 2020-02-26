@@ -6,6 +6,7 @@ const Form = () => import('@/views/Form.vue');
 const CustomForm = () => import('@/views/CustomForm.vue');
 const Memo = () => import('@/views/Memo.vue');
 const HelloWorld = () => import('@/views/HelloWorld.vue');
+const List = () => import('@/views/List.vue');
 
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
@@ -27,6 +28,18 @@ const routes = [
       default: HelloWorld,
       nav: Header
     }
+  },
+  {
+    path: '/list',
+    name: 'list',
+    components: {
+      default: List,
+      nav: Header
+    },
+    meta: {
+      title: 'List',
+    },
+    
   },
   {
     path: '/form/:formName',

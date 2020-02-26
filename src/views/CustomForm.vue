@@ -7,7 +7,7 @@
 <script>
 import CustomForm from "../components/CustomForm";
 export default {
-  name: "tel",
+  name: "CustomFormView",
   props:['formName'],
   components: {
     CustomForm
