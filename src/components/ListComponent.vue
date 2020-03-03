@@ -3,8 +3,8 @@
     <template v-slot:item.status="{ item }">
       <v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
     </template>
-    <template v-slot:item.url="{ item }">
-      <a :href="item.url">{{ item.url }}</a>
+    <template v-slot:item.name="{ item }">
+      <a :href="item.url">{{ item.name }}</a>
     </template>
   </v-data-table>
 </template>
@@ -29,7 +29,7 @@ export default {
       });
 
     axios
-      .get("/wei/ListHeaders/PageHeader.json")
+      .get("/wei/ListHeaders/PageHeader2.json")
       .then(res => {
         this.headers = res.data;
       })

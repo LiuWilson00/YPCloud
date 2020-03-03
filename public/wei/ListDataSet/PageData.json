@@ -46,6 +46,14 @@
         "status": "Develop",
         "updateTime": "2020/02/26 17:00",
         "depiction": "create list by json"
+    },
+    {
+        "name": "page://hello",
+        "url": "https://git.page/wei/hello",
+        "version": "0.1.0",
+        "status": "complete",
+        "updateTime": "2020/02/26 17:00",
+        "depiction": "page cli template"
     }
    
 ]

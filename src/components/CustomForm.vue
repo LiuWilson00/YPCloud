@@ -19,7 +19,6 @@
           ></component>
         </v-col>
         <v-row>
-          
           <v-col col="1" align-self="end">
             <v-btn class="SubmitBtn ml-4" text @click="submitHandler">Submit</v-btn>
 
@@ -69,8 +68,19 @@ export default {
       com: "",
       views: [],
 
-      json: '',
-      resData: {}
+      json: "",
+      resData: {},
+      mms: null,
+      eiInfo: {
+        eiName: "",
+        eiTag: "",
+        ddn: ""
+      },
+      webmmsOptions: {
+        EiToken: "",
+        SToken: "",
+        UToken: ""
+      }
     };
   },
   props: ["formName"],
@@ -93,10 +103,6 @@ export default {
     changeView(viewName) {
       //not using
       this.view = viewName;
-    },
-    creatVuetifyComponentTemplate(jsonDataItem) {
-      // not using
-      return `<v-${jsonDataItem.type} label=${jsonDataItem.name}>`;
     },
     getComponentNameByTypeName(TypeName) {
       //read rule js to mapping right type name
@@ -127,14 +133,14 @@ export default {
     }
   },
   mounted() {
-    Axios.get(`/wei/FormData/${this.formName}.json`).then(res => {
-      console.log(res.data);
-      this.json=res.data;
-    }).catch(
-      err=>{
-        console.log(err)
-      }
-    );
+    Axios.get(`/wei/FormData/${this.formName}.json`)
+      .then(res => {
+        console.log(res.data);
+        this.json = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     this.com = this.creatVuetifyComponentTemplate(this.json.data[0]);
     //de but//
@@ -142,6 +148,25 @@ export default {
     //de but//
     this.json.data.forEach(item => {
       this.views.push(this.getComponentNameByTypeName(item.type));
+    });
+
+    this.webmmsOptions.EiToken = getCookie("EiToken") || "";
+    this.webmmsOptions.SToken = getCookie("SToken") || "";
+
+    let tempEiToken = this.webmmsOptions.EiToken;
+    let tempSToken = this.webmmsOptions.EiToken;
+
+    console.log({ tempEiToken, tempSToken });
+    this.mms = webmms({ tempEiToken, tempSToken });
+    this.mms.on("registered", reply => {
+      console.log(reply);
+      let {
+        result: { DDN, EiToken, SToken }
+      } = reply;
+      let id = 0;
+      // document.getElementById('DDN').innerText = `DDN: ${DDN}`
+      setCookie("EiToken", EiToken, { expires: 7, path: "" });
+      setCookie("SToken", SToken, { expires: 7, path: "" });
     });
   },
   created() {},

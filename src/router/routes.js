@@ -7,6 +7,7 @@ const CustomForm = () => import('@/views/CustomForm.vue');
 const Memo = () => import('@/views/Memo.vue');
 const HelloWorld = () => import('@/views/HelloWorld.vue');
 const List = () => import('@/views/List.vue');
+const animateJS = () => import('@/views/animateJS.vue');
 
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
@@ -39,7 +40,18 @@ const routes = [
     meta: {
       title: 'List',
     },
-    
+
+  },
+  {
+    path: '/animateJS',
+    name: 'animateJS',
+    meta: {
+      title: 'animateJS',
+    }
+    ,components:{
+      default: animateJS,
+      nav: Header
+    }
   },
   {
     path: '/form/:formName',
