@@ -2,7 +2,7 @@
     "name": "Leave Form",
     "depiction": "This is Wilson Form",
     "header": {
-        "color": "transparent"
+        "color": ""
     },
     "data": [
         {
@@ -36,7 +36,7 @@
             "type": "date",
             "varName": "LeaveDateStart",
             "label": "plz input leave date start",
-            "name": "Date Time",
+            "name": "Leave Date Start",
             "col": 6,
             "thumbLabel": true
         },
@@ -44,7 +44,7 @@
             "type": "time",
             "varName": "timeStart",
             "label": "plz input leave time start",
-            "name": "Time",
+            "name": "Start Time",
             "col": 6,
             "thumbLabel": true
         },
@@ -52,7 +52,7 @@
             "type": "date",
             "varName": "LeaveDateEnd",
             "label": "plz input leave date end",
-            "name": "Date Time",
+            "name": "Leave Date End",
             "col": 6,
             "thumbLabel": true
         },
@@ -60,7 +60,7 @@
             "type": "time",
             "varName": "timeEnd",
             "label": "plz input leave time start",
-            "name": "Time",
+            "name": "End Time",
             "col": 6,
             "thumbLabel": true
         }

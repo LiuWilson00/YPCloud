@@ -1,0 +1,77 @@
+{
+    "name": "Form123",
+    "depiction": "Form123",
+    "header": {
+        "color": ""
+    },
+    "data": [
+        {
+            "type": "text-field",
+            "name": "AAN name",
+            "defaultValue": "Wilson",
+            "disabled": true
+        },
+        {
+            "type": "date",
+            "varName": "date",
+            "label": "time",
+            "name": "Leave Date End",
+            "col": 6,
+            "thumbLabel": true,
+            "defaultValue": "now"
+        },
+        {
+            "type": "time",
+            "varName": "time",
+            "label": "date",
+            "name": "Start Time",
+            "col": 6,
+            "thumbLabel": true,
+            "defaultValue": "now"
+        },
+        {
+            "type": "checkBox",
+            "name": "sex",
+            "depiction": "sex",
+            "defaultValue": "M",
+            "data": [
+                {
+                    "id": 1,
+                    "name": "Man",
+                    "value": "M"
+                },
+                {
+                    "id": 2,
+                    "name": "Womon",
+                    "value": "W"
+                }
+            ]
+        },
+        {
+            "type": "text-field",
+            "name": "Called No",
+            "varName": "calledNo",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Contact",
+            "varName": "contact",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Question",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Result",
+            "defaultValue": ""
+        }
+    ],
+    "setting": {
+        "style": "dark",
+        "maxWidth": 1024
+    }
+}

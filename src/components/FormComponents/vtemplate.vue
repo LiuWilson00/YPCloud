@@ -11,8 +11,34 @@ export default {
     };
   },
   props: ["jsonData"],
+  computed: {
+    cDefaultValue() {
+      if (
+        this.jsonData.defaultValue == "now" &&
+        this.jsonData.type == "jvDatePicker"
+      ) {
+        let d = new Date();
+        let mon = "00" + (d.getMonth() + 1);
+        let monLen = d.getMonth().toString().length;
+        let date = "00" + d.getDate();
+        let dateLen = d.getDate().toString().length;
+        return `${d.getFullYear()}-${mon.slice(
+          mon.length - monLen - 1,
+          mon.length
+        )}-${date.slice(date.length - dateLen - 1, date.length)}`;
+      }
+      if (
+        this.jsonData.defaultValue == "now" &&
+        this.jsonData.type == "jvTimePicker"
+      ) {
+        let d = new Date();
+        return d.toString().slice(16,21);
+      }
+      return this.jsonData.defaultValue;
+    }
+  },
   mounted() {
-    this.inputValue = this.jsonData.defaultValue;
+    this.inputValue = this.cDefaultValue;
   },
   methods: {
     resetData() {
@@ -21,7 +47,7 @@ export default {
           ? this.localDefaulValue === undefined
             ? ""
             : this.localDefaulValue
-          : this.jsonData.defaultValue;
+          : this.cDefaultValue;
     }
   },
   watch: {
@@ -30,7 +56,7 @@ export default {
         "setResData",
         this.jsonData.varName === undefined
           ? this.jsonData.name
-          : this.jsonData.name,
+          : this.jsonData.varName,
         this.inputValue
       );
     }

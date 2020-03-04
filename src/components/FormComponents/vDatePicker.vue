@@ -46,6 +46,7 @@ export default {
     };
   },
   props:basicTemplate.props,
+  computed:basicTemplate.computed,
   mounted:basicTemplate.mounted,
   methods: dateMethods,
   watch: basicTemplate.watch

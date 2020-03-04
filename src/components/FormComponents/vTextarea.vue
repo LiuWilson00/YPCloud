@@ -1,5 +1,9 @@
 <template>
-  <v-textarea :label="jsonData.name" v-model="inputValue"></v-textarea>
+  <v-textarea
+    :label="jsonData.name"
+    :disabled="jsonData.disabled===undefined?false:jsonData.disabled"
+    v-model="inputValue"
+  ></v-textarea>
 </template>
 
 <script>
@@ -12,6 +16,7 @@ export default {
     };
   },
   methods: basicTemplate.methods,
+  computed: basicTemplate.computed,
   props: basicTemplate.props,
   mounted: basicTemplate.mounted,
   watch: basicTemplate.watch
