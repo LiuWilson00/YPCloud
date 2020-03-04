@@ -18,6 +18,8 @@ const opts = {
 Vue.config.productionTip = false
 Vue.use(Vuetify);
 
+
+
 Vue.config.productionTip = false;
 
 Vue.prototype.makeId = function (length) {
@@ -37,6 +39,13 @@ router.afterEach((to, from) => {
 
 new Vue({
   vuetify: new Vuetify(opts),
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "./styles/main.scss"` // change the route with you main.scss location in yout proyect
+      }
+    }
+  },
   router,
   store,
   i18n,

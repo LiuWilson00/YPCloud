@@ -32,30 +32,30 @@
         },
         {
             "type": "text-field",
-            "name": "Caller No(A)",
+            "name": "Caller No (A)",
             "varName": "callerNo",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Called No(B)",
+            "name": "Called No (B)",
             "varName": "calledNo",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Contact(C)",
+            "name": "Contact (C)",
             "varName": "contact",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Question(Q)",
+            "name": "Question (Q)",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Result(R)",
+            "name": "Result (R)",
             "defaultValue": ""
         }
     ],

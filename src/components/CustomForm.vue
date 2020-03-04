@@ -31,7 +31,10 @@
 </template>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "../styles/main.scss";
+
+
 .v-card {
   padding: 0 20px;
 }

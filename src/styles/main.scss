@@ -1,0 +1,16 @@
+.v-text-field .v-input__control,
+.v-text-field .v-input__slot,
+.v-text-field fieldset {
+    border-color: rgba(100, 100, 100, 0.1)
+}
+
+
+
+.theme--light.v-text-field.v-input--is-disabled .v-input__slot:before {
+    -o-border-image: "";
+    border-image: 1 repeat;
+}
+
+h1 {
+    color: red;
+}
