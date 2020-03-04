@@ -7,8 +7,7 @@
     "data": [
         {
             "type": "text-field",
-            "name": "AAN name(AAN)",
-            "varName": "AANname",
+            "name": "AAN name",
             "defaultValue": "Wilson",
             "disabled": true
         },
@@ -31,31 +30,43 @@
             "defaultValue": "now"
         },
         {
-            "type": "text-field",
-            "name": "Caller No(A)",
-            "varName": "callerNo",
-            "defaultValue": ""
+            "type": "checkBox",
+            "name": "sex",
+            "depiction": "sex",
+            "defaultValue": "M",
+            "data": [
+                {
+                    "id": 1,
+                    "name": "Man",
+                    "value": "M"
+                },
+                {
+                    "id": 2,
+                    "name": "Womon",
+                    "value": "W"
+                }
+            ]
         },
         {
             "type": "text-field",
-            "name": "Called No(B)",
+            "name": "Called No",
             "varName": "calledNo",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Contact(C)",
+            "name": "Contact",
             "varName": "contact",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Question(Q)",
+            "name": "Question",
             "defaultValue": ""
         },
         {
             "type": "text-field",
-            "name": "Result(R)",
+            "name": "Result",
             "defaultValue": ""
         }
     ],
