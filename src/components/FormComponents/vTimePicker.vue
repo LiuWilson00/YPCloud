@@ -13,7 +13,7 @@
     <template v-slot:activator="{ on }">
       <v-text-field
         v-model="inputValue"
-        label="Picker in menu"
+        :label="jsonData.label"
         prepend-icon="access_time"
         readonly
         v-on="on"
