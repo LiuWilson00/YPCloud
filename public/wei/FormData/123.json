@@ -7,8 +7,8 @@
     "data": [
         {
             "type": "text-field",
-            "name": "AAN name(AAN)",
-            "varName": "AANname",
+            "name": "AAN",
+            "varName": "AAN",
             "defaultValue": "Wilson",
             "disabled": true
         },

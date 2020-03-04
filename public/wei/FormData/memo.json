@@ -1,13 +1,14 @@
 {
-    "name": "123",
-    "depiction": "Form123",
+    "name": "Memo",
+    "depiction": "Memo",
     "header": {
         "color": ""
     },
     "data": [
         {
             "type": "text-field",
-            "name": "AAN name",
+            "name": "AAN",
+            "varName": "AAN",
             "defaultValue": "Wilson",
             "disabled": true
         },
@@ -29,44 +30,17 @@
             "thumbLabel": true,
             "defaultValue": "now"
         },
-        {
-            "type": "checkBox",
-            "name": "sex",
-            "depiction": "sex",
-            "defaultValue": "M",
-            "data": [
-                {
-                    "id": 1,
-                    "name": "Man",
-                    "value": "M"
-                },
-                {
-                    "id": 2,
-                    "name": "Womon",
-                    "value": "W"
-                }
-            ]
-        },
+        
         {
             "type": "text-field",
-            "name": "Called No",
+            "name": "Caller No",
             "varName": "calledNo",
             "defaultValue": ""
         },
         {
-            "type": "text-field",
-            "name": "Contact",
-            "varName": "contact",
-            "defaultValue": ""
-        },
-        {
-            "type": "text-field",
-            "name": "Question",
-            "defaultValue": ""
-        },
-        {
-            "type": "text-field",
-            "name": "Result",
+            "type": "textarea",
+            "name": "Message",
+            "varName": "message",
             "defaultValue": ""
         }
     ],
