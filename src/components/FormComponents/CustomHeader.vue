@@ -29,7 +29,6 @@ export default {
     };
   },
   computed: {
-
     //form title date time format
     formatDateTime() {
       let year = this.nowDateTime.getFullYear();
@@ -52,8 +51,7 @@ export default {
     // watch computed transfer to panrent components
     formatDateTime: {
       handler: function() {
-        this.$emit("setResData", "formDateTime",this.formatDateTime);
-        console.log(this.formatDateTime)
+        this.$emit("setResData", "FDT", this.formatDateTime);
       },
       immediate: true
     }

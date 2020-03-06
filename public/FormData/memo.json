@@ -12,24 +12,7 @@
             "defaultValue": "Wilson",
             "disabled": true
         },
-        {
-            "type": "date",
-            "varName": "date",
-            "label": "Date",
-            "name": "Leave Date End",
-            "col": 6,
-            "thumbLabel": true,
-            "defaultValue": "now"
-        },
-        {
-            "type": "time",
-            "varName": "time",
-            "label": "Time",
-            "name": "Start Time",
-            "col": 6,
-            "thumbLabel": true,
-            "defaultValue": "now"
-        },
+       
         
         {
             "type": "text-field",

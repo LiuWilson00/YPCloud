@@ -8,13 +8,13 @@
         {
             "type": "text-field",
             "name": "AAN name(AAN)",
-            "varName": "AANname",
+            "varName": "ANN",
             "defaultValue": "Wilson",
             "disabled": true
         },
         {
             "type": "date",
-            "varName": "date",
+            "varName": "d",
             "label": "Date",
             "name": "Leave Date End",
             "col": 6,
@@ -23,7 +23,7 @@
         },
         {
             "type": "time",
-            "varName": "time",
+            "varName": "t",
             "label": "Time",
             "name": "Start Time",
             "col": 6,
@@ -33,29 +33,31 @@
         {
             "type": "text-field",
             "name": "Caller No(A)",
-            "varName": "callerNo",
+            "varName": "A",
             "defaultValue": ""
         },
         {
             "type": "text-field",
             "name": "Called No(B)",
-            "varName": "calledNo",
+            "varName": "B",
             "defaultValue": ""
         },
         {
             "type": "text-field",
             "name": "Contact(C)",
-            "varName": "contact",
+            "varName": "C",
             "defaultValue": ""
         },
         {
             "type": "text-field",
             "name": "Question(Q)",
+            "varName": "Q",
             "defaultValue": ""
         },
         {
             "type": "text-field",
             "name": "Result(R)",
+            "varName": "R",
             "defaultValue": ""
         }
     ],

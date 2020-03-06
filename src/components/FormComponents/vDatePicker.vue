@@ -45,10 +45,6 @@ export default {
       menu: false
     };
   },
-  props:basicTemplate.props,
-  computed:basicTemplate.computed,
-  mounted:basicTemplate.mounted,
-  methods: dateMethods,
-  watch: basicTemplate.watch
+  mixins: [basicTemplate]
 };
 </script>

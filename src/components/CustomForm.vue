@@ -123,7 +123,6 @@ export default {
       // console.log(this.$refs, Object.keys(this.$refs), this.$refs["name"][0]);
       //DEV console
       Object.keys(this.$refs).forEach(key => {
-
         //Let all child component data reset
         if (typeof this.$refs[key][0].resetData != "function") {
           // console.log('False',key,this.$refs[key][0].resetData);
@@ -168,7 +167,7 @@ export default {
       Axios.get(`/wei/FormData/${this.formName}.json`)
         .then(res => {
           this.json = res.data;
-          this.setResData("FormName", this.json.name);
+          this.setResData("FN", this.json.name);
         })
         .catch(err => {
           console.log(err);

@@ -24,10 +24,6 @@ export default {
       inputValue: 0
     };
   },
-  methods: basicTemplate.methods,
-  computed: basicTemplate.computed,
-  props: basicTemplate.props,
-  mounted: basicTemplate.mounted,
-  watch: basicTemplate.watch
+  mixins:[basicTemplate]
 };
 </script>

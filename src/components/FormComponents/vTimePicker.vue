@@ -19,29 +19,26 @@
         v-on="on"
       ></v-text-field>
     </template>
-    <v-time-picker v-if="menu" v-model="inputValue" full-width @click:minute="$refs.menu.save(inputValue)"></v-time-picker>
+    <v-time-picker
+      v-if="menu"
+      v-model="inputValue"
+      full-width
+      @click:minute="$refs.menu.save(inputValue)"
+    ></v-time-picker>
   </v-menu>
 </template>
 
 <script>
-
-import basicTemplate from "./vtemplate"
-
-
+import basicTemplate from "./vtemplate";
 
 export default {
   name: "VTP",
   data() {
     return {
       inputValue: "",
-      menu:false
-      
+      menu: false
     };
   },
-  methods:basicTemplate.methods,
-  computed:basicTemplate.computed,
-  props: basicTemplate.props,
-  mounted:basicTemplate.mounted,
-  watch:basicTemplate.watch
+  mixins: [basicTemplate]
 };
 </script>

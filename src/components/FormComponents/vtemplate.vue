@@ -1,10 +1,7 @@
-<template>
-  <v-textarea :label="jsonData.name" v-model="inputValue"></v-textarea>
-</template>
+
 
 <script>
 export default {
-  name: "VTF",
   data() {
     return {
       inputValue: ""
@@ -32,7 +29,7 @@ export default {
         this.jsonData.type == "jvTimePicker"
       ) {
         let d = new Date();
-        return d.toString().slice(16,21);
+        return d.toString().slice(16, 21);
       }
       return this.jsonData.defaultValue;
     }
