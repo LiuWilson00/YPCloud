@@ -3,7 +3,12 @@
     <v-card class="mx-auto" :max-width="json.setting.maxWidth" outlined>
       <v-row>
         <v-col col="12">
-          <coustomHeader :formName="json.name" :formColor="json.header.color" :formMsg="formMsg"></coustomHeader>
+          <coustomHeader
+            @setResData="setResData"
+            :formName="json.name"
+            :formColor="json.header.color"
+            :formMsg="formMsg"
+          ></coustomHeader>
         </v-col>
 
         <v-col
@@ -33,7 +38,6 @@
 
 <style lang="scss">
 @import "../styles/main.scss";
-
 
 .v-card {
   padding: 0 20px;
