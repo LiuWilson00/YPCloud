@@ -24,6 +24,6 @@ export default {
       inputValue: 0
     };
   },
-  mixins:[basicTemplate]
+  mixins: [basicTemplate]
 };
 </script>
