@@ -20,9 +20,9 @@ export default {
         let date = "00" + d.getDate();
         let dateLen = d.getDate().toString().length;
         return `${d.getFullYear()}-${mon.slice(
-          mon.length - monLen - 1,
+          mon.length -2,
           mon.length
-        )}-${date.slice(date.length - dateLen - 1, date.length)}`;
+        )}-${date.slice(date.length - 2, date.length)}`;
       }
       if (
         this.jsonData.defaultValue == "now" &&

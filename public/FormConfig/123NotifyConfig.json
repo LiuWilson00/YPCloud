@@ -1,7 +1,7 @@
 [
     {
         "notifyName":"crm://123",
-        "Topic": "tg://-1001400445332",
+        "Topic": "tg://-289793659",
         "DDN": ">>comm",
         "Payload":{
             "type": "message"

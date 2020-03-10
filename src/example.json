@@ -1,0 +1,84 @@
+[
+    {
+        "type": "cloud",
+        "dataUrl": "https://git.page/wei/ListDataSet/PageData.json",
+        "headerUrl": "https://git.page/wei/ListHeaders/PageHeader.json"
+    },
+    {
+        "type": "object",
+        "listData": [
+            {
+                "name": "page://form",
+                "url": "https://git.page/wei/form/demo",
+                "version": "0.1.0",
+                "status": "complete",
+                "updateTime": "2020/02/26 15:00",
+                "depiction": "carate form from json"
+            },
+            {
+                "name": "page://123",
+                "url": "https://git.page/wei/123",
+                "version": "0.1.0",
+                "status": "complete",
+                "updateTime": "2020/02/21 12:00",
+                "depiction": "A form for tel123, submit to web MMS"
+            },
+            {
+                "name": "page://memo",
+                "url": "https://git.page/wei/memo",
+                "version": "0.1.0",
+                "status": "complete",
+                "updateTime": "2020/02/21 14:00",
+                "depiction": "A form for meme, submit to web MMS"
+            },
+            {
+                "name": "page://admin",
+                "url": "none",
+                "version": "0.0.1",
+                "status": "design",
+                "updateTime": "none",
+                "depiction": "web system console"
+            },
+            {
+                "name": "page://store",
+                "url": "none",
+                "version": "0.0.1",
+                "status": "design",
+                "updateTime": "none",
+                "depiction": "A page search engine(like app store)"
+            },
+            {
+                "name": "page://list",
+                "url": "https://git.page/wei/list",
+                "version": "0.1.0",
+                "status": "Develop",
+                "updateTime": "2020/02/26 17:00",
+                "depiction": "create list by json"
+            },
+            {
+                "name": "page://hello",
+                "url": "https://git.page/wei/hello",
+                "version": "0.1.0",
+                "status": "complete",
+                "updateTime": "2020/02/26 17:00",
+                "depiction": "page cli template"
+            }
+        ],
+        "header": [
+            {
+                "text": "Page Name",
+                "align": "start",
+                "sortable": false,
+                "value": "name"
+            },
+            {
+                "text": "update time",
+                "value": "updateTime"
+            },
+            {
+                "text": "depiction",
+                "value": "depiction"
+            }
+        ]
+    }
+]

@@ -14,32 +14,29 @@ import axios from "axios";
 export default {
   data() {
     return {
-      headers: [],
-      data: []
-    };
+      // headers:[],data:[]
+      };
   },
-  props:[
-    "jsonData","url"
-  ],
+  props: ["headers", "data"],
 
   mounted() {
-    axios
-      .get("/wei/ListDataSet/PageData.json")
-      .then(res => {
-        this.data = res.data;
-      })
-      .catch(err => {
-        console(err);
-      });
+    // axios
+    //   .get("/wei/ListDataSet/PageData.json")
+    //   .then(res => {
+    //     this.data = res.data;
+    //   })
+    //   .catch(err => {
+    //     console(err);
+    //   });
 
-    axios
-      .get("/wei/ListHeaders/PageHeader2.json")
-      .then(res => {
-        this.headers = res.data;
-      })
-      .catch(err => {
-        console(err);
-      });
+    // axios
+    //   .get("/wei/ListHeaders/PageHeader2.json")
+    //   .then(res => {
+    //     this.headers = res.data;
+    //   })
+    //   .catch(err => {
+    //     console(err);
+    //   });
   },
   methods: {
     getColor(status) {
