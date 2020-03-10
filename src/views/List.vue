@@ -27,7 +27,6 @@ export default {
       var url = document.location.href;
       var parseUrl = parse(url, true);
       var { query } = parseUrl;
-      
 
       if (query.url != undefined && query.url != "") {
         this.getJsonFromUrl(query.url);
@@ -38,14 +37,19 @@ export default {
         this.getJsonDefaul();
       }
     },
+    getUrl(url) {
+      var localUrl = document.location.href;
+      var parseUrl = parse(localUrl, true);
+      return parseUrl.origin == "https://git.page" ? url : this.cors + url;
+    },
     getJsonFromUrl: async function(url) {
       var json = {};
-      await axios.get(this.cors + url).then(res => {
+
+      await axios.get(this.getUrl(url)).then(res => {
         json = res.data;
       });
       this.header = await this.axiosGetter(json.headerUrl);
       this.listData = await this.axiosGetter(json.dataUrl);
-      await console.log(this.header, this.listData);
     },
     getJsonFromParams: async function(json) {
       switch (json.type) {
@@ -69,9 +73,11 @@ export default {
     },
     axiosGetter: async function(url) {
       let data = null;
-      await axios.get(this.cors + url).then(res => {
+
+      await axios.get(this.getUrl(url)).then(res => {
         data = res.data;
       });
+
       return data;
     },
     getJsonDefaul: async function() {
@@ -87,7 +93,12 @@ export default {
   },
   async mounted() {
     const vm = this;
-    await console.log(process.env.BASE_URL);
+
+    await console.log(
+      this.getUrl("https://git.page/wei/ListJson/weiPage.json"),
+      parse(document.location.href, true)
+    );
+
     await this.getQuery();
   }
 };
