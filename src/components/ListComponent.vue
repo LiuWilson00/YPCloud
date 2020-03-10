@@ -18,6 +18,10 @@ export default {
       data: []
     };
   },
+  props:[
+    "jsonData","url"
+  ],
+
   mounted() {
     axios
       .get("/wei/ListDataSet/PageData.json")
