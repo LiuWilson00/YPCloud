@@ -7,6 +7,7 @@
 import ListComponent from "../components/ListComponent";
 import parse from "url-parse";
 import axios from "axios";
+import test from "../import";
 
 export default {
   name: "list",
@@ -94,11 +95,11 @@ export default {
   async mounted() {
     const vm = this;
 
-    await console.log(
-      this.getUrl("https://git.page/wei/ListJson/weiPage.json"),
-      parse(document.location.href, true)
-    );
-
+    // await console.log(
+    //   this.getUrl("https://git.page/wei/ListJson/weiPage.json"),
+    //   parse(document.location.href, true)
+    // );
+    test();
     await this.getQuery();
   }
 };
