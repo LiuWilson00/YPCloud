@@ -3,7 +3,9 @@
     <v-app-bar color="grey darken-3" dense dark>
       <img :src="qIcon" class="qIcon" />
       <v-spacer></v-spacer>
-      Wilson
+       <v-card-subtitle class="white--text">Wilson</v-card-subtitle>
+      <v-icon class="arrow-down">keyboard_arrow_down</v-icon>
+     
     </v-app-bar>
   </div>
 </template>

@@ -13,6 +13,7 @@ const opts = {
   icons: {
     iconfont: 'md', // default - only for display purposes
   },
+
 };
 
 Vue.config.productionTip = false
@@ -44,6 +45,13 @@ new Vue({
       sass: {
         data: `@import "./styles/main.scss"` // change the route with you main.scss location in yout proyect
       }
+    }
+    ,
+    chainWebpack: config => {
+      ["vue-modules", "vue", "normal-modules", "normal"].forEach((match) => {
+        config.module.rule('scss').oneOf(match).use('sass-loader')
+          .tap(opt => Object.assign(opt, { data: `@import '~@/sass/main.scss';` }))
+      })
     }
   },
   router,
