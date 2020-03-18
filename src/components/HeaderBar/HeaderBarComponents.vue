@@ -3,6 +3,7 @@
     <v-app-bar color="grey darken-3" dense dark>
       <img :src="qIcon" class="qIcon" />
       <v-spacer></v-spacer>
+      Wilson
     </v-app-bar>
   </div>
 </template>
