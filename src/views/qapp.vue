@@ -1,9 +1,9 @@
 <template>
   <div class="qapp">
-    <HeaderBar class="header-bar" />
+    <HeaderBar :userName="userName" class="header-bar" />
     <UserInfo class="user-info" />
-    <LoadAppView v-if="appList.length==0" />
-    <AppList v-else :appList="appList" />
+    <LoadAppView v-if="apps.length==0" />
+    <AppList v-else :appList="apps" />
     <v-card-subtitle>System Status | Pivacy Policy | Terms & Conditions | Copyright © 2020 YP Cloud. All rights reserved</v-card-subtitle>
   </div>
 </template>
@@ -33,13 +33,19 @@ export default {
   data() {
     return {
       urtData: "",
-      importsList: []
+      importsList: [],
+      userName: "Wilson",
+      urtAppList: []
     };
   },
   computed: {
-    appList() {
+    urlAppList() {
       if (this.importsList.data == undefined) return [];
       return this.importsList.data;
+    },
+    apps() {
+      if (this.urtAppList == []) return this.urlAppList;
+      return this.urtAppList;
     }
   },
   async mounted() {
@@ -47,6 +53,10 @@ export default {
     this.importsList = await imports.getDatFromUrl();
     imports.mmsInit(async () => {
       vm.urtData = await imports.getDatFromUrt();
+      console.log(this.urtData[0].Reply.Data.Data[0].data);
+      if (this.urtData != "" && this.urtData[0].Reply.RstMsg == "OK") {
+        this.urtAppList = this.urtData[0].Reply.Data.Data[0].data;
+      }
     });
   },
   components: {

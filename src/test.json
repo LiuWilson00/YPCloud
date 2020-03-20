@@ -1,0 +1,11 @@
+{
+    "topic": "",
+    "DDN": ">>obj-mms",
+    "func": "FindObj",
+    "payload": {
+        "condition": {
+            "uid": "KPLwd1Qh",
+            "name": "app_list_demo2"
+        }
+    }
+}

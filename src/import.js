@@ -41,7 +41,8 @@ const dataGetter = {
     getDataFromURT: function (urt) {
         return new Promise((resolve, reject) => {
             mms.callMMS(
-                //     {
+                //下參數的順序會影響結果
+                // {
                 //     topic: "",
                 //     DDN: ">>obj-mms",
                 //     func: "FindObj",
@@ -51,16 +52,16 @@ const dataGetter = {
                 //             name: "newObject_wilson"
                 //         }
                 //     }
-                // }
                 urt
             ).then(res => {
-                console.log(res, urt)
+                // console.log(res, urt)
                 resolve(res)
             }).catch(err => {
                 reject(err)
             })
         })
     },
+
     getDataFromJSON: function (json) {
 
     }
