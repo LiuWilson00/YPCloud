@@ -4,6 +4,7 @@ import webmms from 'webmms-client'
 import config from './config'
 import { set as setCookie, get as getCookie } from "es-cookie";
 
+var isRegistered = false
 var mms = null;
 var eiInfo = {
     eiName: "",
@@ -38,7 +39,27 @@ const dataGetter = {
         })
     },
     getDataFromURT: function (urt) {
-
+        return new Promise((resolve, reject) => {
+            mms.callMMS(
+                //     {
+                //     topic: "",
+                //     DDN: ">>obj-mms",
+                //     func: "FindObj",
+                //     payload: {
+                //         condition: {
+                //             uid: "KPLwd1Qh",
+                //             name: "newObject_wilson"
+                //         }
+                //     }
+                // }
+                urt
+            ).then(res => {
+                console.log(res, urt)
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     },
     getDataFromJSON: function (json) {
 
@@ -48,14 +69,12 @@ const dataGetter = {
 
 
 
-
 function getLocalUrl() {
     localUrl = window.location.href
 }
 
 
-
-function mmsInit() {
+function mmsInit(callback) {
     webmmsOptions.EiToken = getCookie("EiToken") || "";
     webmmsOptions.SToken = getCookie("SToken") || "";
     let tempEiToken = webmmsOptions.EiToken;
@@ -68,7 +87,7 @@ function mmsInit() {
         EiToken: tempEiToken,
         SToken: tempSToken
     });
-    mms.on("registered", reply => {
+    mms.on("registered", async reply => {
         console.log(reply);
         let {
             result: { DDN, EiToken, SToken }
@@ -77,7 +96,9 @@ function mmsInit() {
         // document.getElementById('DDN').innerText = `DDN: ${DDN}`
         setCookie("EiToken", EiToken, { expires: 7, path: "" });
         setCookie("SToken", SToken, { expires: 7, path: "" });
+        callback()
     });
+
 }
 
 
@@ -102,14 +123,32 @@ async function getParamsUrlQuery(query) {
 }
 
 
-export default async function ConsoleTest() {
-    getLocalUrl();
+export default {
+    mmsInit: mmsInit,
+    getDatFromUrt: async function () {
+        getLocalUrl();
+        let parseUrl = parse(localUrl, true)
+        let query = parseUrl.query
 
-    let parseUrl = parse(localUrl, true)
-    let query = parseUrl.query
+        console.log(JSON.parse(query.urt))
 
+        return await dataGetter.getDataFromURT(JSON.parse(query.urt))
 
-    mmsInit()
-    return await getParamsUrlQuery(query)
+    },
+    getAllData: async function () {
 
+        getLocalUrl();
+        let parseUrl = parse(localUrl, true)
+        let query = parseUrl.query
+        return await getParamsUrlQuery(query)
+
+    },
+    getDatFromUrl: async function () {
+        getLocalUrl();
+        let parseUrl = parse(localUrl, true)
+        let query = parseUrl.query
+
+        return await dataGetter.getDataFromURL(query.url)
+
+    },
 }

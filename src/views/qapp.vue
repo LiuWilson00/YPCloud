@@ -32,18 +32,22 @@ export default {
   name: "qapp",
   data() {
     return {
+      urtData: "",
       importsList: []
     };
   },
   computed: {
     appList() {
-      if (this.importsList.url == undefined) return [];
-      return this.importsList.url;
+      if (this.importsList.data == undefined) return [];
+      return this.importsList.data;
     }
   },
   async mounted() {
-    console.log(this.importsList.url == undefined);
-    this.importsList = await imports();
+    const vm = this;
+    this.importsList = await imports.getDatFromUrl();
+    imports.mmsInit(async () => {
+      vm.urtData = await imports.getDatFromUrt();
+    });
   },
   components: {
     HeaderBar,
