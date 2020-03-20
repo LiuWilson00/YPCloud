@@ -1,0 +1,51 @@
+[
+    {
+      "appId": 1,
+      "name": "Flow Builder",
+      "order": 0,
+      "iconName": "Flow_Builder",
+      "iconUrl": "https://i.imgur.com/3SswLvz.jpg"
+    },
+    {
+      "appId": 2,
+      "name": "YOLO",
+      "order": 10,
+      "iconName": "YOLO",
+      "iconUrl": "https://i.imgur.com/fIR80RQ.png"
+    },
+    {
+      "appId": 3,
+      "name": "Flow Bot",
+      "order": 10,
+      "iconName": "Flow_Bot",
+      "iconUrl": "https://i.imgur.com/oo6Rfhh.png"
+    },
+    {
+      "appId": 4,
+      "name": "Node-RED",
+      "order": 10,
+      "iconName": "Node-RED",
+      "iconUrl": "https://i.imgur.com/QzkGPPN.png"
+    },
+    {
+      "appId": 5,
+      "name": "smart screen",
+      "order": 10,
+      "iconName": "smart_screen",
+      "iconUrl": "https://i.imgur.com/EgByjxS.png"
+    },
+    {
+      "appId": 6,
+      "name": "jBuilder",
+      "order": 10,
+      "iconName": "jBuilder",
+      "iconUrl": "https://i.imgur.com/SbYAUCT.png"
+    },
+    {
+      "appId": 7,
+      "name": "Fallout shelter",
+      "order": 10,
+      "iconName": "Fallout_shelter",
+      "iconUrl": "https://i.imgur.com/yutsbcJ.jpg"
+    }
+  ]

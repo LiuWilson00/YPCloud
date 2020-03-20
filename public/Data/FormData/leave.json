@@ -1,0 +1,72 @@
+{
+    "name": "Leave Form",
+    "depiction": "This is Wilson Form",
+    "header": {
+        "color": "transparent"
+    },
+    "data": [
+        {
+            "type": "text-field",
+            "name": "name",
+            "defaultValue": "plz input you name"
+        },
+        {
+            "type": "checkBox",
+            "name": "sex",
+            "depiction": "sex",
+            "data": [
+                {
+                    "id": 1,
+                    "name": "Man",
+                    "value": "M"
+                },
+                {
+                    "id": 2,
+                    "name": "Womon",
+                    "value": "W"
+                }
+            ]
+        },
+        {
+            "type": "text-field",
+            "name": "Reason",
+            "defaultValue": "Your Reason"
+        },
+        {
+            "type": "date",
+            "varName": "LeaveDateStart",
+            "label": "plz input leave date start",
+            "name": "Date Time",
+            "col": 6,
+            "thumbLabel": true
+        },
+        {
+            "type": "time",
+            "varName": "timeStart",
+            "label": "plz input leave time start",
+            "name": "Time",
+            "col": 6,
+            "thumbLabel": true
+        },
+        {
+            "type": "date",
+            "varName": "LeaveDateEnd",
+            "label": "plz input leave date end",
+            "name": "Date Time",
+            "col": 6,
+            "thumbLabel": true
+        },
+        {
+            "type": "time",
+            "varName": "timeEnd",
+            "label": "plz input leave time start",
+            "name": "Time",
+            "col": 6,
+            "thumbLabel": true
+        }
+    ],
+    "setting": {
+        "style": "dark",
+        "maxWidth": 1024
+    }
+}

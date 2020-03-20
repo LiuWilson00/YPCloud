@@ -1,0 +1,34 @@
+{
+    "name": "Memo",
+    "depiction": "Memo",
+    "header": {
+        "color": ""
+    },
+    "data": [
+        {
+            "type": "text-field",
+            "name": "AAN",
+            "varName": "AAN",
+            "defaultValue": "Wilson",
+            "disabled": true
+        },
+       
+        
+        {
+            "type": "text-field",
+            "name": "Caller No",
+            "varName": "calledNo",
+            "defaultValue": ""
+        },
+        {
+            "type": "textarea",
+            "name": "Message",
+            "varName": "message",
+            "defaultValue": ""
+        }
+    ],
+    "setting": {
+        "style": "dark",
+        "maxWidth": 1024
+    }
+}

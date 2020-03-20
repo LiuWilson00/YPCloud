@@ -1,23 +1,25 @@
 import parse from 'url-parse'
 import axios from 'axios'
 
-
+const cors = "https://cors-anywhere.herokuapp.com/"
 var localUrl = ""
 function getUrl(url) {
     var localUrl = document.location.href;
     var parseUrl = parse(localUrl, true);
-    return parseUrl.origin == "https://git.page" ? url : this.cors + url;
+    return parseUrl.origin == "https://git.page" ? url : cors + url;
 }
 const dataGetter = {
     getDataFromFILE: function (fileLocal) {
 
     },
     getDataFromURL: function (url) {
-        let jsonData = {}
-        axios.get(getUrl(url)).then(
-            res => { jsonData = res.data }
-        )
-        return jsonData
+        return new Promise((resolve, reject) => {
+            axios.get(getUrl(url)).then((res) => {
+                resolve({ data: res.data, key: "url" })
+            }).catch((err) => {
+                reject(err)
+            })
+        })
     },
     getDataFromURT: function (urt) {
 
@@ -36,36 +38,35 @@ function getLocalUrl() {
 
 
 
+async function getParamsUrlQuery(query) {
 
-function getParamsUrlQuery(query) {
-    let cloudDataObject = {}
-    Object.keys(query).forEach(
-        key => {
-            // console.log(dataGetter)
-            let temp = dataGetter[`getDataFrom${key.toUpperCase()}`](query[key])
-            Object.defineProperty(cloudDataObject, key, { value: temp })
-        }
-    )
+    var cloudDataObject = new Object()
+
+
+    await
+        Promise.all(await Object.keys(query).map(key => dataGetter[`getDataFrom${key.toUpperCase()}`](query[key]))).then(
+            res => {
+                res.forEach(
+                    data => {
+                        cloudDataObject[data.key] = data.data
+                    }
+                )
+            }
+        )
+    return cloudDataObject
+
 
 }
 
 
-export default function ConsoleTest() {
+export default async function ConsoleTest() {
     getLocalUrl();
 
     let parseUrl = parse(localUrl, true)
     let query = parseUrl.query
-    // console.log(localUrl, parseUrl, parseUrl.query, query);
-    // console.log(dataGetter)
-    // Object.keys(query).forEach(
-    //     key => {
-    //         console.log(key)
 
 
-    //     }
-    // )
-    getParamsUrlQuery(query)
 
-    return true
+    return await getParamsUrlQuery(query)
 
 }

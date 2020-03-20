@@ -1,0 +1,50 @@
+{
+    "name": "123",
+    "depiction": "Form123",
+    "header": {
+        "color": ""
+    },
+    "data": [
+        {
+            "type": "text-field",
+            "name": "AAN name(AAN)",
+            "varName": "ANN",
+            "defaultValue": "Wilson",
+            "disabled": true
+        },
+        {
+            "type": "text-field",
+            "name": "Caller No(A)",
+            "varName": "A",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Called No(B)",
+            "varName": "B",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Contact(C)",
+            "varName": "C",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Question(Q)",
+            "varName": "Q",
+            "defaultValue": ""
+        },
+        {
+            "type": "text-field",
+            "name": "Result(R)",
+            "varName": "R",
+            "defaultValue": ""
+        }
+    ],
+    "setting": {
+        "style": "dark",
+        "maxWidth": 1024
+    }
+}

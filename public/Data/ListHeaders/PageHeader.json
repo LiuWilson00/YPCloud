@@ -1,0 +1,28 @@
+[
+    {
+        "text": "Page Name",
+        "align": "start",
+        "sortable": false,
+        "value": "name"
+    },
+    {
+        "text": "Url",
+        "value": "url"
+    },
+    {
+        "text": "Version",
+        "value": "version"
+    },
+    {
+        "text": "Status",
+        "value": "status"
+    },
+    {
+        "text": "update time",
+        "value": "updateTime"
+    },
+    {
+        "text": "depiction",
+        "value": "depiction"
+    }
+]
