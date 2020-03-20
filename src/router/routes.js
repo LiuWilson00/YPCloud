@@ -110,11 +110,14 @@ const routes = [
     component: Mote
   },
   {
-    path: '/qapps',
-    name: 'qapps',
+    path: '/RunApps',
+    name: 'RunApps',
     components: {
       default: qapps,
       nav: Header
+    },
+    meta: {
+      title: 'RunApp',
     }
   }
 ];
