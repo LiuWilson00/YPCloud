@@ -5,7 +5,9 @@
       <video autoplay playsinline></video>
 
       <v-icon id="capture">camera_alt</v-icon>
+
       <div id="output" class="mb-5" max-width="1024"></div>
+      <v-card-subtitle>System Status | Pivacy Policy | Terms & Conditions | Copyright © 2020 YP Cloud. All rights reserved</v-card-subtitle>
     </v-card>
   </div>
 </template>
@@ -30,6 +32,7 @@
     margin: 3rem;
   }
   #output {
+    border-top-style: outset;
     width: 800px;
     display: flex;
     flex-wrap: wrap;
