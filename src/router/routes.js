@@ -9,7 +9,9 @@ const HelloWorld = () => import('@/views/HelloWorld.vue');
 const List = () => import('@/views/List.vue');
 const animateJS = () => import('@/views/animateJS.vue');
 const qapps = () => import('@/views/qapp.vue');
+const runStore = () => import('@/views/RunStore.vue');
 const bricks = () => import('@/views/bricks.vue');
+const yolo = () => import('@/views/yolo.vue');
 
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
@@ -122,6 +124,17 @@ const routes = [
     }
   },
   {
+    path: '/RunStore',
+    name: 'RunStore',
+    components: {
+      default: runStore,
+      nav: Header
+    },
+    meta: {
+      title: 'RunStore',
+    }
+  },
+  {
     path: '/Bricks',
     name: 'Bricks',
     components: {
@@ -130,6 +143,17 @@ const routes = [
     },
     meta: {
       title: 'Bricks',
+    }
+  },
+  {
+    path: '/yolo',
+    name: 'yolo',
+    components: {
+      default: yolo,
+      nav: Header
+    },
+    meta: {
+      title: 'yolo',
     }
   }
 ];
