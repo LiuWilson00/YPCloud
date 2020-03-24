@@ -9,6 +9,7 @@ const HelloWorld = () => import('@/views/HelloWorld.vue');
 const List = () => import('@/views/List.vue');
 const animateJS = () => import('@/views/animateJS.vue');
 const qapps = () => import('@/views/qapp.vue');
+const bricks = () => import('@/views/bricks.vue');
 
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
@@ -118,6 +119,17 @@ const routes = [
     },
     meta: {
       title: 'RunApp',
+    }
+  },
+  {
+    path: '/Bricks',
+    name: 'Bricks',
+    components: {
+      default: bricks,
+      nav: Header
+    },
+    meta: {
+      title: 'Bricks',
     }
   }
 ];

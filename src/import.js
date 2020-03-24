@@ -127,10 +127,11 @@ async function getParamsUrlQuery(query) {
 export default {
     mmsInit: mmsInit,
     getDatFromUrt: async function () {
+
         getLocalUrl();
         let parseUrl = parse(localUrl, true)
         let query = parseUrl.query
-
+        if (query.url == undefined) return false
         console.log(JSON.parse(query.urt))
 
         return await dataGetter.getDataFromURT(JSON.parse(query.urt))

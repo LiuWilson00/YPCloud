@@ -44,15 +44,23 @@ export default {
       return this.importsList.data;
     },
     apps() {
-      if (this.urtAppList == []) return this.urlAppList;
+      if (
+        this.urtAppList.length == 0 ||
+        this.urtAppList == false ||
+        this.urtAppList == undefined ||
+        this.urtAppList == null
+      )
+        return this.urlAppList;
       return this.urtAppList;
     }
   },
   async mounted() {
     const vm = this;
     this.importsList = await imports.getDatFromUrl();
+
     imports.mmsInit(async () => {
       vm.urtData = await imports.getDatFromUrt();
+      if (vm.urtData == false) return;
       console.log(this.urtData[0].Reply.Data.Data[0].data);
       if (this.urtData != "" && this.urtData[0].Reply.RstMsg == "OK") {
         this.urtAppList = this.urtData[0].Reply.Data.Data[0].data;
