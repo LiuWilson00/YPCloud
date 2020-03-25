@@ -126,6 +126,7 @@ async function getParamsUrlQuery(query) {
 
 export default {
     mmsInit: mmsInit,
+    mms: mms,
     getDatFromUrt: async function () {
 
         getLocalUrl();
