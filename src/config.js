@@ -4,6 +4,7 @@ const webConfig = {
     wsurl: "wss://lib3.ypcloud.com",
     tgTopic: "tg://-289793659",
     tgDDN: ">>comm",
+    webAPI: "https://webapi.git.page/"
 }
 
 

@@ -51,6 +51,7 @@ import logo from "@/assets/pet.svg";
 import imports from "@/import.js";
 import webmms from "webmms-client";
 import config from "@/config";
+import axios from "axios";
 // import google from "googleapis";
 
 // const { google } = require("googleapis");
@@ -74,7 +75,9 @@ export default {
       },
       video: {},
       output: {},
-      scale: 0.25
+      blob: "",
+      scale: 0.25,
+      formData: new FormData()
     };
   },
   computed: {
@@ -94,16 +97,16 @@ export default {
         d.getDate()
       )}${zeroed(d.getHours())}${zeroed(d.getSeconds())}`;
     },
-    sendToPiAI() {
+    sendToPiAI(url) {
       return new Promise((resolve, reject) => {
         // console.log("sending", this.mms);
         this.mms
           .sendMMS({
-            topic: "ml://tiny-yolo-v3(pytorch)/image_base64",
+            topic: "ml://tiny-yolo-v3(pytorch)/image_url",
             DDN: ">>py-ai",
             payload: {
               chatid: "-347773088",
-              img_base64: 1234
+              img_url: url
             }
           })
           .then(res => {
@@ -131,9 +134,11 @@ export default {
           })
           .then(res => {
             // console.log(res, urt)
+            console.log("res", res);
             resolve(res);
           })
           .catch(err => {
+            console.log("err", err);
             reject(err);
           });
       });
@@ -184,6 +189,7 @@ export default {
         .catch(handleError);
     },
     captureImage() {
+      const vm = this;
       var canvas = document.createElement("canvas");
       canvas.width = 640;
       canvas.height = 480;
@@ -196,45 +202,36 @@ export default {
       img.style.display = "flex";
       img.style.borderRadius = "3px";
       img.src = canvas.toDataURL();
-      this.imgData = canvas.toDataURL();
-      output.prepend(img);
-
-      this.sendToPiAI().then(res => {
-        console.log(res);
-      });
-    },
-    start() {
-      // 2. Initialize the JavaScript client library.
-      gapi.client
-        .init({
-          apiKey: "AIzaSyAmVTuMZ3S8Gig6YFQaCztNQiT2sGL515E",
-          // clientId and scope are optional if auth is not required.
-          discoveryDocs: ["https://people.googleapis.com/$discovery/rest"],
-          clientId: "decent-genius-247512@appspot.gserviceaccount.com",
-          scope: "profile"
-        })
-        .then(function() {
-          // 3. Initialize and make the API request.
-          return gapi.client.people.people.get({
-            resourceName: "people/me",
-            "requestMask.includeField": "person.names"
+      this.imgData = canvas.toDataURL("image/png");
+      this.blob = canvas.toBlob(b => {
+        var fileName = vm.getNowDateTimeString();
+        this.formData.append("yoloImg", b, `${fileName}.png`);
+        console.log(fileName);
+        axios
+          .post(`${config.webConfig.webAPI}upload-yolo`, this.formData)
+          .then(() => {
+            vm.sendToPiAI(
+              `https://webapi.git.page/images/yolo/${fileName}.png`
+            );
           });
-        })
-        .then(
-          function(response) {
-            console.log(response.result);
-          },
-          function(reason) {
-            console.log("Error: " + reason.error);
-          }
-        );
+      }, "image/png");
+      output.prepend(img);
+      // this.sendScreenshot(img);
+      // this.sendToPiAI().then(res => {
+      //   console.log(res);
+      // });
+    },
+
+    sendScreenshot(img) {
+      this.formData.append("yoloImg", img);
+
+      axios.post("http://localhost:3000/upload-yolo", this.formData);
     }
   },
   mounted() {
     this.initWebRTC();
     this.mmsInit();
     console.log(this.getNowDateTimeString());
-    gapi.load("client", this.start);
   }
 };
 </script>
