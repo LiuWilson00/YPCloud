@@ -3,7 +3,7 @@
     <v-app-bar color="grey darken-3" dense dark>
       <img :src="runApp" class="qIcon" />
       <v-spacer></v-spacer>
-      <v-card-subtitle class="white--text">Wilson</v-card-subtitle>
+      <v-card-subtitle class="white--text">{{userName}}</v-card-subtitle>
 
       <v-menu bottom left offset-y min-width="300">
         <template v-slot:activator="{ on }">
@@ -14,7 +14,7 @@
 
         <v-list>
           <v-list-item v-for="(item, i) in items" :key="i" @click="itemHandler">
-            <v-list-item-title>{{ item.title }}   </v-list-item-title>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
             <v-spacer></v-spacer>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item>
@@ -43,6 +43,7 @@ export default {
       ]
     };
   },
+  props: ["userName"],
   methods: {
     itemHandler() {
       return;

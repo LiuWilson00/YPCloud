@@ -1,0 +1,67 @@
+{
+    "fan": {
+        "type": "fan",
+        "style": {
+            "width": "25%",
+            "height": "67%",
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [
+            {
+                "targets": ".leaf",
+                "rotate": {
+                    "value": 720,
+                    "duration": 1800,
+                    "easing": "linear"
+                },
+                "loop": true
+            }
+        ],
+        "brickAction": {}
+    },
+    "light": {
+        "type": "light",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "shin": [
+                "heartBeat",
+                "infinite"
+            ]
+        }
+    },
+    "phone": {
+        "type": "phone",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "HelloWorld": [
+                "bounce",
+                "infinite"
+            ],
+            "phone": [
+                "rubberBand",
+                "infinite",
+                "slower"
+            ]
+        }
+    }
+}

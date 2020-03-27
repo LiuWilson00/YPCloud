@@ -202,12 +202,39 @@ export default {
       this.sendToPiAI().then(res => {
         console.log(res);
       });
+    },
+    start() {
+      // 2. Initialize the JavaScript client library.
+      gapi.client
+        .init({
+          apiKey: "AIzaSyAmVTuMZ3S8Gig6YFQaCztNQiT2sGL515E",
+          // clientId and scope are optional if auth is not required.
+          discoveryDocs: ["https://people.googleapis.com/$discovery/rest"],
+          clientId: "decent-genius-247512@appspot.gserviceaccount.com",
+          scope: "profile"
+        })
+        .then(function() {
+          // 3. Initialize and make the API request.
+          return gapi.client.people.people.get({
+            resourceName: "people/me",
+            "requestMask.includeField": "person.names"
+          });
+        })
+        .then(
+          function(response) {
+            console.log(response.result);
+          },
+          function(reason) {
+            console.log("Error: " + reason.error);
+          }
+        );
     }
   },
   mounted() {
     this.initWebRTC();
     this.mmsInit();
     console.log(this.getNowDateTimeString());
+    gapi.load("client", this.start);
   }
 };
 </script>

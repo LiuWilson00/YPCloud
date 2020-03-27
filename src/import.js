@@ -138,6 +138,7 @@ export default {
         return await dataGetter.getDataFromURT(JSON.parse(query.urt))
 
     },
+    
     getAllData: async function () {
 
         getLocalUrl();

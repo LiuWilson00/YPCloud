@@ -12,6 +12,7 @@ const qapps = () => import('@/views/qapp.vue');
 const runStore = () => import('@/views/RunStore.vue');
 const bricks = () => import('@/views/bricks.vue');
 const yolo = () => import('@/views/yolo.vue');
+const bricksChildren = () => import('@/views/BricksChildren.vue');
 
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
@@ -143,7 +144,21 @@ const routes = [
     },
     meta: {
       title: 'Bricks',
-    }
+    },
+
+  },
+  {
+    path: '/Brick/:brickName',
+    name: 'brick',
+    components: {
+      default: bricksChildren,
+      nav: Header
+    },
+    meta: {
+      title: 'Brick',
+    },
+    props: { default: true, nav: false }
+
   },
   {
     path: '/yolo',

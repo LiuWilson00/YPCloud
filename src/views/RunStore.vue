@@ -34,4 +34,5 @@ export default {
     return { userIcon };
   }
 };
+
 </script>

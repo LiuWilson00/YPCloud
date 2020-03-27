@@ -2,6 +2,7 @@
   <div class="qapp">
     <HeaderBar :userName="userName" class="header-bar" />
     <UserInfo class="user-info" />
+    <img :src="userIcon" alt="userIcon" />
     <LoadAppView v-if="apps.length==0" />
     <AppList v-else :appList="apps" />
     <v-card-subtitle>System Status | Pivacy Policy | Terms & Conditions | Copyright © 2020 YP Cloud. All rights reserved</v-card-subtitle>
