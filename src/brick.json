@@ -2,8 +2,7 @@
     "fan": {
         "type": "fan",
         "style": {
-            "width": "25%",
-            "height": "67%",
+            "scale": 0.4,
             "colorRotate": 30
         },
         "locate": {

@@ -87,7 +87,7 @@ export default {
       brickList: [
         {
           type: "fan",
-          style: { width: "100px", height: "150px", colorRotate: 30 },
+          style: { scale: 0.2083, colorRotate: 30 },
           locate: { top: 100, left: 100 },
           animate: [
             {
@@ -105,7 +105,7 @@ export default {
         },
         {
           type: "fan",
-          style: { width: "100px", height: "150px" },
+          style: { scale: 0.2083 },
           locate: { top: 100, left: 200 },
           animate: [
             {

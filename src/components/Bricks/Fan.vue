@@ -27,6 +27,10 @@
 @import "../../../node_modules/animate.css/animate.css";
 
 .fan {
+  --basewidth: 480px;
+  --basehight: 640px;
+  width: var(--basewidth);
+  height: var(--basehight);
   position: absolute;
   --deg: 0deg;
   img {
@@ -34,7 +38,7 @@
   }
   img.leaf {
     width: 80%;
-    top: 7%;
+    top: 15%;
     left: 10%;
     filter: hue-rotate(var(--deg));
   }
@@ -44,7 +48,7 @@
   }
   img.base {
     width: 80%;
-    top: 68%;
+    top: 135%;
     left: 10%;
     filter: hue-rotate(var(--deg));
   }
