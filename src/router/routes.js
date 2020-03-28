@@ -14,6 +14,8 @@ const bricks = () => import('@/views/bricks.vue');
 const yolo = () => import('@/views/yolo.vue');
 const bricksChildren = () => import('@/views/BricksChildren.vue');
 
+
+import aibot from "@/assets/aibot.png"
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
 import store from '@/store';
@@ -168,7 +170,8 @@ const routes = [
       nav: Header
     },
     meta: {
-      title: 'aibot',
+      title: 'AiBot',
+      icon: aibot
     }
   }
 ];

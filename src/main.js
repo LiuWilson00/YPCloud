@@ -53,6 +53,12 @@ new Vue({
           .tap(opt => Object.assign(opt, { data: `@import '~@/sass/main.scss';` }))
       })
     }
+  }, watch: {
+    $route(to) {
+      document.title = `${to.meta.title}`;
+      const link = document.querySelector("[rel='icon']")
+      link.setAttribute('href', to.meta.icon)
+    }
   },
   router,
   store,

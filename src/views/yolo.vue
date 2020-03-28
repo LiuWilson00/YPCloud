@@ -1,14 +1,14 @@
 <template>
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
-      <img :src="logo" alt="logo" width="50" />
+      <img :src="logo" alt="logo" class="logo mt-3" width="50" />
+      <v-card-title class="title">AiBot</v-card-title>
       <v-icon @click="deviceChange">cached</v-icon>
       <video autoplay playsinline></video>
 
       <v-icon id="capture" @click="captureImage">camera_alt</v-icon>
 
       <div id="output" class="mb-5" max-width="1024"></div>
-      <v-card-subtitle>System Status | Pivacy Policy | Terms & Conditions | Copyright © 2020 YP Cloud. All rights reserved</v-card-subtitle>
     </v-card>
   </div>
 </template>
@@ -18,12 +18,12 @@
   display: flex;
   flex-flow: column;
 
+  .title {
+    padding: 0;
+  }
   align-items: center;
   * {
     display: flex;
-  }
-  img {
-    margin: 1.5rem;
   }
   video {
     border-radius: 10px;
@@ -48,7 +48,7 @@
 </style>
 <script>
 import Instascan from "instascan";
-import logo from "@/assets/pet.svg";
+import logo from "@/assets/aibot.png";
 import imports from "@/import.js";
 import webmms from "webmms-client";
 import config from "@/config";
@@ -79,7 +79,8 @@ export default {
       video: {},
       output: {},
       scale: 0.25,
-      formData: new FormData()
+      formData: new FormData(),
+      target: false // true : front , false: back.
     };
   },
   computed: {
@@ -234,15 +235,13 @@ export default {
     },
     deviceChange() {
       const vm = this;
-      function successCallback(videoinput_id) {
-        console.log(videoinput_id);
-      }
+
       function handleSuccess(stream) {
         window.stream = stream; // only to make stream available to console
         vm.video.srcObject = stream;
-        console.log(stream);
+        vm.target = !vm.target;
       }
-
+      const deviceTarget = vm.target ? "front" : "back";
       //STEP1 列出所有可用裝置
       navigator.mediaDevices.enumerateDevices().then(devices => {
         //STEP2 將影片輸出的裝置塞選出
@@ -252,7 +251,7 @@ export default {
         var videoinput_id = ""; //暫存device的id
         //STEP3 找到有back字串的鏡頭
         devices.forEach(function(device) {
-          if (device.label.toLowerCase().search("back") != -1) {
+          if (device.label.toLowerCase().search(deviceTarget) != -1) {
             videoinput_id = device.deviceId;
           }
         });
@@ -302,7 +301,7 @@ export default {
   mounted() {
     this.peerInit();
     this.initWebRTC();
-    this.mmsInit();
+    this.deviceChange();
     console.log(this.getNowDateTimeString());
   }
 };
