@@ -29,6 +29,7 @@
     "material-design-icons-iconfont": "^5.0.1",
     "moment": "^2.24.0",
     "obj-urlencode": "^1.0.0",
+    "peerjs": "^1.2.0",
     "url-parse": "^1.4.7",
     "vee-validate": "^3.2.4",
     "vue": "^2.6.10",

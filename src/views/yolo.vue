@@ -2,6 +2,7 @@
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
       <img :src="logo" alt="logo" width="50" />
+      <v-icon @click="deviceChange">cached</v-icon>
       <video autoplay playsinline></video>
 
       <v-icon id="capture" @click="captureImage">camera_alt</v-icon>
@@ -52,6 +53,8 @@ import imports from "@/import.js";
 import webmms from "webmms-client";
 import config from "@/config";
 import axios from "axios";
+import Peer from "peerjs";
+import parse from "url-parse";
 // import google from "googleapis";
 
 // const { google } = require("googleapis");
@@ -75,7 +78,6 @@ export default {
       },
       video: {},
       output: {},
-      blob: "",
       scale: 0.25,
       formData: new FormData()
     };
@@ -98,12 +100,13 @@ export default {
       )}${zeroed(d.getHours())}${zeroed(d.getSeconds())}`;
     },
     sendToPiAI(url) {
+      const vm = this;
       return new Promise((resolve, reject) => {
         // console.log("sending", this.mms);
         this.mms
           .sendMMS({
             topic: "ml://tiny-yolo-v3(pytorch)/image_url",
-            DDN: ">>py-ai",
+            DDN: ">>aibot",
             payload: {
               chatid: "-347773088",
               img_url: url
@@ -111,6 +114,7 @@ export default {
           })
           .then(res => {
             // console.log(res, urt)
+
             resolve(res);
           })
           .catch(err => {
@@ -134,11 +138,11 @@ export default {
           })
           .then(res => {
             // console.log(res, urt)
-            console.log("res", res);
+            // console.log("res", res);
             resolve(res);
           })
           .catch(err => {
-            console.log("err", err);
+            // console.log("err", err);
             reject(err);
           });
       });
@@ -203,13 +207,14 @@ export default {
       img.style.borderRadius = "3px";
       img.src = canvas.toDataURL();
       this.imgData = canvas.toDataURL("image/png");
-      this.blob = canvas.toBlob(b => {
+      canvas.toBlob(b => {
         var fileName = vm.getNowDateTimeString();
         this.formData.append("yoloImg", b, `${fileName}.png`);
         console.log(fileName);
         axios
           .post(`${config.webConfig.webAPI}upload-yolo`, this.formData)
           .then(() => {
+            vm.formData = new FormData();
             vm.sendToPiAI(
               `https://webapi.git.page/images/yolo/${fileName}.png`
             );
@@ -226,9 +231,76 @@ export default {
       this.formData.append("yoloImg", img);
 
       axios.post("http://localhost:3000/upload-yolo", this.formData);
+    },
+    deviceChange() {
+      const vm = this;
+      function successCallback(videoinput_id) {
+        console.log(videoinput_id);
+      }
+      function handleSuccess(stream) {
+        window.stream = stream; // only to make stream available to console
+        vm.video.srcObject = stream;
+        console.log(stream);
+      }
+
+      //STEP1 列出所有可用裝置
+      navigator.mediaDevices.enumerateDevices().then(devices => {
+        //STEP2 將影片輸出的裝置塞選出
+        devices = devices.filter(function(devices) {
+          return devices.kind === "videoinput";
+        });
+        var videoinput_id = ""; //暫存device的id
+        //STEP3 找到有back字串的鏡頭
+        devices.forEach(function(device) {
+          if (device.label.toLowerCase().search("back") != -1) {
+            videoinput_id = device.deviceId;
+          }
+        });
+        //STEP4 如果找不到就用第一個找到的鏡頭
+        if (videoinput_id != "") {
+          navigator.mediaDevices
+            .getUserMedia({
+              video: {
+                deviceId: { exact: videoinput_id },
+                facingMode: "environment"
+              }
+            })
+            .then(handleSuccess);
+        } else {
+          navigator.mediaDevices
+            .getUserMedia({ video: { facingMode: "environment" } })
+            .then(handleSuccess);
+        }
+      });
+    },
+    peerInit() {
+      let localUrl = window.location.href;
+      let parseUrl = parse(localUrl, true);
+      let query = parseUrl.query;
+      const peer = new Peer(query.id, {
+        host: "localhost",
+        port: 9000,
+        path: "/peer"
+      });
+      // console.log(peer, query);
+      peer.on("open", function(id) {
+        console.log("My peer ID is: " + id);
+      });
+      peer.on("connection", conn => {
+        conn.on("open", () => {
+          // 有任何人加入這個會話時，就會觸發
+          console.log(`${conn.peer} is connected with me`);
+        });
+        conn.on("data", function(data) {
+          // 當收到訊息時會執行
+          console.log(`${conn.peer} : ` + data);
+          conn.send("HI I am A");
+        });
+      });
     }
   },
   mounted() {
+    this.peerInit();
     this.initWebRTC();
     this.mmsInit();
     console.log(this.getNowDateTimeString());
