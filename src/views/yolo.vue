@@ -5,8 +5,8 @@
         <img :src="logo" alt="logo" class="logo mt-3" width="50" />
       </div>
       <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
-      <video autoplay playsinline></video>
-      <v-icon @click="deviceChange">cached</v-icon>
+      <video :class="{animated:flash ,flash:flash,faster:flash}" autoplay playsinline></video>
+      <v-icon @click="cachedHandler">cached</v-icon>
       <v-icon id="capture" @click="captureImage">camera_alt</v-icon>
 
       <div id="output" class="mb-5" max-width="1024"></div>
@@ -14,6 +14,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
+@import "../../node_modules/animate.css/animate.css";
 .yolo-card {
   max-width: 1024px;
   display: flex;
@@ -21,8 +22,11 @@
   .toolbar {
     flex: auto;
     align-self: flex-end;
-    padding: 15px;
+
     padding-right: 5%;
+  }
+  .logo {
+    margin: 15px;
   }
   .title {
     padding: 0;
@@ -55,10 +59,10 @@
 @media only screen and (max-width: 600px) {
   .yolo-card {
     video {
-      width: 400px;
+      width: 350px;
     }
     #output {
-      width: 400px;
+      width: 350px;
     }
   }
 }
@@ -82,6 +86,7 @@ export default {
     return {
       logo,
       imgData: "",
+      flash: false,
       mms: null,
       eiInfo: {
         eiName: "",
@@ -190,10 +195,10 @@ export default {
         setCookie("SToken", SToken, { expires: 7, path: "" });
       });
     },
-    initWebRTC() {
+    initDeviceChange() {
       const vm = this;
-      this.video = document.querySelector("video");
-      this.output = document.querySelector("#output");
+      // this.video = document.querySelector("video");
+      // this.output = document.querySelector("#output");
       var constraints = {
         video: true
       };
@@ -215,8 +220,10 @@ export default {
     captureImage() {
       const vm = this;
       var canvas = document.createElement("canvas");
-      canvas.width = 640;
-      canvas.height = 480;
+      var scale = 1;
+      canvas.width = vm.video.videoWidth * scale;
+      canvas.height = vm.video.videoHeight * scale;
+      vm.flash = true;
       canvas
         .getContext("2d")
         .drawImage(this.video, 0, 0, canvas.width, canvas.height);
@@ -253,15 +260,14 @@ export default {
 
       axios.post("http://localhost:3000/upload-yolo", this.formData);
     },
-    deviceChange() {
+    backDeviceChange() {
       const vm = this;
 
       function handleSuccess(stream) {
         window.stream = stream; // only to make stream available to console
         vm.video.srcObject = stream;
       }
-      const deviceTarget = vm.target ? "front" : "back";
-      vm.target = !vm.target;
+
       //STEP1 列出所有可用裝置
       navigator.mediaDevices.enumerateDevices().then(devices => {
         //STEP2 將影片輸出的裝置塞選出
@@ -271,7 +277,7 @@ export default {
         var videoinput_id = ""; //暫存device的id
         //STEP3 找到有back字串的鏡頭
         devices.forEach(function(device) {
-          if (device.label.toLowerCase().search(deviceTarget) != -1) {
+          if (device.label.toLowerCase().search("back") != -1) {
             videoinput_id = device.deviceId;
           }
         });
@@ -291,6 +297,14 @@ export default {
             .then(handleSuccess);
         }
       });
+    },
+    cachedHandler() {
+      if (this.target) {
+        this.initDeviceChange();
+      } else {
+        this.backDeviceChange();
+      }
+      this.target = !this.target;
     },
     peerInit() {
       let localUrl = window.location.href;
@@ -318,12 +332,22 @@ export default {
       });
     }
   },
+  watch: {
+    flash: {
+      handler() {
+        const vm = this;
+        setTimeout(() => {
+          vm.flash = false;
+        }, 1000);
+      }
+    }
+  },
   mounted() {
     // this.peerInit();
     this.video = document.querySelector("video");
     this.output = document.querySelector("#output");
     this.mmsInit();
-    this.deviceChange();
+    this.backDeviceChange();
   }
 };
 </script>
