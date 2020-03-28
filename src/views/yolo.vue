@@ -51,6 +51,17 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .yolo-card {
+    video {
+      width: 400px;
+    }
+    #output {
+      width: 400px;
+    }
+  }
+}
 </style>
 <script>
 import Instascan from "instascan";
@@ -214,6 +225,7 @@ export default {
       img.style.margin = "5px";
       img.style.display = "flex";
       img.style.borderRadius = "3px";
+      img.style.width = "100px";
       img.src = canvas.toDataURL();
       this.imgData = canvas.toDataURL("image/png");
       canvas.toBlob(b => {
