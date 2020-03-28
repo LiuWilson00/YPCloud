@@ -1,11 +1,12 @@
 <template>
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
-      <img :src="logo" alt="logo" class="logo mt-3" width="50" />
-      <v-card-title class="title">AiBot</v-card-title>
-      <v-icon @click="deviceChange">cached</v-icon>
+      <div class="toolbar">
+        <img :src="logo" alt="logo" class="logo mt-3" width="50" />
+      </div>
+      <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
       <video autoplay playsinline></video>
-
+      <v-icon @click="deviceChange">cached</v-icon>
       <v-icon id="capture" @click="captureImage">camera_alt</v-icon>
 
       <div id="output" class="mb-5" max-width="1024"></div>
@@ -17,7 +18,12 @@
   max-width: 1024px;
   display: flex;
   flex-flow: column;
-
+  .toolbar {
+    flex: auto;
+    align-self: flex-end;
+    padding: 15px;
+    padding-right: 5%;
+  }
   .title {
     padding: 0;
   }
@@ -80,7 +86,8 @@ export default {
       output: {},
       scale: 0.25,
       formData: new FormData(),
-      target: false // true : front , false: back.
+      target: false, // true : front , false: back.
+      isRegistered: false
     };
   },
   computed: {
@@ -154,7 +161,7 @@ export default {
       let tempEiToken = this.webmmsOptions.EiToken;
       let tempSToken = this.webmmsOptions.EiToken;
       let tempWsurl = config.webConfig.wsurl;
-
+      const vm = this;
       this.mms = webmms({
         wsurl: tempWsurl,
         EiToken: tempEiToken,
@@ -166,6 +173,7 @@ export default {
           result: { DDN, EiToken, SToken }
         } = reply;
         let id = 0;
+        vm.isRegistered = true;
         // document.getElementById('DDN').innerText = `DDN: ${DDN}`
         setCookie("EiToken", EiToken, { expires: 7, path: "" });
         setCookie("SToken", SToken, { expires: 7, path: "" });
@@ -239,9 +247,9 @@ export default {
       function handleSuccess(stream) {
         window.stream = stream; // only to make stream available to console
         vm.video.srcObject = stream;
-        vm.target = !vm.target;
       }
       const deviceTarget = vm.target ? "front" : "back";
+      vm.target = !vm.target;
       //STEP1 列出所有可用裝置
       navigator.mediaDevices.enumerateDevices().then(devices => {
         //STEP2 將影片輸出的裝置塞選出
@@ -299,10 +307,11 @@ export default {
     }
   },
   mounted() {
-    this.peerInit();
-    this.initWebRTC();
+    // this.peerInit();
+    this.video = document.querySelector("video");
+    this.output = document.querySelector("#output");
+    this.mmsInit();
     this.deviceChange();
-    console.log(this.getNowDateTimeString());
   }
 };
 </script>
