@@ -102,7 +102,7 @@ export default {
       output: {},
       scale: 0.25,
       formData: new FormData(),
-      target: false, // true : front , false: back.
+      target: true, // true : front , false: back.
       isRegistered: false
     };
   },
