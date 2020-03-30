@@ -112,8 +112,8 @@ export default {
     this.traAnimeList.forEach(ani => {
       anime(ani);
     });
-    this.updateHig(this.basewidth * (scale == undefined ? 1 : scale));
-    this.updateWid(this.basehight * (scale == undefined ? 1 : scale));
+    this.updateHig(this.basehight * (scale == undefined ? 1 : scale));
+    this.updateWid(this.basewidth * (scale == undefined ? 1 : scale));
   }
 };
 </script>

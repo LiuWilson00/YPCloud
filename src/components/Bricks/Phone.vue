@@ -48,17 +48,17 @@
   }
   .btn {
     width: 10%;
-    top: 155%;
+    top: 88%;
     left: 45%;
   }
 
   .Screen {
     width: 64%;
-    top: 21%;
+    top: 12%;
     left: 19%;
   }
   .HelloWorld {
-    top: 52%;
+    top: 30%;
     left: 32%;
     width: 42%;
   }

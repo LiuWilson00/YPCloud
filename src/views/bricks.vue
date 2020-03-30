@@ -1,30 +1,26 @@
 <template>
   <div class="bricks">
-    <v-card class="mx-auto fixed" width="300">
-      <v-list>
-        <v-list-item @click="brickList.push(Template.fan)">
-          <v-list-item-icon>
-            <v-icon>toys</v-icon>
-          </v-list-item-icon>
+    <v-menu bottom origin="center center" class="fixed" transition="scale-transition">
+      <template v-slot:activator="{ on }">
+        <v-btn color="primary" dark v-on="on">Bricks Tool</v-btn>
+      </template>
+      <v-card class="mx-auto" width="300">
+        <v-list>
+          <v-list-item
+            v-for="item in brickToolbarList"
+            :key="item.name"
+            @click="brickList.push(Template[item.name])"
+            :class="{unEffective:item.Effective}"
+          >
+            <v-list-item-icon>
+              <v-icon>{{item.icon}}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{item.name}}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-menu>
 
-          <v-list-item-title>fan</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="brickList.push(Template.phone)">
-          <v-list-item-icon>
-            <v-icon>stay_primary_portrait</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-title>phone</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="brickList.push(Template.light)">
-          <v-list-item-icon>
-            <v-icon>wb_incandescent</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-title>light</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-card>
     <component
       v-for="(brick,index) in brickList"
       :key="index"
@@ -69,11 +65,18 @@
   border-color: cadetblue;
   border-radius: 10px;
 }
+.unEffective {
+  display: none;
+}
 </style>
 <script>
 import Fan from "@/components/Bricks/Fan.vue";
 import Light from "@/components/Bricks/Light.vue";
 import Phone from "@/components/Bricks/Phone.vue";
+import Traffic from "@/components/Bricks/Traffic.vue";
+import Car from "@/components/Bricks/Car.vue";
+import Girl from "@/components/Bricks/Girl.vue";
+import Boy from "@/components/Bricks/Boy.vue";
 import brickJson from "@/brick.json";
 import vueJsonEditor from "vue-json-editor";
 export default {
@@ -84,25 +87,16 @@ export default {
       activeNum: -1,
       activeModel: {},
       Template: brickJson,
+      brickToolbarList: [
+        { name: "fan", icon: "toys", effective: true },
+        { name: "phone", icon: "phone", effective: true },
+        { name: "traffic", icon: "traffic", effective: true },
+        { name: "light", icon: "wb_incandescent", effective: true },
+        { name: "car", icon: "directions_car", effective: true },
+        { name: "girl", icon: "sentiment_satisfied_alt", effective: true },
+        { name: "boy", icon: "sentiment_satisfied_alt", effective: true }
+      ],
       brickList: [
-        {
-          type: "fan",
-          style: { scale: 0.2083, colorRotate: 30 },
-          locate: { top: 100, left: 100 },
-          animate: [
-            {
-              targets: ".leaf",
-              // rotateZ: 250,
-              rotate: {
-                value: 720,
-                duration: 1800,
-                easing: "linear"
-              },
-              loop: true
-            }
-          ],
-          brickAction: {}
-        },
         {
           type: "fan",
           style: { scale: 0.2083 },
@@ -150,6 +144,73 @@ export default {
           brickAction: {
             HelloWorld: ["bounce", "infinite"],
             phone: ["rubberBand", "infinite", "slower"]
+          }
+        },
+        {
+          type: "traffic",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 100,
+            left: 515
+          },
+          animate: [],
+          brickAction: {
+            traffic: ["Carousel"]
+          }
+        },
+        {
+          type: "car",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 100,
+            left: 615
+          },
+          animate: [],
+          brickAction: {
+            tires_L: ["rubberBand", "infinite"],
+            tires_R: ["rubberBand", "infinite"],
+            base: ["bounce", "infinite"]
+          }
+        },
+        {
+          type: "girl",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 100,
+            left: 715
+          },
+          animate: [],
+          brickAction: {
+            hair: ["pulse", "infinite"],
+            face: ["pulse", "infinite", "slower"],
+            butterfly: ["jello", "infinite"],
+            chothe: ["pulse", "infinite", "delay-1s", "slower"]
+          }
+        },
+        {
+          type: "boy",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 100,
+            left: 815
+          },
+          animate: [],
+          brickAction: {
+            hair: ["pulse", "infinite"],
+            face: ["pulse", "infinite", "slower"],
+            chothe: ["pulse", "infinite", "delay-1s", "slower"]
           }
         }
       ]
@@ -209,6 +270,10 @@ export default {
     fan: Fan,
     light: Light,
     phone: Phone,
+    traffic: Traffic,
+    car: Car,
+    girl: Girl,
+    boy: Boy,
     vueJsonEditor
   }
 };

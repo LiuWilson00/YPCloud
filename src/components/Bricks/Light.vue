@@ -45,7 +45,7 @@
   }
   .wire {
     width: 25%;
-    top: 80%;
+    top: 45%;
     left: 30%;
   }
   .bulb {
@@ -54,7 +54,7 @@
 
   .base {
     width: 50%;
-    top: 115%;
+    top: 63%;
     left: 21%;
   }
   .shin {

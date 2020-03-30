@@ -62,5 +62,110 @@
                 "slower"
             ]
         }
+    },
+    "traffic": {
+        "type": "traffic",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "traffic": [
+                "Carousel"
+            ]
+        }
+    },
+    "car": {
+        "type": "car",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "tires_L": [
+                "rubberBand",
+                "infinite"
+            ],
+            "tires_R": [
+                "rubberBand",
+                "infinite"
+            ],
+            "base": [
+                "bounce",
+                "infinite"
+            ]
+        }
+    },
+    "girl": {
+        "type": "girl",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "hair": [
+                "pulse",
+                "infinite"
+            ],
+            "face": [
+                "pulse",
+                "infinite",
+                "slower"
+            ],
+            "butterfly": [
+                "jello",
+                "infinite"
+            ],
+            "chothe": [
+                "pulse",
+                "infinite",
+                "delay-1s",
+                "slower"
+            ]
+        }
+    },
+    "boy": {
+        "type": "boy",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "hair": [
+                "pulse",
+                "infinite"
+            ],
+            "face": [
+                "pulse",
+                "infinite",
+                "slower"
+            ],
+            "chothe": [
+                "pulse",
+                "infinite",
+                "delay-1s",
+                "slower"
+            ]
+        }
     }
 }

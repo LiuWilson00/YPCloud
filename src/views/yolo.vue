@@ -1,13 +1,11 @@
 <template>
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
-      <div class="toolbar">
-        <img :src="logo" alt="logo" class="logo mt-3" width="50" />
-      </div>
+      
       <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
-      <video :class="{animated:flash ,flash:flash,faster:flash}" autoplay playsinline></video>
+      <video class="mt-3" :class="{animated:flash ,flash:flash,faster:flash}" autoplay playsinline></video>
       <v-icon @click="cachedHandler">cached</v-icon>
-      <v-icon id="capture" @click="captureImage">camera_alt</v-icon>
+      <v-icon :class="{animated:flash ,pulse:flash,faster:flash}" id="capture" @click="captureImage">camera_alt</v-icon>
 
       <div id="output" class="mb-5" max-width="1024"></div>
     </v-card>

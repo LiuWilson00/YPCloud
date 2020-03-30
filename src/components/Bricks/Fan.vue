@@ -38,7 +38,7 @@
   }
   img.leaf {
     width: 80%;
-    top: 15%;
+    top: 10%;
     left: 10%;
     filter: hue-rotate(var(--deg));
   }
@@ -48,7 +48,7 @@
   }
   img.base {
     width: 80%;
-    top: 135%;
+    top: 76%;
     left: 10%;
     filter: hue-rotate(var(--deg));
   }

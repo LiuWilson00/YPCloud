@@ -21,6 +21,10 @@
 import fan from "@/components/Bricks/Fan.vue";
 import light from "@/components/Bricks/Light.vue";
 import phone from "@/components/Bricks/Phone.vue";
+import traffic from "@/components/Bricks/Traffic.vue";
+import car from "@/components/Bricks/Car.vue";
+import girl from "@/components/Bricks/Girl.vue";
+import boy from "@/components/Bricks/Boy.vue";
 import brickJson from "@/brick.json";
 export default {
   name: "brick",
@@ -38,7 +42,11 @@ export default {
   components: {
     fan,
     light,
-    phone
+    phone,
+    traffic,
+    car,
+    girl,
+    boy
   }
 };
 </script>
