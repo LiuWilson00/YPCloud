@@ -77,6 +77,10 @@ import Traffic from "@/components/Bricks/Traffic.vue";
 import Car from "@/components/Bricks/Car.vue";
 import Girl from "@/components/Bricks/Girl.vue";
 import Boy from "@/components/Bricks/Boy.vue";
+import StreetLight from "@/components/Bricks/StreetLight.vue";
+import Drone from "@/components/Bricks/Drone.vue";
+import Refrigerator from "@/components/Bricks/Refrigerator.vue";
+
 import brickJson from "@/brick.json";
 import vueJsonEditor from "vue-json-editor";
 export default {
@@ -94,7 +98,10 @@ export default {
         { name: "light", icon: "wb_incandescent", effective: true },
         { name: "car", icon: "directions_car", effective: true },
         { name: "girl", icon: "sentiment_satisfied_alt", effective: true },
-        { name: "boy", icon: "sentiment_satisfied_alt", effective: true }
+        { name: "boy", icon: "sentiment_satisfied_alt", effective: true },
+        { name: "drone", icon: "send", effective: true },
+        { name: "streetLight", icon: "flare", effective: true },
+        { name: "refrigerator", icon: "kitchen", effective: true }
       ],
       brickList: [
         {
@@ -212,6 +219,74 @@ export default {
             face: ["pulse", "infinite", "slower"],
             chothe: ["pulse", "infinite", "delay-1s", "slower"]
           }
+        },
+        {
+          type: "drone",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 100,
+            left: 915
+          },
+          animate: [
+            {
+              targets: ".propeller",
+              rotateY: 720,
+              easing: "linear",
+              loop: true
+            }
+          ],
+          brickAction: {
+            drone: ["wobble", "infinite", "slower"]
+          }
+        },
+        {
+          type: "streetLight",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 250,
+            left: 215
+          },
+          animate: [],
+          brickAction: {
+            shin: ["heartBeat", "infinite"]
+          }
+        },
+        {
+          type: "refrigerator",
+          style: {
+            scale: 0.2083,
+            colorRotate: 30
+          },
+          locate: {
+            top: 250,
+            left: 315
+          },
+          animate: [
+            {
+              targets: ".doorUp",
+              rotateY: 115,
+              easing: "easeInOutBack",
+              loop: true,
+              duration: 2500,
+              direction: "alternate"
+            },
+            {
+              targets: ".doorDown",
+              rotateY: 115,
+              easing: "easeInOutBack",
+              loop: true,
+              direction: "alternate"
+            }
+          ],
+          brickAction: {
+            food: ["bounce", "infinite"]
+          }
         }
       ]
     };
@@ -274,6 +349,9 @@ export default {
     car: Car,
     girl: Girl,
     boy: Boy,
+    drone: Drone,
+    streetLight: StreetLight,
+    refrigerator: Refrigerator,
     vueJsonEditor
   }
 };

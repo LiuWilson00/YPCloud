@@ -84,7 +84,10 @@
         "type": "car",
         "style": {
             "scale": 0.4,
-            "colorRotate": 30
+            "colorRotate": 30,
+            "left": {
+                "width": "100px"
+            }
         },
         "locate": {
             "top": 100,
@@ -165,6 +168,84 @@
                 "infinite",
                 "delay-1s",
                 "slower"
+            ]
+        }
+    },
+    "drone": {
+        "type": "drone",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [
+            {
+                "targets": ".propeller",
+                "rotateY": 720,
+                "easing": "linear",
+                "loop": true
+            }
+        ],
+        "brickAction": {
+            "drone": [
+                "wobble",
+                "infinite",
+                "slower"
+            ]
+        }
+    },
+    "streetLight": {
+        "type": "streetLight",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [],
+        "brickAction": {
+            "shin": [
+                "heartBeat",
+                "infinite"
+            ]
+        }
+    },
+    "refrigerator": {
+        "type": "refrigerator",
+        "style": {
+            "scale": 0.4,
+            "colorRotate": 30
+        },
+        "locate": {
+            "top": 100,
+            "left": 100
+        },
+        "animate": [
+            {
+                "targets": ".doorUp",
+                "rotateY": 115,
+                "easing": "easeInOutBack",
+                "loop": true,
+                "duration": 2500,
+                "direction": "alternate"
+            },
+            {
+                "targets": ".doorDown",
+                "rotateY": 115,
+                "easing": "easeInOutBack",
+                "loop": true,
+                "direction": "alternate"
+            }
+        ],
+        "brickAction": {
+            "food": [
+                "bounce",
+                "infinite"
             ]
         }
     }

@@ -25,6 +25,9 @@ import traffic from "@/components/Bricks/Traffic.vue";
 import car from "@/components/Bricks/Car.vue";
 import girl from "@/components/Bricks/Girl.vue";
 import boy from "@/components/Bricks/Boy.vue";
+import drone from "@/components/Bricks/Drone.vue";
+import streetLight from "@/components/Bricks/StreetLight.vue";
+import refrigerator from "@/components/Bricks/Refrigerator.vue";
 import brickJson from "@/brick.json";
 export default {
   name: "brick",
@@ -46,7 +49,10 @@ export default {
     traffic,
     car,
     girl,
-    boy
+    boy,
+    drone,
+    streetLight,
+    refrigerator
   }
 };
 </script>
