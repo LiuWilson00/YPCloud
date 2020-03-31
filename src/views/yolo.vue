@@ -1,11 +1,14 @@
 <template>
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
-      
       <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
       <video class="mt-3" :class="{animated:flash ,flash:flash,faster:flash}" autoplay playsinline></video>
       <v-icon @click="cachedHandler">cached</v-icon>
-      <v-icon :class="{animated:flash ,pulse:flash,faster:flash}" id="capture" @click="captureImage">camera_alt</v-icon>
+      <v-icon
+        :class="{animated:flash ,pulse:flash,faster:flash}"
+        id="capture"
+        @click="captureImage"
+      >camera_alt</v-icon>
 
       <div id="output" class="mb-5" max-width="1024"></div>
     </v-card>
@@ -311,7 +314,8 @@ export default {
       const peer = new Peer(query.id, {
         host: "localhost",
         port: 9000,
-        path: "/"
+        path: "/peer/myapp",
+        debug: 3
       });
       // console.log(peer, query);
       peer.on("open", function(id) {
