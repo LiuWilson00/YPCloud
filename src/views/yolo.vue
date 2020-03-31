@@ -1,6 +1,26 @@
 <template>
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
+      <v-menu :close-on-content-click="false">
+        <template v-slot:activator="{ on: menu }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-btn class="menuBtn" color="primary" dark v-on="{ ...tooltip, ...menu }">
+                ai tool
+                <v-icon>build</v-icon>
+              </v-btn>
+            </template>
+            <span>ai tool</span>
+          </v-tooltip>
+        </template>
+        <v-card class="toolMenu">
+          <v-select :items="aiModItems" filled label="AI mod"></v-select>
+          <v-card-subtitle>Hello {{peerID}}! now you can call your friend</v-card-subtitle>
+          <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
+          <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
+          <v-btn small color="primary" @click="submitHandler">submit</v-btn>
+        </v-card>
+      </v-menu>
       <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
       <video
         id="local"
@@ -18,19 +38,19 @@
 
       <video id="remote" autoplay></video>
       <div id="output" class="mb-5" max-width="1024"></div>
-      <v-card-subtitle>{{peerRes}}</v-card-subtitle>
-      <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
-      <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
-      <v-btn small color="primary" @click="submitHandler">submit</v-btn>
     </v-card>
   </div>
 </template>
 <style lang="scss" scoped>
 @import "../../node_modules/animate.css/animate.css";
+.toolMenu {
+  padding: 5%;
+}
 .yolo-card {
   max-width: 1024px;
   display: flex;
   flex-flow: column;
+
   .toolbar {
     flex: auto;
     align-self: flex-end;
@@ -70,6 +90,12 @@
 
 /* md - Medium devices (tablets, 768px and up) */
 @media (min-width: 600px) and (max-width: 991.98px) {
+  .toolMenu {
+    padding: 5%;
+  }
+  .menuBtn {
+    align-self: self-end;
+  }
   .yolo-card {
     flex-flow: row;
   }
@@ -102,9 +128,11 @@ export default {
   name: "yolo",
   data() {
     return {
+      aiModItems: ["Video", "Image"],
       peer: null,
       peerRes: "",
       peerMsg: "",
+      peerID: "",
       peerTarget: "",
       logo,
       imgData: "",
@@ -352,10 +380,10 @@ export default {
       });
       // console.log(peer, query);
       this.peer.on("open", function(id) {
+        vm.peerID = query.id;
         console.log("My peer ID is: " + id);
       });
       this.peer.on("connection", conn => {
-        console.log("123", conn);
         conn.on("open", () => {
           // 有任何人加入這個會話時，就會觸發
           console.log(`${conn.peer} is connected with me`);
