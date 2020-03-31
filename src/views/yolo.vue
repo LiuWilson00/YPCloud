@@ -311,7 +311,7 @@ export default {
       const peer = new Peer(query.id, {
         host: "localhost",
         port: 9000,
-        path: "/peer"
+        path: "/"
       });
       // console.log(peer, query);
       peer.on("open", function(id) {
@@ -341,7 +341,7 @@ export default {
     }
   },
   mounted() {
-    // this.peerInit();
+    this.peerInit();
     this.video = document.querySelector("video");
     this.output = document.querySelector("#output");
     this.mmsInit();

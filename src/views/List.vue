@@ -99,7 +99,7 @@ export default {
     //   this.getUrl("https://git.page/wei/ListJson/weiPage.json"),
     //   parse(document.location.href, true)
     // );
-    test();
+    // test();
     await this.getQuery();
   }
 };
