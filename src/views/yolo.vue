@@ -340,8 +340,7 @@ export default {
       let parseUrl = parse(localUrl, true);
       let query = parseUrl.query;
       this.peer = new Peer(query.id, {
-        host: "192.168.0.114",
-        port: 9100,
+        host: "webrtc.git.page",
         path: "/myapp"
         // debug: 3
       });
