@@ -68,6 +68,12 @@
   }
 }
 
+/* md - Medium devices (tablets, 768px and up) */
+@media (min-width: 600px) and (max-width: 991.98px) {
+  .yolo-card {
+    flex-flow: row;
+  }
+}
 @media only screen and (max-width: 600px) {
   .yolo-card {
     video {

@@ -37,6 +37,7 @@ export default {
       return list;
     },
     traAnimeList() {
+      //為了怕有多項依樣的元件 要將TARGET 用bindex分開,否則動畫會全部變更。
       let list = [];
       const vm = this;
 
@@ -80,7 +81,7 @@ export default {
         const vm = this;
         newVal.forEach(el => anime.remove(`.${this.bIndex}${el.targets}`));
         document
-          .querySelectorAll(`.${this.bIndex}.${bName} *`)
+          .querySelectorAll(`.${this.bIndex} *`)
           .forEach(el => el.removeAttribute("style"));
         this.traAnimeList.forEach(ani => {
           anime(ani);
