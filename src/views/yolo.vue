@@ -2,7 +2,13 @@
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
       <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
-      <video class="mt-3" :class="{animated:flash ,flash:flash,faster:flash}" autoplay playsinline></video>
+      <video
+        id="local"
+        class="mt-3"
+        :class="{animated:flash ,flash:flash,faster:flash}"
+        autoplay
+        playsinline
+      ></video>
       <v-icon @click="cachedHandler">cached</v-icon>
       <v-icon
         :class="{animated:flash ,pulse:flash,faster:flash}"
@@ -10,7 +16,12 @@
         @click="captureImage"
       >camera_alt</v-icon>
 
+      <video id="remote" autoplay></video>
       <div id="output" class="mb-5" max-width="1024"></div>
+      <v-card-subtitle>{{peerRes}}</v-card-subtitle>
+      <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
+      <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
+      <v-btn small color="primary" @click="submitHandler">submit</v-btn>
     </v-card>
   </div>
 </template>
@@ -85,6 +96,10 @@ export default {
   name: "yolo",
   data() {
     return {
+      peer: null,
+      peerRes: "",
+      peerMsg: "",
+      peerTarget: "",
       logo,
       imgData: "",
       flash: false,
@@ -99,6 +114,7 @@ export default {
         SToken: "",
         UToken: ""
       },
+      remoteVideo: {},
       video: {},
       output: {},
       scale: 0.25,
@@ -113,6 +129,17 @@ export default {
     }
   },
   methods: {
+    submitHandler() {
+      const conn = this.peer.connect(this.peerTarget);
+      conn.on("open", () => {
+        conn.send(this.peerMsg);
+      });
+      // console.log(this.video.srcObject);
+      const call = this.peer.call(this.peerTarget, this.video.srcObject);
+      call.on("stream", remoteStream => {
+        this.remoteVideo.srcObject = remoteStream;
+      });
+    },
     getNowDateTimeString() {
       let d = new Date();
       function zeroed(time) {
@@ -308,20 +335,22 @@ export default {
       this.target = !this.target;
     },
     peerInit() {
+      const vm = this;
       let localUrl = window.location.href;
       let parseUrl = parse(localUrl, true);
       let query = parseUrl.query;
-      const peer = new Peer(query.id, {
-        host: "localhost",
-        port: 9000,
-        path: "/peer/myapp",
-        debug: 3
+      this.peer = new Peer(query.id, {
+        host: "192.168.0.114",
+        port: 9100,
+        path: "/myapp"
+        // debug: 3
       });
       // console.log(peer, query);
-      peer.on("open", function(id) {
+      this.peer.on("open", function(id) {
         console.log("My peer ID is: " + id);
       });
-      peer.on("connection", conn => {
+      this.peer.on("connection", conn => {
+        console.log("123", conn);
         conn.on("open", () => {
           // 有任何人加入這個會話時，就會觸發
           console.log(`${conn.peer} is connected with me`);
@@ -329,8 +358,20 @@ export default {
         conn.on("data", function(data) {
           // 當收到訊息時會執行
           console.log(`${conn.peer} : ` + data);
+
+          vm.peerRes = `${conn.peer} : ` + data;
           conn.send("HI I am A");
         });
+      });
+      this.peer.on("call", call => {
+        const startChat = async () => {
+          call.answer(vm.video.srcObject);
+          call.on("stream", stream => {
+            console.log("stream");
+            vm.remoteVideo.srcObject = stream;
+          });
+        };
+        startChat();
       });
     }
   },
@@ -346,7 +387,8 @@ export default {
   },
   mounted() {
     this.peerInit();
-    this.video = document.querySelector("video");
+    this.video = document.querySelector("#local");
+    this.remoteVideo = document.querySelector("#remote");
     this.output = document.querySelector("#output");
     this.mmsInit();
     this.backDeviceChange();
