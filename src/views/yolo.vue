@@ -1,48 +1,155 @@
 <template>
   <div class="yolo">
     <v-card class="mx-auto yolo-card" max-width="1024">
+      <!-- Any setting -->
       <v-menu :close-on-content-click="false">
         <template v-slot:activator="{ on: menu }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <v-btn class="menuBtn" color="primary" dark v-on="{ ...tooltip, ...menu }">
-                ai tool
-                <v-icon>build</v-icon>
+              <v-btn
+                class="mx-2 AItoolBtn"
+                color="grey lighten-1"
+                small
+                dark
+                v-on="{ ...tooltip, ...menu }"
+                v-model="aiMod"
+                fab
+              >
+                <v-icon dark>dehaze</v-icon>
               </v-btn>
             </template>
-            <span>ai tool</span>
+            <span>AI tool</span>
           </v-tooltip>
         </template>
         <v-card class="toolMenu">
-          <v-select :items="aiModItems" filled label="AI mod"></v-select>
+          <v-select :items="aiModItems" v-model="aiMod" filled label="AI model"></v-select>
           <v-card-subtitle>Hello {{peerID}}! now you can call your friend</v-card-subtitle>
           <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
           <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
           <v-btn small color="primary" @click="submitHandler">submit</v-btn>
         </v-card>
       </v-menu>
-      <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
-      <video
-        id="local"
-        class="mt-3"
-        :class="{animated:flash ,flash:flash,faster:flash}"
-        autoplay
-        playsinline
-      ></video>
-      <v-icon @click="cachedHandler">cached</v-icon>
-      <v-icon
-        :class="{animated:flash ,pulse:flash,faster:flash}"
-        id="capture"
-        @click="captureImage"
-      >camera_alt</v-icon>
+      <!-- Any setting  end-->
 
-      <video id="remote" autoplay></video>
+      <!-- MMS Error msg-->
+      <v-card-subtitle v-if="!isRegistered">{{isRegistered?"":"MMS is not registered"}}</v-card-subtitle>
+
+      <!-- MMS Error end-->
+
+      <!-- local Viedo -->
+      <div class="mainArea">
+        <div class="videoList">
+          <video
+            id="local"
+            class="mt-3 videmCam"
+            :class="[{animated:flash ,flash:flash,faster:flash},videoActive=='local'?'active':'']"
+            autoplay
+            playsinline
+            @click="videoActive='local'"
+          ></video>
+          <video
+            id="remote"
+            class="mt-3 videmCam"
+            v-show="calling"
+            :class="videoActive=='remote'?'active':''"
+            @click="videoActive='remote'"
+            autoplay
+          ></video>
+        </div>
+
+        <!-- local Viedo end -->
+
+        <!-- change Lens -->
+        <!-- <v-icon @click="cachedHandler">cached</v-icon> -->
+        <!-- Take picture -->
+        <v-slide-group v-model="actionActive" class="pa-4" show-arrows>
+          <v-slide-item
+            v-for="action in actionList"
+            :key="action.type"
+            v-slot:default="{ active, toggle }"
+          >
+            <v-card
+              :color="active ? 'primary' : 'grey lighten-1'"
+              class="ma-4"
+              height="50"
+              width="50"
+              @click="toggle"
+            >
+              <v-row class="fill-height" align="center" justify="center">
+                <v-scale-transition>
+                  <v-icon color="white" size="25">{{action.icon}}</v-icon>
+                </v-scale-transition>
+              </v-row>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </div>
+      <v-expand-transition>
+        <v-sheet
+          v-if="actionActive != null"
+          class="methodList"
+          color="grey lighten-4"
+          height="200"
+          width="1024"
+          tile
+        >
+          <v-row class="fill-height methodsRow" align="center" justify="center">
+            <v-icon
+              v-for="method in  actionList[actionActive].methods "
+              :key="method.type"
+              :class="{animated:flash ,pulse:flash,faster:flash}"
+              id="capture"
+              @click="actionStart(method.funName)"
+            >{{method.icon}}</v-icon>
+          </v-row>
+        </v-sheet>
+      </v-expand-transition>
+      <!-- Take picture end -->
+
+      <!-- picture area -->
       <div id="output" class="mb-5" max-width="1024"></div>
+      <!-- picture area end -->
+
+      <!--Check peer -->
+      <v-dialog v-model="peerDialog" max-width="290">
+        <v-card class="peerDialog">
+          <v-card-title class="headline animated infinite tada">{{remotePerrID}}</v-card-title>
+
+          <v-card-text>Hello! {{peerID}}, you have a call...</v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn color="green darken-1" text @click="peerDialogClosed(false)">Disagree</v-btn>
+
+            <v-btn color="green darken-1" text @click="peerDialogClosed(true)">Agree</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <!--progress bar -->
+      <v-dialog v-model="callingDialog" max-width="290">
+        <v-card class="peerDialog">
+          <v-progress-circular
+            :rotate="360"
+            :size="100"
+            :width="15"
+            :value="callPercentage"
+            color="blue-grey"
+          >{{ callSec }}</v-progress-circular>
+        </v-card>
+      </v-dialog>
     </v-card>
   </div>
 </template>
 <style lang="scss" scoped>
 @import "../../node_modules/animate.css/animate.css";
+.AItoolBtn {
+  align-self: flex-end;
+}
+.peerDialog {
+  overflow: hidden;
+}
+
 .toolMenu {
   padding: 5%;
 }
@@ -57,6 +164,9 @@
 
     padding-right: 5%;
   }
+  .mainArea {
+    flex-direction: column;
+  }
   .logo {
     margin: 15px;
   }
@@ -67,9 +177,21 @@
   * {
     display: flex;
   }
-  video {
-    border-radius: 10px;
+  .videoList {
+    display: flex;
+
+    .videmCam {
+      flex: 2;
+      flex-basis: 0%;
+      width: 20%;
+      border-radius: 10px;
+      transition: all 0.5s;
+    }
+    .videmCam.active {
+      flex: 3;
+    }
   }
+
   #capture {
     font-size: 3rem;
     margin: 3rem;
@@ -90,14 +212,32 @@
 
 /* md - Medium devices (tablets, 768px and up) */
 @media (min-width: 600px) and (max-width: 991.98px) {
+  .AItoolBtn {
+    align-self: flex-start;
+  }
   .toolMenu {
     padding: 5%;
+  }
+  .mainArea {
+    flex-direction: column;
   }
   .menuBtn {
     align-self: self-end;
   }
   .yolo-card {
     flex-flow: row;
+    #output {
+      border-top-style: none;
+      width: 15%;
+    }
+  }
+  .methodList {
+    width: auto !important;
+    height: 640px !important;
+    flex-direction: row;
+    .methodsRow {
+      flex-direction: column;
+    }
   }
 }
 @media only screen and (max-width: 600px) {
@@ -127,13 +267,62 @@ import { set as setCookie, get as getCookie } from "es-cookie";
 export default {
   name: "yolo",
   data() {
+    const vm = this;
     return {
-      aiModItems: ["Video", "Image"],
+      aiModItems: ["yolov3", "yolov3-tiny"],
+      aiMod: "yolov3-tiny",
+      actionList: [
+        {
+          type: "image",
+          icon: "photo",
+          actionName: "captureImage",
+          methods: [
+            { type: "image", icon: "camera_alt", funName: "captureImage" },
+            {
+              type: "switch_camera",
+              icon: "switch_camera",
+              funName: "cachedHandler"
+            }
+          ]
+        },
+        {
+          type: "video",
+          icon: "voice_chat",
+          actionName: "actionName",
+          methods: [
+            { type: "image", icon: "camera_alt", funName: "captureImage" },
+            {
+              type: "switch_camera",
+              icon: "switch_camera",
+              funName: "cachedHandler"
+            },
+            {
+              type: "movie_creation",
+              icon: "movie_creation",
+              funName: ""
+            }
+          ]
+        }
+      ],
+      videoActive: "local",
+      actionActive: 0,
+      // MMS mod item
+      remotePerrID: "",
       peer: null,
       peerRes: "",
       peerMsg: "",
       peerID: "",
       peerTarget: "",
+      peerDialog: false,
+      callAns: null,
+      //peer var
+      callingDialog: false,
+      callMaxTime: 10000,
+      callWaitTime: 0,
+      callRemote: {},
+      calling: false,
+      callInterval: {},
+      remoteCaller: {},
       logo,
       imgData: "",
       flash: false,
@@ -153,27 +342,51 @@ export default {
       output: {},
       scale: 0.25,
       formData: new FormData(),
-      target: true, // true : front , false: back.
+      target: true, // Lens: true : front , false: back.
       isRegistered: false
     };
   },
   computed: {
     base64Img() {
       return this.imgData.replace("data:image/png;base64,", "");
+    },
+    callPercentage() {
+      return this.callWaitTime / 100;
+    },
+    callSec() {
+      return `${parseInt(this.callWaitTime / 1000)}s`;
     }
   },
   methods: {
+    actionStart(string) {
+      this[string]();
+    },
+    peerDialogClosed(ans) {
+      this.peerDialog = false;
+      this.callAns = ans;
+    },
+    //call peer target
     submitHandler() {
       const conn = this.peer.connect(this.peerTarget);
+      const vm = this;
+      this.callingDialog = true;
       conn.on("open", () => {
         conn.send(this.peerMsg);
       });
       // console.log(this.video.srcObject);
-      const call = this.peer.call(this.peerTarget, this.video.srcObject);
-      call.on("stream", remoteStream => {
+      this.callRemote = this.peer.call(this.peerTarget, this.video.srcObject);
+      this.waitCall();
+      this.callRemote.on("stream", remoteStream => {
+        vm.callingDialog = false;
+        console.log("streaming", remoteStream);
         this.remoteVideo.srcObject = remoteStream;
+        vm.calling = true;
+      });
+      this.callRemote.on("close", err => {
+        console.log("close");
       });
     },
+    //get file name
     getNowDateTimeString() {
       let d = new Date();
       function zeroed(time) {
@@ -185,17 +398,27 @@ export default {
         d.getDate()
       )}${zeroed(d.getHours())}${zeroed(d.getSeconds())}`;
     },
+    waitCall() {
+      const vm = this;
+      this.callInterval = setInterval(() => {
+        vm.callWaitTime = vm.callWaitTime + 1000;
+      }, 1000);
+    },
+    //send MMS
     sendToPiAI(url) {
       const vm = this;
       return new Promise((resolve, reject) => {
         // console.log("sending", this.mms);
         this.mms
           .sendMMS({
-            topic: "ml://tiny-yolo-v3(pytorch)/image_url",
+            topic: "ml://aibot",
             DDN: ">>aibot",
             payload: {
               chatid: "-347773088",
-              img_url: url
+              img_path: "",
+              img_url: url,
+              method: "url",
+              model: this.aiMod
             }
           })
           .then(res => {
@@ -208,6 +431,7 @@ export default {
           });
       });
     },
+    //MMS Buket
     setImgToBuket() {
       return new Promise((resolve, reject) => {
         // console.log("sending", this.mms);
@@ -233,6 +457,7 @@ export default {
           });
       });
     },
+    //INIT MMS service
     mmsInit() {
       this.webmmsOptions.EiToken = getCookie("EiToken") || "";
       this.webmmsOptions.SToken = getCookie("SToken") || "";
@@ -257,6 +482,7 @@ export default {
         setCookie("SToken", SToken, { expires: 7, path: "" });
       });
     },
+    //change to front Lens
     initDeviceChange() {
       const vm = this;
       // this.video = document.querySelector("video");
@@ -360,6 +586,7 @@ export default {
         }
       });
     },
+    //change Lens Function
     cachedHandler() {
       if (this.target) {
         this.initDeviceChange();
@@ -368,19 +595,32 @@ export default {
       }
       this.target = !this.target;
     },
+
+    async waitUserInput() {
+      const timeout = async ms => new Promise(res => setTimeout(res, ms));
+      var waitTime = 0;
+      const maxTime = this.callMaxTime;
+      while (this.peerDialog != false) {
+        waitTime = waitTime + 50;
+        await timeout(50);
+        if (maxTime < waitTime) {
+          this.peerDialog = false;
+        }
+      }
+    },
     peerInit() {
       const vm = this;
-      let localUrl = window.location.href;
-      let parseUrl = parse(localUrl, true);
-      let query = parseUrl.query;
-      this.peer = new Peer(query.id, {
+
+      this.$store.dispatch("INIT_PEER");
+
+      this.peer = new Peer(vm.$store.state.peerId, {
         host: "webrtc.git.page",
         path: "/myapp"
         // debug: 3
       });
       // console.log(peer, query);
       this.peer.on("open", function(id) {
-        vm.peerID = query.id;
+        vm.peerID = vm.$store.state.peerId;
         console.log("My peer ID is: " + id);
       });
       this.peer.on("connection", conn => {
@@ -391,19 +631,29 @@ export default {
         conn.on("data", function(data) {
           // 當收到訊息時會執行
           console.log(`${conn.peer} : ` + data);
-
+          vm.remotePerrID = `${conn.peer} : ` + data;
           vm.peerRes = `${conn.peer} : ` + data;
           conn.send("HI I am A");
         });
       });
       this.peer.on("call", call => {
         const startChat = async () => {
-          call.answer(vm.video.srcObject);
-          call.on("stream", stream => {
-            console.log("stream");
-            vm.remoteVideo.srcObject = stream;
-          });
+          vm.peerDialog = true;
+
+          // vm.remotePerrID = call.peer;
+          await vm.waitUserInput();
+
+          if (vm.callAns) {
+            call.answer(vm.video.srcObject);
+            call.on("stream", stream => {
+              vm.calling = true;
+              vm.remoteVideo.srcObject = stream;
+            });
+          } else {
+            call.close();
+          }
         };
+        vm.remoteCaller = call;
         startChat();
       });
     }
@@ -416,7 +666,37 @@ export default {
           vm.flash = false;
         }, 1000);
       }
+    },
+    callWaitTime: {
+      handler() {
+        if (this.callWaitTime > this.callMaxTime) {
+          clearInterval(this.callInterval);
+
+          this.callWaitTime = 0;
+          this.callingDialog = false;
+          this.callRemote.close();
+        }
+      }
+    },
+    calling: {
+      handler() {
+        if (this.calling) {
+          clearInterval(this.callInterval);
+          this.callWaitTime = 0;
+        } else {
+          if (this.callRemote != {}) {
+            this.callRemote.close();
+            this.remoteCaller.close();
+          }
+        }
+      }
     }
+    // target: {
+    //   handler() {
+    //     if (this.calling) {
+    //     }
+    //   }
+    // }
   },
   mounted() {
     this.peerInit();

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import router from '@/router';
 import axios from 'axios';
 import config from './config';
+import parse from "url-parse"
 
 Vue.use(Vuex);
 
@@ -13,14 +14,15 @@ export default new Vuex.Store({
     maxIdOfUserData: 0,
     formDatas: [],
     maxIdOfFormDatas: 0,
-    mmsMsg:""
+    mmsMsg: "",
+    peerId: ""
 
   },
   getters: {
     getUserNameById: state => {
-      const user=state.userDatas.find(data => { return data.id == id })
+      const user = state.userDatas.find(data => { return data.id == id })
       return user.userName;
-      
+
     }
   },
   mutations: {
@@ -41,6 +43,9 @@ export default new Vuex.Store({
       });
       state.maxIdOfFormDatas = tempId
 
+    },
+    SET_PEER(state, data) {
+      state.peerId = data
     }
   },
   actions: {
@@ -61,6 +66,20 @@ export default new Vuex.Store({
         .then(res => {
           this.commit("SET_FORM_DATAS", res.data)
         })
+    },
+    INIT_PEER() {
+      let localUrl = window.location.href;
+      let parseUrl = parse(localUrl, true);
+      let query = parseUrl.query;
+      if (query.id != undefined) {
+        localStorage.setItem("peerUser", query.id)
+        this.commit("SET_PEER", query.id)
+      } else if (localStorage.getItem("peerUser") != null) {
+        this.commit("SET_PEER", localStorage.getItem("peerUser"))
+      } else {
+        this.commit("SET_PEER", Math.random().toString(36).substr(2))
+      }
+
     }
   }
   // modules : {
