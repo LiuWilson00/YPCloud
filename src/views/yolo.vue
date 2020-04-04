@@ -26,7 +26,7 @@
           <v-card-subtitle>Hello {{peerID}}! now you can call your friend</v-card-subtitle>
           <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
           <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
-          <v-btn small color="primary" @click="submitHandler">submit</v-btn>
+          <v-btn small color="primary" @click="peerSubmitHandler">submit</v-btn>
         </v-card>
       </v-menu>
       <!-- Any setting  end-->
@@ -41,7 +41,7 @@
         <div class="videoList">
           <video
             id="local"
-            class="mt-3 videmCam"
+            class="mt-3 videoCam"
             :class="[{animated:flash ,flash:flash,faster:flash},videoActive=='local'?'active':'']"
             autoplay
             playsinline
@@ -49,7 +49,7 @@
           ></video>
           <video
             id="remote"
-            class="mt-3 videmCam"
+            class="mt-3 videoCam"
             v-show="calling"
             :class="videoActive=='remote'?'active':''"
             @click="videoActive='remote'"
@@ -141,133 +141,22 @@
     </v-card>
   </div>
 </template>
-<style lang="scss" scoped>
-@import "../../node_modules/animate.css/animate.css";
-.AItoolBtn {
-  align-self: flex-end;
-}
-.peerDialog {
-  overflow: hidden;
-}
-
-.toolMenu {
-  padding: 5%;
-}
-.yolo-card {
-  max-width: 1024px;
-  display: flex;
-  flex-flow: column;
-
-  .toolbar {
-    flex: auto;
-    align-self: flex-end;
-
-    padding-right: 5%;
-  }
-  .mainArea {
-    flex-direction: column;
-  }
-  .logo {
-    margin: 15px;
-  }
-  .title {
-    padding: 0;
-  }
-  align-items: center;
-  * {
-    display: flex;
-  }
-  .videoList {
-    display: flex;
-
-    .videmCam {
-      flex: 2;
-      flex-basis: 0%;
-      width: 20%;
-      border-radius: 10px;
-      transition: all 0.5s;
-    }
-    .videmCam.active {
-      flex: 3;
-    }
-  }
-
-  #capture {
-    font-size: 3rem;
-    margin: 3rem;
-  }
-  #output {
-    border-top-style: outset;
-    width: 800px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    .captureImg {
-      display: flex;
-      margin: 5px;
-    }
-  }
-}
-
-/* md - Medium devices (tablets, 768px and up) */
-@media (min-width: 600px) and (max-width: 991.98px) {
-  .AItoolBtn {
-    align-self: flex-start;
-  }
-  .toolMenu {
-    padding: 5%;
-  }
-  .mainArea {
-    flex-direction: column;
-  }
-  .menuBtn {
-    align-self: self-end;
-  }
-  .yolo-card {
-    flex-flow: row;
-    #output {
-      border-top-style: none;
-      width: 15%;
-    }
-  }
-  .methodList {
-    width: auto !important;
-    height: 640px !important;
-    flex-direction: row;
-    .methodsRow {
-      flex-direction: column;
-    }
-  }
-}
-@media only screen and (max-width: 600px) {
-  .yolo-card {
-    video {
-      width: 350px;
-    }
-    #output {
-      width: 350px;
-    }
-  }
-}
+<style lang="scss" src="../styles/AIBotStyle.scss" scoped>
 </style>
 <script>
-import Instascan from "instascan";
-import logo from "@/assets/aibot.png";
 import imports from "@/import.js";
-import webmms from "webmms-client";
-import config from "@/config";
+
 import axios from "axios";
-import Peer from "peerjs";
 import parse from "url-parse";
+import peerComponent from "@/components/AIBot/peer.vue";
+import mmsComponent from "@/components/AIBot/mms.vue";
 // import google from "googleapis";
 
 // const { google } = require("googleapis");
-import { set as setCookie, get as getCookie } from "es-cookie";
+
 export default {
   name: "yolo",
   data() {
-    const vm = this;
     return {
       aiModItems: ["yolov3", "yolov3-tiny"],
       aiMod: "yolov3-tiny",
@@ -306,37 +195,8 @@ export default {
       ],
       videoActive: "local",
       actionActive: 0,
-      // MMS mod item
-      remotePerrID: "",
-      peer: null,
-      peerRes: "",
-      peerMsg: "",
-      peerID: "",
-      peerTarget: "",
-      peerDialog: false,
-      callAns: null,
-      //peer var
-      callingDialog: false,
-      callMaxTime: 10000,
-      callWaitTime: 0,
-      callRemote: {},
-      calling: false,
-      callInterval: {},
-      remoteCaller: {},
-      logo,
       imgData: "",
       flash: false,
-      mms: null,
-      eiInfo: {
-        eiName: "",
-        eiTag: "",
-        ddn: ""
-      },
-      webmmsOptions: {
-        EiToken: "",
-        SToken: "",
-        UToken: ""
-      },
       remoteVideo: {},
       video: {},
       output: {},
@@ -357,35 +217,12 @@ export default {
       return `${parseInt(this.callWaitTime / 1000)}s`;
     }
   },
+  mixins: [peerComponent, mmsComponent],
   methods: {
     actionStart(string) {
       this[string]();
     },
-    peerDialogClosed(ans) {
-      this.peerDialog = false;
-      this.callAns = ans;
-    },
-    //call peer target
-    submitHandler() {
-      const conn = this.peer.connect(this.peerTarget);
-      const vm = this;
-      this.callingDialog = true;
-      conn.on("open", () => {
-        conn.send(this.peerMsg);
-      });
-      // console.log(this.video.srcObject);
-      this.callRemote = this.peer.call(this.peerTarget, this.video.srcObject);
-      this.waitCall();
-      this.callRemote.on("stream", remoteStream => {
-        vm.callingDialog = false;
-        console.log("streaming", remoteStream);
-        this.remoteVideo.srcObject = remoteStream;
-        vm.calling = true;
-      });
-      this.callRemote.on("close", err => {
-        console.log("close");
-      });
-    },
+
     //get file name
     getNowDateTimeString() {
       let d = new Date();
@@ -397,90 +234,6 @@ export default {
       return `${d.getFullYear()}${zeroed(d.getMonth() + 1)}${zeroed(
         d.getDate()
       )}${zeroed(d.getHours())}${zeroed(d.getSeconds())}`;
-    },
-    waitCall() {
-      const vm = this;
-      this.callInterval = setInterval(() => {
-        vm.callWaitTime = vm.callWaitTime + 1000;
-      }, 1000);
-    },
-    //send MMS
-    sendToPiAI(url) {
-      const vm = this;
-      return new Promise((resolve, reject) => {
-        // console.log("sending", this.mms);
-        this.mms
-          .sendMMS({
-            topic: "ml://aibot",
-            DDN: ">>aibot",
-            payload: {
-              chatid: "-347773088",
-              img_path: "",
-              img_url: url,
-              method: "url",
-              model: this.aiMod
-            }
-          })
-          .then(res => {
-            // console.log(res, urt)
-
-            resolve(res);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      });
-    },
-    //MMS Buket
-    setImgToBuket() {
-      return new Promise((resolve, reject) => {
-        // console.log("sending", this.mms);
-        this.mms
-          .callMMS({
-            topic: "xs://config",
-            DDN: ">>sys",
-            func: "set",
-            payload: {
-              catalog: "wt2",
-              idname: "wt2",
-              data: { base64: this.base64Img }
-            }
-          })
-          .then(res => {
-            // console.log(res, urt)
-            // console.log("res", res);
-            resolve(res);
-          })
-          .catch(err => {
-            // console.log("err", err);
-            reject(err);
-          });
-      });
-    },
-    //INIT MMS service
-    mmsInit() {
-      this.webmmsOptions.EiToken = getCookie("EiToken") || "";
-      this.webmmsOptions.SToken = getCookie("SToken") || "";
-      let tempEiToken = this.webmmsOptions.EiToken;
-      let tempSToken = this.webmmsOptions.EiToken;
-      let tempWsurl = config.webConfig.wsurl;
-      const vm = this;
-      this.mms = webmms({
-        wsurl: tempWsurl,
-        EiToken: tempEiToken,
-        SToken: tempSToken
-      });
-      this.mms.on("registered", async reply => {
-        console.log(reply);
-        let {
-          result: { DDN, EiToken, SToken }
-        } = reply;
-        let id = 0;
-        vm.isRegistered = true;
-        // document.getElementById('DDN').innerText = `DDN: ${DDN}`
-        setCookie("EiToken", EiToken, { expires: 7, path: "" });
-        setCookie("SToken", SToken, { expires: 7, path: "" });
-      });
     },
     //change to front Lens
     initDeviceChange() {
@@ -537,16 +290,6 @@ export default {
           });
       }, "image/png");
       output.prepend(img);
-      // this.sendScreenshot(img);
-      // this.sendToPiAI().then(res => {
-      //   console.log(res);
-      // });
-    },
-
-    sendScreenshot(img) {
-      this.formData.append("yoloImg", img);
-
-      axios.post("http://localhost:3000/upload-yolo", this.formData);
     },
     backDeviceChange() {
       const vm = this;
@@ -607,55 +350,6 @@ export default {
           this.peerDialog = false;
         }
       }
-    },
-    peerInit() {
-      const vm = this;
-
-      this.$store.dispatch("INIT_PEER");
-
-      this.peer = new Peer(vm.$store.state.peerId, {
-        host: "webrtc.git.page",
-        path: "/myapp"
-        // debug: 3
-      });
-      // console.log(peer, query);
-      this.peer.on("open", function(id) {
-        vm.peerID = vm.$store.state.peerId;
-        console.log("My peer ID is: " + id);
-      });
-      this.peer.on("connection", conn => {
-        conn.on("open", () => {
-          // 有任何人加入這個會話時，就會觸發
-          console.log(`${conn.peer} is connected with me`);
-        });
-        conn.on("data", function(data) {
-          // 當收到訊息時會執行
-          console.log(`${conn.peer} : ` + data);
-          vm.remotePerrID = `${conn.peer} : ` + data;
-          vm.peerRes = `${conn.peer} : ` + data;
-          conn.send("HI I am A");
-        });
-      });
-      this.peer.on("call", call => {
-        const startChat = async () => {
-          vm.peerDialog = true;
-
-          // vm.remotePerrID = call.peer;
-          await vm.waitUserInput();
-
-          if (vm.callAns) {
-            call.answer(vm.video.srcObject);
-            call.on("stream", stream => {
-              vm.calling = true;
-              vm.remoteVideo.srcObject = stream;
-            });
-          } else {
-            call.close();
-          }
-        };
-        vm.remoteCaller = call;
-        startChat();
-      });
     }
   },
   watch: {
@@ -666,37 +360,7 @@ export default {
           vm.flash = false;
         }, 1000);
       }
-    },
-    callWaitTime: {
-      handler() {
-        if (this.callWaitTime > this.callMaxTime) {
-          clearInterval(this.callInterval);
-
-          this.callWaitTime = 0;
-          this.callingDialog = false;
-          this.callRemote.close();
-        }
-      }
-    },
-    calling: {
-      handler() {
-        if (this.calling) {
-          clearInterval(this.callInterval);
-          this.callWaitTime = 0;
-        } else {
-          if (this.callRemote != {}) {
-            this.callRemote.close();
-            this.remoteCaller.close();
-          }
-        }
-      }
     }
-    // target: {
-    //   handler() {
-    //     if (this.calling) {
-    //     }
-    //   }
-    // }
   },
   mounted() {
     this.peerInit();

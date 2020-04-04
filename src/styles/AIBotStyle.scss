@@ -1,0 +1,142 @@
+@import "../../node_modules/animate.css/animate.css";
+
+.AItoolBtn {
+    align-self: flex-end;
+}
+
+.peerDialog {
+    overflow: hidden;
+}
+
+.toolMenu {
+    padding: 5%;
+}
+
+.yolo-card {
+    max-width: 1024px;
+    display: flex;
+    flex-flow: column;
+
+    .toolbar {
+        flex: auto;
+        align-self: flex-end;
+
+        padding-right: 5%;
+    }
+
+    .mainArea {
+        flex-direction: column;
+    }
+
+    .logo {
+        margin: 15px;
+    }
+
+    .title {
+        padding: 0;
+    }
+
+    align-items: center;
+
+    * {
+        display: flex;
+    }
+
+    .videoList {
+        display: flex;
+
+        .videmCam {
+            flex: 2;
+            flex-basis: 0%;
+            width: 20%;
+            border-radius: 10px;
+            transition: all 0.5s;
+        }
+
+        .videmCam.active {
+            flex: 3;
+        }
+    }
+
+    #capture {
+        font-size: 3rem;
+        margin: 3rem;
+    }
+
+    #output {
+        border-top-style: outset;
+        width: 800px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+
+        .captureImg {
+            display: flex;
+            margin: 5px;
+        }
+    }
+}
+
+/* md - Medium devices (tablets, 768px and up) */
+@media (min-width: 600px) and (max-width: 991.98px) {
+    .AItoolBtn {
+        align-self: flex-start;
+    }
+
+    .toolMenu {
+        padding: 5%;
+    }
+
+    .mainArea {
+        flex-direction: column;
+    }
+
+    .menuBtn {
+        align-self: self-end;
+    }
+
+    .yolo-card {
+        flex-flow: row;
+
+        #output {
+            border-top-style: none;
+            width: 15%;
+        }
+    }
+
+    .methodList {
+        width: auto !important;
+        height: 640px !important;
+        flex-direction: row;
+
+        .methodsRow {
+            flex-direction: column;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .yolo-card {
+        .videoList {
+            display: flex;
+
+            .videoCam {
+                flex: 2;
+                flex-basis: 0%;
+                width: 20%;
+                border-radius: 30px;
+                transition: all 0.5s;
+                max-height: 300px;
+            }
+
+            .videoCam.active {
+                flex: 3;
+            }
+        }
+
+        #output {
+            width: 350px;
+        }
+    }
+}
