@@ -1,21 +1,22 @@
 <template>
   <div class="yolo">
-    <v-card class="mx-auto yolo-card" max-width="1024">
+    <v-card class="yolo-card mx-auto">
+      <!-- local Viedo -->
+      <video
+        id="local"
+        class="videoCam"
+        :class="[{animated:flash ,flash:flash,faster:flash},videoActive=='local'?'active':'']"
+        autoplay
+        playsinline
+        @click="videoActive='local'"
+      ></video>
       <!-- Any setting -->
       <v-menu :close-on-content-click="false">
         <template v-slot:activator="{ on: menu }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on: tooltip }">
-              <v-btn
-                class="mx-2 AItoolBtn"
-                color="grey lighten-1"
-                small
-                dark
-                v-on="{ ...tooltip, ...menu }"
-                v-model="aiMod"
-                fab
-              >
-                <v-icon dark>dehaze</v-icon>
+              <v-btn class="AItoolBtn" icon v-on="{ ...tooltip, ...menu }" v-model="aiMod">
+                <v-icon dark>more_vert</v-icon>
               </v-btn>
             </template>
             <span>AI tool</span>
@@ -23,10 +24,11 @@
         </template>
         <v-card class="toolMenu">
           <v-select :items="aiModItems" v-model="aiMod" filled label="AI model"></v-select>
-          <v-card-subtitle>Hello {{peerID}}  now you can call your friend</v-card-subtitle>
+          <v-card-subtitle>Hello {{peerID}} now you can call your friend</v-card-subtitle>
           <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
           <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
           <v-btn small color="primary" @click="peerSubmitHandler">submit</v-btn>
+          <div id="output" class="mb-5" max-width="1024"></div>
         </v-card>
       </v-menu>
       <!-- Any setting  end-->
@@ -36,17 +38,9 @@
 
       <!-- MMS Error end-->
 
-      <!-- local Viedo -->
+      <!-- remote Viedo end -->
       <div class="mainArea">
         <div class="videoList">
-          <video
-            id="local"
-            class="mt-3 videoCam"
-            :class="[{animated:flash ,flash:flash,faster:flash},videoActive=='local'?'active':'']"
-            autoplay
-            playsinline
-            @click="videoActive='local'"
-          ></video>
           <video
             id="remote"
             class="mt-3 videoCam"
@@ -57,42 +51,44 @@
           ></video>
         </div>
 
-        <!-- local Viedo end -->
+        <!-- remote Viedo end -->
 
         <!-- change Lens -->
         <!-- <v-icon @click="cachedHandler">cached</v-icon> -->
         <!-- Take picture -->
-        <v-slide-group v-model="actionActive" class="pa-4" show-arrows>
-          <v-slide-item
-            v-for="action in actionList"
-            :key="action.type"
-            v-slot:default="{ active, toggle }"
-          >
-            <v-card
-              :color="active ? 'primary' : 'grey lighten-1'"
-              class="ma-4"
-              height="50"
-              width="50"
-              @click="toggle"
-            >
-              <v-row class="fill-height" align="center" justify="center">
-                <v-scale-transition>
-                  <v-icon color="white" size="25">{{action.icon}}</v-icon>
-                </v-scale-transition>
-              </v-row>
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
       </div>
-      <v-expand-transition>
-        <v-sheet
-          v-if="actionActive != null"
-          class="methodList"
-          color="grey lighten-4"
-          height="200"
-          width="1024"
-          tile
+      <v-slide-group class="pa-4 slideArea" v-model="actionActive" show-arrows>
+        <v-slide-item
+          v-for="action in actionList"
+          :key="action.type"
+          v-slot:default="{ active, toggle }"
         >
+          <!-- <v-card
+            :color="active ? 'primary' : 'grey lighten-1'"
+            class="ma-4"
+            height="50"
+            width="50"
+            @click="toggle"
+          >-->
+          <!-- <v-row class="fill-height" align="center" justify="center">
+          <v-scale-transition>-->
+          <v-btn
+            :color="active ? 'primary' : 'grey lighten-1'"
+            @click="toggle"
+            class="ma-4"
+            fab
+            small
+            dark
+          >
+            <v-icon color="white" size="25">{{action.icon}}</v-icon>
+          </v-btn>
+          <!-- </v-scale-transition>
+          </v-row>-->
+          <!-- </v-card> -->
+        </v-slide-item>
+      </v-slide-group>
+      <v-expand-transition>
+        <v-sheet v-if="actionActive != null" class="methodList" color="transparent" tile>
           <v-row class="fill-height methodsRow" align="center" justify="center">
             <v-icon
               v-for="method in  actionList[actionActive].methods "
@@ -107,7 +103,7 @@
       <!-- Take picture end -->
 
       <!-- picture area -->
-      <div id="output" class="mb-5" max-width="1024"></div>
+
       <!-- picture area end -->
 
       <!--Check peer -->
@@ -350,6 +346,21 @@ export default {
           this.peerDialog = false;
         }
       }
+    },
+    resizeScreen() {
+      console.log("change");
+      document
+        .querySelector(".yolo")
+        .style.setProperty(
+          "--screenWidth",
+          `${document.documentElement.clientWidth}px`
+        );
+      document
+        .querySelector(".yolo")
+        .style.setProperty(
+          "--screenHeight",
+          `${document.documentElement.clientHeight}px`
+        );
     }
   },
   watch: {
@@ -369,6 +380,8 @@ export default {
     this.output = document.querySelector("#output");
     this.mmsInit();
     this.backDeviceChange();
+    this.resizeScreen();
+    window.onresize = this.resizeScreen;
   }
 };
 </script>

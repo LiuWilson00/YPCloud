@@ -2,6 +2,7 @@
 
 .AItoolBtn {
     align-self: flex-end;
+    position: absolute;
 }
 
 .peerDialog {
@@ -12,10 +13,32 @@
     padding: 5%;
 }
 
+.yolo {
+    --screenWidth: 768px;
+    --screenHeight: 1024px;
+    width: var(--screenWidth);
+    height: var(--screenHeight);
+
+}
+
+#local {
+    width: 100%;
+}
+
 .yolo-card {
     max-width: 1024px;
     display: flex;
     flex-flow: column;
+
+
+    .slideArea {
+        position: absolute;
+        top: 90%;
+
+        opacity: 0.6;
+    }
+
+
 
     .toolbar {
         flex: auto;
@@ -40,6 +63,7 @@
 
     * {
         display: flex;
+
     }
 
     .videoList {
@@ -60,7 +84,7 @@
 
     #capture {
         font-size: 3rem;
-        margin: 3rem;
+
     }
 
     #output {
@@ -75,6 +99,11 @@
             display: flex;
             margin: 5px;
         }
+    }
+
+    .methodList {
+        position: absolute;
+        top: calc(90% - 16px);
     }
 }
 
@@ -103,11 +132,22 @@
             border-top-style: none;
             width: 15%;
         }
+
+        .slideArea {
+            position: absolute;
+            top: 80%;
+
+            opacity: 0.6;
+        }
+
+
     }
 
     .methodList {
         width: auto !important;
-        height: 640px !important;
+        top: calc(80% - 16px);
+        position: absolute;
+        // height: 640px !important;
         flex-direction: row;
 
         .methodsRow {
@@ -133,6 +173,20 @@
             .videoCam.active {
                 flex: 3;
             }
+
+
+        }
+
+        .slideArea {
+            position: absolute;
+            top: 70%;
+
+            opacity: 0.6;
+        }
+
+        .methodList {
+            position: absolute;
+            top: calc(70% - 16px);
         }
 
         #output {
