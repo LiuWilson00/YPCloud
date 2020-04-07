@@ -14,10 +14,12 @@
 }
 
 .yolo {
-    --screenWidth: 768px;
-    --screenHeight: 1024px;
+    --screenWidth: 1024px;
+    --screenHeight: 768px;
+    --videoHeight: 768px;
     width: var(--screenWidth);
     height: var(--screenHeight);
+
 
 }
 
@@ -30,12 +32,35 @@
     display: flex;
     flex-flow: column;
 
+    .v-slide-group__content {
+        align-items: center;
+        justify-content: center;
+    }
 
     .slideArea {
-        position: absolute;
-        top: 90%;
 
-        opacity: 0.6;
+        width: 100%;
+        min-height: 88px;
+
+        background-color: #424242;
+
+        * {
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .v-slide-group__wrapper {
+
+
+            .v-slide-group__content {
+
+                .v-btn {
+                    transition: all 0.3s;
+                }
+            }
+        }
+
     }
 
 
@@ -103,7 +128,15 @@
 
     .methodList {
         position: absolute;
-        top: calc(90% - 16px);
+        top: calc(var(--videoHeight) - 50px);
+
+        i {
+            opacity: 0.2;
+        }
+
+        i:hover {
+            opacity: 1;
+        }
     }
 }
 
@@ -126,7 +159,7 @@
     }
 
     .yolo-card {
-        flex-flow: row;
+
 
         #output {
             border-top-style: none;
@@ -138,27 +171,19 @@
             }
         }
 
-        .slideArea {
+
+        .methodList {
+            width: auto !important;
+
             position: absolute;
-            top: 80%;
+            // height: 640px !important;
 
-            opacity: 0.6;
+            .methodsRow {}
         }
-
 
     }
 
-    .methodList {
-        width: auto !important;
-        top: calc(80% - 16px);
-        position: absolute;
-        // height: 640px !important;
-        flex-direction: row;
 
-        .methodsRow {
-            flex-direction: column;
-        }
-    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -182,16 +207,11 @@
 
         }
 
-        .slideArea {
-            position: absolute;
-            top: 70%;
 
-            opacity: 0.6;
-        }
 
         .methodList {
             position: absolute;
-            top: calc(70% - 16px);
+
         }
 
         #output {

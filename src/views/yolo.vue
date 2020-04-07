@@ -65,8 +65,9 @@
         <!-- <v-icon @click="cachedHandler">cached</v-icon> -->
         <!-- Take picture -->
       </div>
-      <v-slide-group class="pa-4 slideArea" v-model="actionActive" show-arrows>
+      <v-slide-group class="pa-4 slideArea align-center" v-model="actionActive" show-arrows>
         <v-slide-item
+          class="align-self-center"
           v-for="action in actionList"
           :key="action.type"
           v-slot:default="{ active, toggle }"
@@ -81,14 +82,15 @@
           <!-- <v-row class="fill-height" align="center" justify="center">
           <v-scale-transition>-->
           <v-btn
-            :color="active ? 'primary' : 'grey lighten-1'"
+            :color="active ? 'grey lighten-4' : 'grey lighten-2'"
             @click="toggle"
             class="ma-4"
             fab
-            small
+            :small="!active"
+            :medium="active"
             dark
           >
-            <v-icon color="white" size="25">{{action.icon}}</v-icon>
+            <v-icon color="grey darken-3" size="25">{{action.icon}}</v-icon>
           </v-btn>
           <!-- </v-scale-transition>
           </v-row>-->
@@ -370,6 +372,12 @@ export default {
         .style.setProperty(
           "--screenHeight",
           `${document.documentElement.clientHeight}px`
+        );
+      document
+        .querySelector(".yolo")
+        .style.setProperty(
+          "--videoHeight",
+          `${document.querySelector("video#local").offsetHeight}px`
         );
     }
   },

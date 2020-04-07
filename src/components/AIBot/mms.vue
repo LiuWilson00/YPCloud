@@ -40,6 +40,7 @@ export default {
         } = reply;
         let id = 0;
         vm.isRegistered = true;
+        vm.resizeScreen();
         // document.getElementById('DDN').innerText = `DDN: ${DDN}`
         setCookie("EiToken", EiToken, { expires: 7, path: "" });
         setCookie("SToken", SToken, { expires: 7, path: "" });
