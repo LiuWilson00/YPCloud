@@ -23,7 +23,7 @@
         </template>
         <v-card class="toolMenu">
           <v-select :items="aiModItems" v-model="aiMod" filled label="AI model"></v-select>
-          <v-card-subtitle>Hello {{peerID}}! now you can call your friend</v-card-subtitle>
+          <v-card-subtitle>Hello {{peerID}}  now you can call your friend</v-card-subtitle>
           <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
           <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
           <v-btn small color="primary" @click="peerSubmitHandler">submit</v-btn>
