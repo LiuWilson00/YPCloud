@@ -28,7 +28,15 @@
           <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
           <v-text-field label="target" v-model="peerTarget" hide-details="auto"></v-text-field>
           <v-btn small color="primary" @click="peerSubmitHandler">submit</v-btn>
-          <div id="output" class="mb-5" max-width="1024"></div>
+          <div id="output" class="mb-5" max-width="1024">
+            <img
+              v-for="(img,index) in imgList"
+              :key="index"
+              :src="img"
+              style="width:100px"
+              alt="img"
+            />
+          </div>
         </v-card>
       </v-menu>
       <!-- Any setting  end-->
@@ -189,6 +197,7 @@ export default {
           ]
         }
       ],
+      imgList: [],
       videoActive: "local",
       actionActive: 0,
       imgData: "",
@@ -264,13 +273,14 @@ export default {
       canvas
         .getContext("2d")
         .drawImage(this.video, 0, 0, canvas.width, canvas.height);
-      var img = document.createElement("img");
+      // var img = document.createElement("img");
 
-      img.style.margin = "5px";
-      img.style.display = "flex";
-      img.style.borderRadius = "3px";
-      img.style.width = "100px";
-      img.src = canvas.toDataURL();
+      // img.style.margin = "5px";
+      // img.style.display = "flex";
+      // img.style.borderRadius = "3px";
+      // img.style.width = "100px";
+      // img.src = canvas.toDataURL();
+      this.imgList.push(canvas.toDataURL("image/png"));
       this.imgData = canvas.toDataURL("image/png");
       canvas.toBlob(b => {
         var fileName = vm.getNowDateTimeString();

@@ -131,6 +131,11 @@
         #output {
             border-top-style: none;
             width: 15%;
+
+            img {
+                width: 100px;
+                margin: 5px;
+            }
         }
 
         .slideArea {

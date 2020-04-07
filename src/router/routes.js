@@ -163,14 +163,14 @@ const routes = [
 
   },
   {
-    path: '/aibot',
-    name: 'aibot',
+    path: '/aicam',
+    name: 'aicam',
     components: {
       default: yolo,
       nav: Header
     },
     meta: {
-      title: 'AiBot',
+      title: 'Aicam',
       icon: aibot
     }
   }
