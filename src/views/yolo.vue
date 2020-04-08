@@ -30,7 +30,7 @@
             <span>AI tool</span>
           </v-tooltip>
         </template>
-        <v-card class="toolMenu">
+        <v-card class="toolMenu" z-index="0">
           <v-select :items="aiModItems" v-model="aiMod" filled label="AI model"></v-select>
           <v-card-subtitle>Hello {{peerID}} now you can call your friend</v-card-subtitle>
           <v-text-field label="msg" v-model="peerMsg" hide-details="auto"></v-text-field>
@@ -109,7 +109,7 @@
 
       <!--Check peer -->
       <v-dialog v-model="peerDialog" max-width="290">
-        <v-card class="peerDialog">
+        <v-card class="peerDialog" z-index="30">
           <v-card-title class="headline animated infinite tada">{{remotePerrID}}</v-card-title>
 
           <v-card-text>Hello! {{peerID}}, you have a call...</v-card-text>
@@ -125,7 +125,7 @@
       </v-dialog>
       <!--progress bar -->
       <v-dialog v-model="callingDialog" max-width="290">
-        <v-card class="peerDialog">
+        <v-card class="peerDialog" z-index="30">
           <v-progress-circular
             :rotate="360"
             :size="100"
