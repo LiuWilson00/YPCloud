@@ -245,6 +245,7 @@ export default {
         window.stream = stream; // only to make stream available to console
         vm.video.srcObject = stream;
         console.log(stream);
+        vm.resizeScreen();
       }
 
       function handleError(error) {
@@ -296,6 +297,7 @@ export default {
       function handleSuccess(stream) {
         window.stream = stream; // only to make stream available to console
         vm.video.srcObject = stream;
+        vm.resizeScreen();
       }
 
       //STEP1 列出所有可用裝置
