@@ -13,6 +13,7 @@ const runStore = () => import('@/views/RunStore.vue');
 const bricks = () => import('@/views/bricks.vue');
 const yolo = () => import('@/views/yolo.vue');
 const bricksChildren = () => import('@/views/BricksChildren.vue');
+const stream = () => import('@/views/stream.vue');
 
 
 import aibot from "@/assets/aibot.png"
@@ -171,6 +172,18 @@ const routes = [
     },
     meta: {
       title: 'Aicam',
+      icon: aibot
+    }
+  },
+  {
+    path: '/stream',
+    name: 'stream',
+    components: {
+      default: stream,
+      nav: Header
+    },
+    meta: {
+      title: 'stream',
       icon: aibot
     }
   }
