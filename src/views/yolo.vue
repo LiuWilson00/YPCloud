@@ -297,7 +297,7 @@ export default {
       function handleSuccess(stream) {
         window.stream = stream; // only to make stream available to console
         vm.video.srcObject = stream;
-        vm.resizeScreen();
+        // setTimeout(vm.resizeScreen(), 1000);
       }
 
       //STEP1 列出所有可用裝置
@@ -392,6 +392,7 @@ export default {
     this.mmsInit();
     this.backDeviceChange();
     this.resizeScreen();
+    this.video.onresize = this.resizeScreen;
     window.onresize = this.resizeScreen;
   }
 };
