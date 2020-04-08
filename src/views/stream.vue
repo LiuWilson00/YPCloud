@@ -6,12 +6,15 @@
     <video width="300px" autoplay playsinline></video>
     <p>target stream video</p>
 
+    <v-select v-model="wsconfig" :items="items" label="ws config"></v-select>
+
     <img :src="imgFrame" alt />
     <v-text-field v-model="targetId" label="targetId"></v-text-field>
     <v-text-field v-model="msg" label="msg"></v-text-field>
     <p>test</p>
     <v-btn @click="send">send1</v-btn>
     <v-btn @click="send2">send2</v-btn>
+    <v-btn @click="wstream">re connect</v-btn>
     <p>stream</p>
     <v-btn color="blue" @click="startStream">startStream</v-btn>
     <v-btn color="blue" @click="sendOne">send one</v-btn>
@@ -38,7 +41,9 @@ export default {
       video: {},
       ws: {},
       imgFrame: "",
-      interval: {}
+      interval: {},
+      items: ["ws://localhost:3000", "wss://webapi.git.page/"],
+      wsconfig: "ws://localhost:3000"
     };
   },
   mounted: function() {
@@ -61,7 +66,7 @@ export default {
       return true;
     },
     wstream: function() {
-      this.ws = new WebSocket("ws://localhost:3000/users");
+      this.ws = new WebSocket("ws://localhost:3000/");
 
       //開啟後執行的動作，指定一個 function 會在連結 WebSocket 後執行
       this.ws.onopen = () => {
