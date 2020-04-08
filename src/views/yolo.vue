@@ -142,7 +142,7 @@
 </style>
 <script>
 import imports from "@/import.js";
-
+import config from "@/config";
 import axios from "axios";
 import parse from "url-parse";
 import peerComponent from "@/components/AIBot/peer.vue";
@@ -289,7 +289,7 @@ export default {
             );
           });
       }, "image/png");
-      output.prepend(img);
+      // output.prepend(img);
     },
     backDeviceChange() {
       const vm = this;
