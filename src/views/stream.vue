@@ -66,7 +66,7 @@ export default {
       return true;
     },
     wstream: function() {
-      this.ws = new WebSocket("ws://localhost:3000/");
+      this.ws = new WebSocket(this.wsconfig);
 
       //開啟後執行的動作，指定一個 function 會在連結 WebSocket 後執行
       this.ws.onopen = () => {
