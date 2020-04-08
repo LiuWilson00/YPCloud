@@ -10,13 +10,21 @@
         playsinline
         @click="videoActive='local'"
       ></video>
+      <video
+        id="remote"
+        class="videoCam"
+        v-show="calling"
+        :class="videoActive=='remote'?'active':''"
+        @click="videoActive='remote'"
+        autoplay
+      ></video>
       <!-- Any setting -->
       <v-menu :close-on-content-click="false">
         <template v-slot:activator="{ on: menu }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on: tooltip }">
               <v-btn class="AItoolBtn" icon v-on="{ ...tooltip, ...menu }" v-model="aiMod">
-                <v-icon dark>more_vert</v-icon>
+                <v-icon color="white">more_vert</v-icon>
               </v-btn>
             </template>
             <span>AI tool</span>
@@ -47,24 +55,7 @@
       <!-- MMS Error end-->
 
       <!-- remote Viedo end -->
-      <div class="mainArea">
-        <div class="videoList">
-          <video
-            id="remote"
-            class="mt-3 videoCam"
-            v-show="calling"
-            :class="videoActive=='remote'?'active':''"
-            @click="videoActive='remote'"
-            autoplay
-          ></video>
-        </div>
 
-        <!-- remote Viedo end -->
-
-        <!-- change Lens -->
-        <!-- <v-icon @click="cachedHandler">cached</v-icon> -->
-        <!-- Take picture -->
-      </div>
       <v-slide-group class="pa-4 slideArea align-center" v-model="actionActive" show-arrows>
         <v-slide-item
           class="align-self-center"
