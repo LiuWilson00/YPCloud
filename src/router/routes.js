@@ -14,7 +14,7 @@ const bricks = () => import('@/views/bricks.vue');
 const yolo = () => import('@/views/yolo.vue');
 const bricksChildren = () => import('@/views/BricksChildren.vue');
 const stream = () => import('@/views/stream.vue');
-
+const pullStream = () => import('@/views/pullstream.vue');
 
 import aibot from "@/assets/aibot.png"
 import Header from '../views/Header.vue'
@@ -185,6 +185,17 @@ const routes = [
     meta: {
       title: 'stream',
       icon: aibot
+    }
+  },
+  {
+    path: '/pull',
+    name: 'pull',
+    components: {
+      default: pullStream,
+      nav: Header
+    },
+    meta: {
+      title: 'pull'
     }
   }
 ];

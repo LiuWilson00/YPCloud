@@ -42,8 +42,8 @@ export default {
       ws: {},
       imgFrame: "",
       interval: {},
-      items: ["ws://localhost:3000", "wss://webapi.git.page/"],
-      wsconfig: "ws://localhost:3000"
+      items: ["ws://localhost:9000/pushStream", "wss://webapi.git.page/pushStream"],
+      wsconfig: "ws://localhost:9000/pushStream"
     };
   },
   mounted: function() {

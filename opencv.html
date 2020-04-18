@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/gh/wallat/compiled-opencvjs/v4.2.0/opencv.js" async onload="onOpenCvReady();"
+        type="text/javascript"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Hello OpenCV.js</h2>
+    <video id="videoInput"></video>
+    <p id="status">OpenCV.js is loading...</p>
+    <img id="imageSrc" alt="No Image" />
+    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+    </div>
+    <div class="inputoutput">
+        <canvas id="canvasOutput"></canvas>
+        <div class="caption">canvasOutput</div>
+    </div>
+</body>
+<script>
+
+
+
+
+    let imgElement = document.getElementById('imageSrc');
+    let inputElement = document.getElementById('fileInput');
+    inputElement.addEventListener('change', (e) => {
+        imgElement.src = URL.createObjectURL(e.target.files[0]);
+    }, false);
+    imgElement.onload = function () {
+        let mat = cv.imread(imgElement);
+        cv.imshow('canvasOutput', mat);
+        mat.delete();
+    };
+    function onOpenCvReady() {
+        document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+        let video = document.getElementById('videoInput');
+        let cap = new cv.VideoCapture("rtsp://jujue2:0277134800@6d16.ypcloud.com:6129/rtspjpeg480p");
+
+
+    }
+</script>
+
+</html>

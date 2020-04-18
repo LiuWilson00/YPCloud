@@ -64,7 +64,7 @@ export default {
             }
           })
           .then(res => {
-            // console.log(res, urt)
+            console.log(res, urt)
 
             resolve(res);
           })
