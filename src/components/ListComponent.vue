@@ -1,5 +1,11 @@
 <template>
-  <v-data-table :headers="headers" :items="data" :items-per-page="10" class="elevation-1">
+  <v-data-table
+    hide-default-footer
+    :headers="headers"
+    :items="data"
+    :items-per-page="999"
+    class="elevation-1"
+  >
     <template v-slot:item.status="{ item }">
       <v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
     </template>
@@ -15,7 +21,7 @@ export default {
   data() {
     return {
       // headers:[],data:[]
-      };
+    };
   },
   props: ["headers", "data"],
 
@@ -28,7 +34,6 @@ export default {
     //   .catch(err => {
     //     console(err);
     //   });
-
     // axios
     //   .get("/wei/ListHeaders/PageHeader2.json")
     //   .then(res => {

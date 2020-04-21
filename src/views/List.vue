@@ -7,7 +7,6 @@
 import ListComponent from "../components/ListComponent";
 import parse from "url-parse";
 import axios from "axios";
-import test from "../import";
 
 export default {
   name: "list",
@@ -28,12 +27,14 @@ export default {
       var url = document.location.href;
       var parseUrl = parse(url, true);
       var { query } = parseUrl;
-
+      console.log(parseUrl, query.brick == undefined);
       if (query.url != undefined && query.url != "") {
         this.getJsonFromUrl(query.url);
         return;
       } else if (query.json != undefined && query.json != "") {
         this.getJsonFromParams(JSON.parse(query.json));
+      } else if (query.brick != undefined) {
+        this.getJsonAction("brick");
       } else {
         this.getJsonDefaul();
       }
@@ -87,6 +88,16 @@ export default {
         vm.header = res.data;
       });
       await axios.get("/wei/ListDataSet/PageData.json").then(res => {
+        vm.listData = res.data;
+      });
+      await console.log(vm.header, vm.listData);
+    },
+    getJsonAction: async function() {
+      const vm = this;
+      await axios.get("/wei/ListHeaders/BrickHeader.json").then(res => {
+        vm.header = res.data;
+      });
+      await axios.get("/wei/ListDataSet/BrickData.json").then(res => {
         vm.listData = res.data;
       });
       await console.log(vm.header, vm.listData);

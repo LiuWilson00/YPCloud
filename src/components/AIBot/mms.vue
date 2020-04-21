@@ -64,11 +64,11 @@ export default {
             }
           })
           .then(res => {
-            console.log(res, urt)
-
+            console.log(res);
             resolve(res);
           })
           .catch(err => {
+            console.log(err);
             reject(err);
           });
       });

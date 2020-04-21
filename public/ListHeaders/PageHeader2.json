@@ -1,16 +1,8 @@
 [
     {
-        "text": "Page Name",
+        "text": "Project Name",
         "align": "start",
         "sortable": false,
         "value": "name"
-    },
-    {
-        "text": "update time",
-        "value": "updateTime"
-    },
-    {
-        "text": "depiction",
-        "value": "depiction"
     }
 ]
