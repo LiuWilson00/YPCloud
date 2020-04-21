@@ -1,6 +1,7 @@
 <template>
   <v-data-table
     hide-default-footer
+    hide-default-header
     :headers="headers"
     :items="data"
     :items-per-page="999"
@@ -10,11 +11,20 @@
       <v-chip :color="getColor(item.status)" dark>{{ item.status }}</v-chip>
     </template>
     <template v-slot:item.name="{ item }">
-      <a :href="item.url">{{ item.name }}</a>
+      <a
+        :href="item.url"
+        style="    margin: 0 auto;
+    width: 200px;
+    display: block;"
+      >{{ item.name }}</a>
     </template>
   </v-data-table>
 </template>
-
+<style scoped>
+tr td {
+  border-bottom: none !important;
+}
+</style>
 <script>
 import axios from "axios";
 export default {
