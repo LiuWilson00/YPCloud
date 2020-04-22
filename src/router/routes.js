@@ -15,6 +15,7 @@ const yolo = () => import('@/views/yolo.vue');
 const bricksChildren = () => import('@/views/BricksChildren.vue');
 const stream = () => import('@/views/stream.vue');
 const pullStream = () => import('@/views/pullstream.vue');
+const Newaicam = () => import('@/views/Newaicam.vue');
 
 import aibot from "@/assets/aibot.png"
 import Header from '../views/Header.vue'
@@ -196,6 +197,17 @@ const routes = [
     },
     meta: {
       title: 'pull'
+    }
+  },
+  {
+    path: '/Newaicam',
+    name: 'Newaicam',
+    components: {
+      nonnav: Newaicam
+    },
+    meta: {
+      title: 'Newaicam',
+      icon: aibot
     }
   }
 ];
