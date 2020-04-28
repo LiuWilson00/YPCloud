@@ -1,5 +1,6 @@
 <template>
   <div class="PlayerContorls">
+    <VideoHeader class="controls-header"></VideoHeader>
     <div class="controls-footer">
       <div class="controls-model-slider" :style="leftOfSlilder">
         <VideoContainerButton
@@ -24,6 +25,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .controls-header {
+    color: white;
+    position: absolute;
+    top: calc( 10% - 40px);
+  }
   .controls-footer {
     position: absolute;
     top: 80%;
@@ -37,6 +43,7 @@
 </style>
 <script>
 import VideoContainerButton from "./VideoContainer/VideoContainerButton";
+import VideoHeader from "./VideoContainer/VideoHeader";
 export default {
   name: "VideoControls",
   data() {
@@ -58,7 +65,7 @@ export default {
       let activeIndex = this.modelList.findIndex(model => {
         return model.name == vm.activeModel;
       });
-      console.log(centerOfModelList, activeIndex);
+
       return `left:${(centerOfModelList - activeIndex) * 20}%`;
     }
   },
@@ -69,7 +76,8 @@ export default {
     }
   },
   components: {
-    VideoContainerButton
+    VideoContainerButton,
+    VideoHeader
   }
 };
 </script>
