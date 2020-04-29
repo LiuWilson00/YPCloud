@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import config from '../../config';
+import config from "../../config";
 export default {
   name: "camMethods",
   methods: {
@@ -10,7 +10,7 @@ export default {
         video: true
       };
       function handleSuccess(stream) {
-        console.log(stream, typeof stream);
+        // console.log(stream, typeof stream);
         window.stream = stream; // only to make stream available to console
         vm.camStream = stream;
       }
@@ -64,7 +64,7 @@ export default {
       });
     },
 
-    captureImage(target) {
+    captureImage(target, ajaxCallback, mmsCallback, errorCallback) {
       const vm = this;
       var canvas = document.createElement("canvas");
       var scale = 1;
@@ -83,12 +83,16 @@ export default {
           .post(`${config.webConfig.webAPI}upload-yolo`, this.formData)
           .then(res => {
             console.log(res);
+            if (ajaxCallback != undefined) ajaxCallback(res);
             vm.formData = new FormData();
             vm.sendToPiAI(
-              `https://webapi.git.page/images/yolo/${fileName}.png`
+              `https://webapi.git.page/images/yolo/${fileName}.png`,
+              mmsCallback,
+              errorCallback
             );
           })
           .catch(err => {
+            if (errorCallback != undefined) errorCallback(err);
             console.log(err);
           });
       }, "image/png");

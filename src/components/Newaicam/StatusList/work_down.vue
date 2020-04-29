@@ -1,14 +1,15 @@
 <template>
-  <div class="offline">
-    <v-icon class="offline-icon animated flash infinite">cloud_off</v-icon>
+  <div class="work-down">
+    <v-icon class="work-down-icon animated swing">check</v-icon>
   </div>
 </template>
 <style lang="scss" scoped>
 @import "../../../../node_modules/animate.css/animate.css";
-.offline {
-  .offline-icon {
+.work-down {
+  .work-down-icon {
     color: white;
-    font-size: 3rem;
+    font-size: 5rem;
+    opacity: 0.85;
   }
 }
 </style>

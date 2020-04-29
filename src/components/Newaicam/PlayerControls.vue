@@ -16,6 +16,8 @@
   </div>
 </template>
 <style lang="scss" scoped>
+
+
 .PlayerContorls {
   position: absolute;
   display: flex;

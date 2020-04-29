@@ -4,6 +4,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
+
 .VideoContainer {
   width: 100%;
   height: 100%;
@@ -44,7 +45,7 @@ export default {
   watch: {
     userVideo: {
       handler: function(src) {
-        console.log(this);
+        // console.log(this);
         this.$refs.userVideo.srcObject = src;
         this.$emit("videoStart", this.$refs.userVideo);
       }

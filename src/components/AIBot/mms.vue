@@ -40,14 +40,14 @@ export default {
         } = reply;
         let id = 0;
         vm.isRegistered = true;
-        vm.resizeScreen();
+        if (vm.resizeScreen != undefined) vm.resizeScreen();
         // document.getElementById('DDN').innerText = `DDN: ${DDN}`
         setCookie("EiToken", EiToken, { expires: 7, path: "" });
         setCookie("SToken", SToken, { expires: 7, path: "" });
       });
     },
     //send MMS
-    sendToPiAI(url) {
+    sendToPiAI(url, callback, errorCallback) {
       const vm = this;
       return new Promise((resolve, reject) => {
         // console.log("sending", this.mms);
@@ -64,10 +64,16 @@ export default {
             }
           })
           .then(res => {
+            if (typeof callback == "function") {
+              callback(res);
+            }
             console.log(res);
             resolve(res);
           })
           .catch(err => {
+            if (typeof errorCallback == "function") {
+              errorCallback(err);
+            }
             console.log(err);
             reject(err);
           });
