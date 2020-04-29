@@ -1,37 +1,5 @@
 [
     {
-        "name": "xd://store",
-        "url": "https://xd.adobe.com/view/69d537e4-f97a-4ed0-652e-6f4ae2ab2784-1fe4/",
-        "version": "0.0.1",
-        "status": "design",
-        "updateTime": "none",
-        "depiction": "A page search engine(like app store)"
-    },
-    {
-        "name": "xd://aicam",
-        "url": "https://xd.adobe.com/view/79c9853f-93a3-4512-424e-ef6ff22f90e1-0ff8/",
-        "version": "0.1.0",
-        "status": "Develop",
-        "updateTime": "2020/02/26 17:00",
-        "depiction": "create list by json"
-    },
-    {
-        "name": "xd://admin",
-        "url": "https://xd.adobe.com/view/46170540-69db-4225-431c-d8425ee5da08-3026/",
-        "version": "0.0.1",
-        "status": "design",
-        "updateTime": "none",
-        "depiction": "web system console"
-    },
-    {
-        "name": "xd://runapps",
-        "url": "https://xd.adobe.com/view/117ffc66-ab14-40a6-4f35-8ef383af054b-674e/",
-        "version": "0.0.1",
-        "status": "design",
-        "updateTime": "none",
-        "depiction": "web system console"
-    },
-    {
         "name": "page://hello",
         "url": "https://git.page/wei/hello",
         "version": "0.1.0",
@@ -94,6 +62,46 @@
         "status": "Develop",
         "updateTime": "2020/02/26 17:00",
         "depiction": "create list by json"
+    },
+    {
+        "name": "page://newaicam",
+        "url": "https://git.page/wei/newaicam",
+        "version": "0.1.0",
+        "status": "Develop",
+        "updateTime": "2020/02/26 17:00",
+        "depiction": "create list by json"
+    },
+    {
+        "name": "xd://store",
+        "url": "https://xd.adobe.com/view/69d537e4-f97a-4ed0-652e-6f4ae2ab2784-1fe4/",
+        "version": "0.0.1",
+        "status": "design",
+        "updateTime": "none",
+        "depiction": "A page search engine(like app store)"
+    },
+    {
+        "name": "xd://aicam",
+        "url": "https://xd.adobe.com/view/79c9853f-93a3-4512-424e-ef6ff22f90e1-0ff8/",
+        "version": "0.1.0",
+        "status": "Develop",
+        "updateTime": "2020/02/26 17:00",
+        "depiction": "create list by json"
+    },
+    {
+        "name": "xd://admin",
+        "url": "https://xd.adobe.com/view/46170540-69db-4225-431c-d8425ee5da08-3026/",
+        "version": "0.0.1",
+        "status": "design",
+        "updateTime": "none",
+        "depiction": "web system console"
+    },
+    {
+        "name": "xd://runapps",
+        "url": "https://xd.adobe.com/view/117ffc66-ab14-40a6-4f35-8ef383af054b-674e/",
+        "version": "0.0.1",
+        "status": "design",
+        "updateTime": "none",
+        "depiction": "web system console"
     },
     {
         "name": "document://aicam",
