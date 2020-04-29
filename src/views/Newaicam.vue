@@ -101,9 +101,8 @@ export default {
       }
     },
     catchRemoteError(error) {
-      if (error[0] != 0) {
-        this.aicamStatus;
-      }
+      console.log("err", error);
+      this.aicamStatus = "ajaxError";
     },
     listenerToStatus() {
       const vm = this;
@@ -115,8 +114,7 @@ export default {
         this.setStatusToNull
       );
     },
-    setStatusToNull(e) {
-      console.log(e);
+    setStatusToNull() {
       this.aicamStatus = null;
       this.listenerToStatusOff();
     },

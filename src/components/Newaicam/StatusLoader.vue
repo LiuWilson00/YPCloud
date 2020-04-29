@@ -57,7 +57,6 @@ export default {
     },
     displayMsg() {
       // console.log(this.status.replace("send_", ""), this.msgMenu["mms"]);
-      console.log(this.status.indexOf("send") > 0, this.status.indexOf("send"));
       return this.status.indexOf("send") >= 0
         ? this.msgMenu[this.status.replace("send_", "")]
         : "";

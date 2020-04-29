@@ -13,8 +13,9 @@
 .status {
   --font-len: 95px;
   position: relative;
-  left: calc(50% - var(--font-len));
+  left: calc(50% - 125px);
   .text-center {
+    width: 150px;
     color: white;
   }
 }
@@ -32,7 +33,7 @@ export default {
     console.log(this.$refs.sender);
     this.$refs.sender.style.setProperty(
       "--font-len",
-      `${this.msg.length * 10}px`
+      `${this.msg.length * 7}px`
     );
   }
 };

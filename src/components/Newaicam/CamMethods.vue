@@ -68,8 +68,8 @@ export default {
       const vm = this;
       var canvas = document.createElement("canvas");
       var scale = 1;
-      canvas.width = document.documentElement.clientHeight * scale;
-      canvas.height = document.documentElement.clientWidth * scale;
+      canvas.width = vm.videoDom == undefined ? 1024 : vm.videoDom.clientWidth;
+      canvas.height = vm.videoDom == undefined ? 1024 : vm.videoDom.clientHeight;
       canvas
         .getContext("2d")
         .drawImage(target, 0, 0, canvas.width, canvas.height);
