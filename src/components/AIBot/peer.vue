@@ -13,7 +13,7 @@ export default {
       peer: null, //new peer object
       peerRes: "", //remote send msg
       peerMsg: "", //send to remote msg
-      peerID: "", //user peer ID
+      peerID: "wers", //user peer ID
       remotePerrID: "", //remote target peer ID
       peerTarget: "",
       peerDialog: false,

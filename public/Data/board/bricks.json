@@ -1,0 +1,97 @@
+{
+    "access": "public",
+    "name": "bricks",
+    "type": "board",
+    "tag": "",
+    "params": {},
+    "data": {
+        "layout": {
+            "col": 8,
+            "row": 4,
+            "header": true,
+            "footer": false
+        },
+        "grid": [
+            {
+                "x": 9,
+                "y": 2,
+                "w": 3,
+                "h": 2,
+                "name": "phone",
+                "app": "https://git.page/wei/brick/phone",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 6,
+                "y": 2,
+                "w": 3,
+                "h": 2,
+                "name": "car",
+                "app": "https://git.page/wei/brick/car",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 0,
+                "y": 2,
+                "w": 3,
+                "h": 2,
+                "name": "refrigerator",
+                "app": "https://git.page/wei/brick/refrigerator",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 3,
+                "y": 2,
+                "w": 3,
+                "h": 2,
+                "name": "drone",
+                "app": "https://git.page/wei/brick/drone",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 9,
+                "y": 0,
+                "w": 3,
+                "h": 2,
+                "name": "boy",
+                "app": "https://git.page/wei/brick/boy",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 3,
+                "y": 0,
+                "w": 3,
+                "h": 2,
+                "name": "fan",
+                "app": "https://git.page/wei/brick/fan",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 6,
+                "y": 0,
+                "w": 3,
+                "h": 2,
+                "name": "girl",
+                "app": "https://git.page/wei/brick/girl",
+                "params": {},
+                "data": {}
+            },
+            {
+                "x": 0,
+                "y": 0,
+                "w": 3,
+                "h": 2,
+                "name": "traffic",
+                "app": "https://git.page/wei/brick/traffic",
+                "params": {},
+                "data": {}
+            }
+        ]
+    }
+}
