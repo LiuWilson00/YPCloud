@@ -16,7 +16,9 @@ export default {
         EiToken: "",
         SToken: "",
         UToken: ""
-      }
+      },
+      aiModItems: ["yolov3", "yolov3-tiny"],
+      aiMod: "yolov3-tiny"
     };
   },
   methods: {
