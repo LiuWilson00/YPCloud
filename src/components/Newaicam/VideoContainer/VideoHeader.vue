@@ -1,20 +1,20 @@
 <template>
   <div class="controls-group">
     <div class="controls-left-group">
-      <v-btn class="controls-button" icon >
+      <v-btn class="controls-button" icon @click="buttonClickHandler('backspace')">
         <v-icon class="controls-header-icon">keyboard_backspace</v-icon>
       </v-btn>
     </div>
     <div class="controls-mid-group">
-      <v-btn class="controls-button" text>
-        <p class="controls-button-text">AICAM</p>
+      <v-btn class="controls-button" icon @click="buttonClickHandler('switch')">
+        <v-icon class="controls-header-icon">switch_camera</v-icon>
       </v-btn>
     </div>
     <div class="controls-right-group">
-      <v-btn class="controls-button" icon >
+      <v-btn class="controls-button" icon @click="buttonClickHandler('insert_photo')">
         <v-icon class="controls-header-icon">insert_photo</v-icon>
       </v-btn>
-      <v-btn class="controls-button" icon >
+      <v-btn class="controls-button" icon @click="buttonClickHandler('more_vert')">
         <v-icon class="controls-header-icon">more_vert</v-icon>
       </v-btn>
     </div>
@@ -40,6 +40,18 @@
 </style>
 <script>
 export default {
-  name: "VideoHeader"
+  name: "VideoHeader",
+  methods: {
+    buttonClickHandler(actionName) {
+      this.$emit("click", this.getActionObject(actionName));
+    },
+    getActionObject(actionName) {
+      return {
+        model: actionName,
+        type: "header",
+        status: "click"
+      };
+    }
+  }
 };
 </script>

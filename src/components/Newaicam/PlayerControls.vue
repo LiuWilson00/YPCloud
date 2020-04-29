@@ -1,6 +1,6 @@
 <template>
   <div class="PlayerContorls">
-    <VideoHeader class="controls-header"></VideoHeader>
+    <VideoHeader class="controls-header" @click="playerAcrion"></VideoHeader>
     <div class="controls-footer">
       <div class="controls-model-slider" :style="leftOfSlilder">
         <VideoContainerButton
@@ -9,7 +9,7 @@
           :icon="model.icon"
           :small="model.name!=activeModel"
           :large="model.name==activeModel"
-          @click="clickHandler(model.name)"
+          @click="playerAcrion({model:model.name,type:'footer',status:checkActionStatus(model.name)})"
         ></VideoContainerButton>
       </div>
     </div>
@@ -29,7 +29,7 @@
   .controls-header {
     color: white;
     position: absolute;
-    top: calc( 10% - 40px);
+    top: calc(10% - 40px);
   }
   .controls-footer {
     position: absolute;
@@ -71,9 +71,14 @@ export default {
     }
   },
   methods: {
-    clickHandler(name) {
-      console.log(123);
-      this.activeModel = name;
+    playerAcrion(actionObject) {
+      this.$emit("playerOnAcrion", actionObject);
+      if (actionObject.type == "footer") {
+        this.activeModel = actionObject.model;
+      }
+    },
+    checkActionStatus(modelName) {
+      return this.activeModel == modelName ? "click" : "onActive";
     }
   },
   components: {

@@ -1,7 +1,8 @@
 <template>
   <div class="new-aicam">
-    <VideoContainer :userVideo="camStream"></VideoContainer>
-    <PlayerContorls></PlayerContorls>
+    <VideoContainer :userVideo="camStream" @videoStart="setVideoToData"></VideoContainer>
+    <PlayerContorls @playerOnAcrion="actionHandler"></PlayerContorls>
+    <StatusLoader :status="videoStatus"></StatusLoader>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -14,39 +15,60 @@
 <script>
 import VideoContainer from "../components/Newaicam/VideoContainer";
 import PlayerContorls from "../components/Newaicam/PlayerControls";
+import StatusLoader from "../components/Newaicam/StatusLoader";
+
+import CamMethods from "../components/Newaicam/CamMethods";
+import mms from "../components/AIBot/mms";
+import peer from "../components/AIBot/peer";
 
 export default {
   name: "aicam",
   data() {
     return {
-      camStream: {}
+      camStream: {},
+      isRegistered: false,
+      imgList: [],
+      formData: new FormData(),
+      videoDom: null
     };
   },
   methods: {
-    initDeviceChange() {
-      const vm = this;
-      var constraints = {
-        video: true
-      };
-      function handleSuccess(stream) {
-        console.log(stream, typeof stream);
-        window.stream = stream; // only to make stream available to console
-        vm.camStream = stream;
+    actionHandler(actionObject) {
+      console.log(actionObject);
+      switch (actionObject.model) {
+        case "switch":
+          this.backDeviceChange();
+          break;
+        case "photo":
+          if ((actionObject.status = "click")) {
+            this.captureImage(this.videoDom);
+          }
+        default:
+          return;
+          break;
       }
-
-      function handleError(error) {
-        console.log("getUserMedia error: ", error);
-      }
-
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(handleSuccess)
-        .catch(handleError);
+    },
+    setVideoToData(video) {
+      this.videoDom = video;
+    },
+    initConnect() {
+      this.initDeviceChange();
+      this.mmsInit();
+      this.peerInit();
     }
   },
-  mounted() {
-    this.initDeviceChange();
+  computed: {
+    videoStatus() {
+      if (!this.isRegistered) {
+        return "loading";
+      }
+      return "noting";
+    }
   },
-  components: { VideoContainer, PlayerContorls }
+  mixins: [CamMethods, mms, peer],
+  mounted() {
+    this.initConnect();
+  },
+  components: { VideoContainer, PlayerContorls, StatusLoader }
 };
 </script>

@@ -37,12 +37,16 @@
 <script>
 export default {
   name: "VideoContainer",
+  data() {
+    return {};
+  },
   props: ["userVideo"],
   watch: {
     userVideo: {
       handler: function(src) {
         console.log(this);
         this.$refs.userVideo.srcObject = src;
+        this.$emit("videoStart", this.$refs.userVideo);
       }
     }
   }

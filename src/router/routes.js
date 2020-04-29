@@ -16,8 +16,10 @@ const bricksChildren = () => import('@/views/BricksChildren.vue');
 const stream = () => import('@/views/stream.vue');
 const pullStream = () => import('@/views/pullstream.vue');
 const Newaicam = () => import('@/views/Newaicam.vue');
+const console = () => import('@/views/console.vue');
 
 import aibot from "@/assets/aibot.png"
+import gitpage_icon from "@/assets/gitpage_icon.png"
 import Header from '../views/Header.vue'
 import Manager from '../views/Manager.vue'
 import store from '@/store';
@@ -208,7 +210,20 @@ const routes = [
     meta: {
       title: 'Newaicam',
       icon: aibot
-    }
+    },
+
+  },
+  {
+    path: '/console',
+    name: 'console',
+    components: {
+      nonnav: console
+    },
+    meta: {
+      title: 'console',
+      icon: gitpage_icon
+    },
+
   }
 ];
 
