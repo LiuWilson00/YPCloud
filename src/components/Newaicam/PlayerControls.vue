@@ -57,11 +57,11 @@ export default {
       activeModel: "voice",
       modelList: [
         { name: "photo", icon: "photo" },
+        { name: "switch", icon: "flip_camera_ios" },
         { name: "video", icon: "voice_chat" },
         { name: "voice", icon: "settings_voice" },
         { name: "translate", icon: "translate" },
-        { name: "visibility", icon: "visibility" },
-        { name: "switch", icon: "switch_camera" }
+        { name: "visibility", icon: "visibility" }
       ]
     };
   },
