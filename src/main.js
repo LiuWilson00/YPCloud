@@ -9,6 +9,11 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
+import Vue2TouchEvents from 'vue2-touch-events'
+ 
+Vue.use(Vue2TouchEvents)
+
+
 const opts = {
   icons: {
     iconfont: 'md', // default - only for display purposes

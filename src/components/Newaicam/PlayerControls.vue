@@ -1,5 +1,10 @@
 <template>
-  <div class="PlayerContorls">
+  <div
+    class="PlayerContorls"
+    v-touch:swipe.left="swipeLeftContorls"
+    v-touch:swipe.right="swipeRightContorls"
+    ref="PlayerContorls"
+  >
     <VideoHeader class="controls-header" @click="playerAcrion"></VideoHeader>
     <div class="controls-footer">
       <div class="controls-model-slider" :style="leftOfSlilder">
@@ -16,8 +21,6 @@
   </div>
 </template>
 <style lang="scss" scoped>
-
-
 .PlayerContorls {
   position: absolute;
   display: flex;
@@ -57,7 +60,8 @@ export default {
         { name: "video", icon: "voice_chat" },
         { name: "voice", icon: "settings_voice" },
         { name: "translate", icon: "translate" },
-        { name: "visibility", icon: "visibility" }
+        { name: "visibility", icon: "visibility" },
+        { name: "switch", icon: "switch_camera" }
       ]
     };
   },
@@ -81,7 +85,30 @@ export default {
     },
     checkActionStatus(modelName) {
       return this.activeModel == modelName ? "click" : "onActive";
+    },
+    swipeLeftContorls() {
+      let nowIndex = this.modelList.findIndex(item => {
+        return item.name == this.activeModel;
+      });
+      if (nowIndex + 1 >= this.modelList.length) return;
+      this.activeModel = this.modelList[nowIndex + 1].name;
+    },
+    swipeRightContorls() {
+      let nowIndex = this.modelList.findIndex(item => {
+        return item.name == this.activeModel;
+      });
+      if (nowIndex - 1 < 0) return;
+      this.activeModel = this.modelList[nowIndex - 1].name;
+    },
+    initSetActiveModel() {
+      let activeIndex = Math.floor((this.modelList.length + 1) / 2 - 1);
+      this.activeModel = this.modelList[activeIndex].name;
+      return this.modelList[activeIndex].name;
     }
+  },
+  mounted() {
+    console.log(this.$refs.PlayerContorls);
+    this.initSetActiveModel();
   },
   components: {
     VideoContainerButton,
