@@ -4,9 +4,22 @@
     <PlayerContorls @playerOnAcrion="actionHandler"></PlayerContorls>
 
     <StatusLoader :status="videoStatus"></StatusLoader>
-    <transition enter-active-class="fadeInDownBig animated" leave-to-class="fadeOutUpBig animated" >
-      <more @backToAicam="moreDisplayNone" v-if="isSetting"></more>
+    <transition enter-active-class="fadeInDownBig animated" leave-to-class="fadeOutUpBig animated">
+      <more
+        @backToAicam="moreDisplayNone"
+        @settingOnAction="actionHandler"
+        v-if="isSetting"
+        :aiModItems="aiModItems"
+        :aiMod="aiMod"
+        :peerID="peerID"
+      ></more>
     </transition>
+    <PeerDialog :peerDialog="peerDialog" :remotePerrID="remotePerrID" :peerID="peerID"></PeerDialog>
+    <CallingDialog
+      :callSec="callSec"
+      :callingDialog="callingDialog"
+      :callPercentage="callPercentage"
+    ></CallingDialog>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -23,8 +36,11 @@ import PlayerContorls from "../components/Newaicam/PlayerControls";
 import StatusLoader from "../components/Newaicam/StatusLoader";
 
 import CamMethods from "../components/Newaicam/CamMethods";
+import PeerDialog from "../components/Newaicam/peer/peerDialog";
+import CallingDialog from "../components/Newaicam/peer/callingDialog";
+
 import mms from "../components/AIBot/mms";
-import peer from "../components/AIBot/peer";
+import peer from "../components/Newaicam/peer/peer";
 
 import more from "../components/Newaicam/Setting";
 
@@ -51,7 +67,9 @@ export default {
       actionMethodsList: {
         switch: this.switchLen,
         photo: this.photoAction,
-        more_vert: this.moreAction
+        more_vert: this.moreAction,
+        set_data: this.changeDataValue,
+        video: this.peerSubmitHandler
       },
       isSetting: false
     };
@@ -141,6 +159,11 @@ export default {
     },
     moreDisplayNone() {
       this.isSetting = !this.isSetting;
+    },
+    changeDataValue(actionObject) {
+      if ((actionObject.type = "setting")) {
+        this[actionObject.dataName] = actionObject.dataValue;
+      }
     }
   },
   watch: {
@@ -171,6 +194,13 @@ export default {
   mounted() {
     this.initConnect();
   },
-  components: { VideoContainer, PlayerContorls, StatusLoader, more }
+  components: {
+    VideoContainer,
+    PlayerContorls,
+    StatusLoader,
+    more,
+    PeerDialog,
+    CallingDialog
+  }
 };
 </script>

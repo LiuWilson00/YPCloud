@@ -78,7 +78,7 @@ export default {
 
           //STEP4.1 if user agree,then
           if (vm.callAns) {
-            call.answer(vm.video.srcObject);
+            call.answer(vm.videoDom.srcObject);
             call.on("stream", stream => {
               vm.calling = true;
               vm.remoteVideo.srcObject = stream;
@@ -117,7 +117,7 @@ export default {
       });
 
       //STEP3 call remote clinet,and send video stream
-      this.callRemote = this.peer.call(this.peerTarget, this.video.srcObject);
+      this.callRemote = this.peer.call(this.peerTarget, this.videoDom.srcObject);
 
       //STEP4 wait remote answer
       this.waitCall();

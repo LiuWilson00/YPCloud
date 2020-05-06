@@ -8,13 +8,22 @@
     <div class="Setting-body">
       <v-row align="center" class="ml-2 mr-2">
         <v-col cols="12">
-          <v-text-field label="Caller ID"></v-text-field>
+          <v-text-field label="Caller ID" disabled v-model="peerID"></v-text-field>
         </v-col>
         <v-col cols="12">
-          <v-text-field label="Called ID"></v-text-field>
+          <v-text-field
+            label="Called ID"
+            v-model="peerTarget"
+            :@change="setData(peerTarget,'peerTarget')"
+          ></v-text-field>
         </v-col>
         <v-col cols="12">
-          <v-select :items="items" label="Model"></v-select>
+          <v-select
+            :items="aiModItems"
+            :value="aiMod"
+            @change="setData($event,'aiMod')"
+            label="Model"
+          ></v-select>
         </v-col>
       </v-row>
     </div>
@@ -37,7 +46,9 @@
   z-index: 10;
   width: 80%;
   height: 80%;
-  margin: 10%;
+  max-width: 768px;
+  align-self: center;
+  margin: 5% 0;
   flex-direction: column;
   position: absolute;
   align-items: center;
@@ -65,13 +76,24 @@ export default {
   name: "VideoSetting",
   data() {
     return {
-      items: ["YOLO", "YOLO-TINY"]
+      peerTarget: "",
+      useInputAiMod: ""
     };
   },
+  props: ["peerID", "aiModItems", "aiMod"],
   computed: {},
   methods: {
     backToAicam() {
       this.$emit("backToAicam");
+    },
+    setData(value, varName) {
+      this.$emit("settingOnAction", {
+        model: "set_data",
+        type: "header",
+        status: "click",
+        dataName: varName,
+        dataValue: value
+      });
     }
   },
   components: {}
