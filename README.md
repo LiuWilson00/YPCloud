@@ -184,3 +184,16 @@ https://codepen.io/wilson-wei-liu/pen/JjovLep
 
 類似於CSS3的 KEYFRAMES 但功能更為強大(可利用FUNCTION動態調整動畫)
 
+
+
+============================
+
+<p>icon image size</p>
+
+<img src="https://i.imgur.com/CHhmCLd.png" ></img>
+
+
+
+============================
+
+

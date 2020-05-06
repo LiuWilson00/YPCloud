@@ -1,18 +1,20 @@
 <template>
-  <div class="qapp">
+  <div class="qapp" ref="qapp">
     <HeaderBar :userName="userName" class="header-bar" />
     <UserInfo class="user-info" />
 
     <LoadAppView v-if="apps.length==0" />
     <AppList v-else :appList="apps" />
-    <v-card-subtitle>System Status | Pivacy Policy | Terms & Conditions | Copyright © 2020 YP Cloud. All rights reserved</v-card-subtitle>
+    <!-- <v-card-subtitle>System Status | Pivacy Policy | Terms & Conditions | Copyright © 2020 YP Cloud. All rights reserved</v-card-subtitle> -->
   </div>
 </template>
 <style  scoped>
 .qapp {
+  --app-height: 1024px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: var(--app-height);
 }
 .user-info {
   margin: 10rem;
@@ -67,6 +69,16 @@ export default {
         this.urtAppList = this.urtData[0].Reply.Data.Data[0].data;
       }
     });
+    window.addEventListener("resize", () => {
+      this.$refs.qapp.style.setProperty(
+        "--app-height",
+        `${document.documentElement.scrollHeight+50}px`
+      );
+    });
+    this.$refs.qapp.style.setProperty(
+      "--app-height",
+      `${document.documentElement.scrollHeight+50}px`
+    );
   },
   components: {
     HeaderBar,

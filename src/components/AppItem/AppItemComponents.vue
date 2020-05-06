@@ -3,7 +3,7 @@
     <v-card height="75" width="75" class="d-flex align-center">
       <v-img  :src="app.iconUrl" :alt="app.iconName"></v-img>
     </v-card>
-    <v-card-subtitle>{{app.name}}</v-card-subtitle>
+    <v-card-subtitle class="app-name">{{app.name}}</v-card-subtitle>
   </div>
 </template>
 
