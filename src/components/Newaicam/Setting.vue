@@ -11,7 +11,7 @@
           <v-text-field label="Caller ID"></v-text-field>
         </v-col>
         <v-col cols="12">
-          <v-text-field label="Called Id"></v-text-field>
+          <v-text-field label="Called ID"></v-text-field>
         </v-col>
         <v-col cols="12">
           <v-select :items="items" label="Model"></v-select>
