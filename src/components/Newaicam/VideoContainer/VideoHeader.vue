@@ -4,7 +4,7 @@
       <v-btn
         :disabled="backspaceDisable"
         class="controls-button"
-        :class="{disaple:backspaceDisable}"
+        :class="{disable:backspaceDisable}"
         icon
         @click="buttonClickHandler('backspace')"
       >
@@ -15,7 +15,7 @@
       <v-btn
         class="controls-button"
         :disabled="switchCameraDisable"
-        :class="{disaple:switchCameraDisable}"
+        :class="{disable:switchCameraDisable}"
         icon
         @click="buttonClickHandler('switch')"
       >
@@ -26,7 +26,7 @@
       <v-btn
         class="controls-button"
         :disabled="imageCameraDisable"
-        :class="{disabled:imageCameraDisable}"
+        :class="{disable:imageCameraDisable}"
         icon
         @click="buttonClickHandler('insert_photo')"
       >
@@ -39,7 +39,7 @@
   </div>
 </template>
 <style lang="scss" scoped>
-.disaple {
+.disable {
   opacity: 0 !important;
 }
 .controls-group {

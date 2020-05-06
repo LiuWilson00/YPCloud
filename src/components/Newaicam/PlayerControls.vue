@@ -73,7 +73,8 @@ export default {
         return model.name == vm.activeModel;
       });
 
-      return `left:${(centerOfModelList - activeIndex) * 20}%`;
+      return `left:calc(${((centerOfModelList - activeIndex) * 100) /
+        this.modelList.length}% + 32px ) `;
     }
   },
   methods: {

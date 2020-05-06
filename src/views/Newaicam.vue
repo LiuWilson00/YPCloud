@@ -2,7 +2,11 @@
   <div class="new-aicam">
     <VideoContainer :userVideo="camStream" @videoStart="setVideoToData" ref="clentVideo"></VideoContainer>
     <PlayerContorls @playerOnAcrion="actionHandler"></PlayerContorls>
+
     <StatusLoader :status="videoStatus"></StatusLoader>
+    <transition enter-active-class="fadeInDownBig animated" leave-to-class="fadeOutUpBig animated" >
+      <more @backToAicam="moreDisplayNone" v-if="isSetting"></more>
+    </transition>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -21,6 +25,8 @@ import StatusLoader from "../components/Newaicam/StatusLoader";
 import CamMethods from "../components/Newaicam/CamMethods";
 import mms from "../components/AIBot/mms";
 import peer from "../components/AIBot/peer";
+
+import more from "../components/Newaicam/Setting";
 
 export default {
   name: "aicam",
@@ -44,8 +50,10 @@ export default {
       aicamStatus: null,
       actionMethodsList: {
         switch: this.switchLen,
-        photo: this.photoAction
-      }
+        photo: this.photoAction,
+        more_vert: this.moreAction
+      },
+      isSetting: false
     };
   },
   methods: {
@@ -61,10 +69,12 @@ export default {
         setTimeout(this.listenerToStatus, 10);
       }
     },
-    switchLen() {
-      this.lenOriginal == "front"
-        ? (this.lenOriginal = "back")
-        : (this.lenOriginal = "front");
+    switchLen(actionObject) {
+      if (actionObject == "click") {
+        this.lenOriginal == "front"
+          ? (this.lenOriginal = "back")
+          : (this.lenOriginal = "front");
+      }
     },
     photoAction(actionObject) {
       if (actionObject.status == "click") {
@@ -125,6 +135,12 @@ export default {
       this.initDeviceChange();
       this.mmsInit();
       this.peerInit();
+    },
+    moreAction() {
+      this.isSetting = !this.isSetting;
+    },
+    moreDisplayNone() {
+      this.isSetting = !this.isSetting;
     }
   },
   watch: {
@@ -155,6 +171,6 @@ export default {
   mounted() {
     this.initConnect();
   },
-  components: { VideoContainer, PlayerContorls, StatusLoader }
+  components: { VideoContainer, PlayerContorls, StatusLoader, more }
 };
 </script>

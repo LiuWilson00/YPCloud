@@ -1,41 +1,57 @@
 <template>
   <div class="Setting">
-    <VideoHeader class="Setting-header" @click="playerAcrion"></VideoHeader>
+    <div class="Setting-back">
+      <button class="Setting-back-button" @click="backToAicam">
+        <v-icon>keyboard_arrow_up</v-icon>
+      </button>
+    </div>
+    <div class="Setting-body">
+      <v-row align="center" class="ml-2 mr-2">
+        <v-col cols="12">
+          <v-text-field label="Caller ID"></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field label="Called Id"></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-select :items="items" label="Model"></v-select>
+        </v-col>
+      </v-row>
+    </div>
     <div class="Setting-footer">
-      <div class="Setting-model-slider" :style="leftOfSlilder">
-        <VideoContainerButton
-          v-for="(model) in modelList"
-          :key="model.name"
-          :icon="model.icon"
-          :small="model.name!=activeModel"
-          :large="model.name==activeModel"
-          @click="playerAcrion({model:model.name,type:'footer',status:checkActionStatus(model.name)})"
-        ></VideoContainerButton>
+      <div class="Setting-model-slider">
+        <v-btn class="mr-2">ok</v-btn>
+        <v-btn>cancel</v-btn>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
-
-
 .Setting {
-  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   display: flex;
   flex: 1;
-  width: 100%;
-  height: 100%;
+  background-color: ghostwhite;
+  z-index: 10;
+  width: 80%;
+  height: 80%;
+  margin: 10%;
   flex-direction: column;
-  justify-content: center;
+  position: absolute;
   align-items: center;
   overflow: hidden;
-  .Setting-header {
-    color: white;
-    position: absolute;
-    top: calc(10% - 40px);
+  .Setting-back {
+    display: flex;
+  }
+  .Setting-body {
+    display: flex;
+    flex-direction: column;
+    color: darkgray;
   }
   .Setting-footer {
-    position: absolute;
-    top: 80%;
+    display: flex;
     .Setting-model-slider {
       transition: all 0.5s;
       position: relative;
@@ -45,36 +61,19 @@
 }
 </style>
 <script>
-
 export default {
   name: "VideoSetting",
   data() {
     return {
+      items: ["YOLO", "YOLO-TINY"]
     };
   },
-  computed: {
-    leftOfSlilder() {
-      const vm = this;
-      let centerOfModelList = Math.floor((1 + this.modelList.length) / 2) - 1;
-      let activeIndex = this.modelList.findIndex(model => {
-        return model.name == vm.activeModel;
-      });
-
-      return `left:${(centerOfModelList - activeIndex) * 20}%`;
-    }
-  },
+  computed: {},
   methods: {
-    playerAcrion(actionObject) {
-      this.$emit("playerOnAcrion", actionObject);
-      if (actionObject.type == "footer") {
-        this.activeModel = actionObject.model;
-      }
-    },
-    checkActionStatus(modelName) {
-      return this.activeModel == modelName ? "click" : "onActive";
+    backToAicam() {
+      this.$emit("backToAicam");
     }
   },
-  components: {
-  }
+  components: {}
 };
 </script>
