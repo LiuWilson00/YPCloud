@@ -182,7 +182,7 @@ export default {
         this.settingError = true;
         this.isSetting = true;
       } else {
-        this.peerSubmitHandler;
+        this.peerSubmitHandler();
       }
     }
   },
