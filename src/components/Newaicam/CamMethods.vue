@@ -8,7 +8,9 @@ export default {
       const vm = this;
       var constraints = {
         video: true,
-        audio: true
+        audio: {
+          echoCancellation: true
+        }
       };
       function handleSuccess(stream) {
         // console.log(stream, typeof stream);
@@ -54,12 +56,15 @@ export default {
               video: {
                 deviceId: { exact: videoinput_id },
                 facingMode: "environment"
+              },
+              audio: {
+                echoCancellation: true
               }
             })
             .then(handleSuccess);
         } else {
           navigator.mediaDevices
-            .getUserMedia({ video: { facingMode: "environment" } })
+            .getUserMedia({ video: { facingMode: "environment" }, audio: true })
             .then(handleSuccess);
         }
       });

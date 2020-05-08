@@ -1,10 +1,9 @@
 <template>
   <div class="VideoContainer">
-    <video autoplay playsinline class="userVideo" src ref="userVideo"></video>
+    <video autoplay playsinline class="userVideo" muted src ref="userVideo"></video>
   </div>
 </template>
 <style lang="scss" scoped>
-
 .VideoContainer {
   width: 100%;
   height: 100%;

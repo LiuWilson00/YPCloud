@@ -8,7 +8,7 @@
     <div class="Setting-body">
       <v-row align="center" class="ml-2 mr-2">
         <v-col cols="12">
-          <v-text-field label="Caller ID" disabled v-model="peerID"></v-text-field>
+          <v-text-field label="Caller ID" v-model="peerID"></v-text-field>
         </v-col>
         <v-col cols="12">
           <v-text-field

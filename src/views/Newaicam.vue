@@ -100,7 +100,7 @@ export default {
       }
     },
     switchLen(actionObject) {
-      if (actionObject == "click") {
+      if (actionObject.status == "click") {
         this.lenOriginal == "front"
           ? (this.lenOriginal = "back")
           : (this.lenOriginal = "front");
