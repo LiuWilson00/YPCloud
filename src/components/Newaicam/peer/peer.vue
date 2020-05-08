@@ -68,9 +68,11 @@ export default {
     },
     rePushStream() {
       if (this.remoteCaller != null) {
+        console.log(this.remoteCaller);
         this.remoteCaller.answer(this.videoDom.srcObject);
       }
       if (this.callRemote != null) {
+        console.log(this.callRemote);
         this.callRemote.answer(this.videoDom.srcObject);
       }
     },

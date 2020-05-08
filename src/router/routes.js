@@ -167,7 +167,7 @@ const routes = [
 
   },
   {
-    path: '/aicam',
+    path: '/oldaicam',
     name: 'aicam',
     components: {
       default: yolo,
@@ -202,13 +202,13 @@ const routes = [
     }
   },
   {
-    path: '/Newaicam',
-    name: 'Newaicam',
+    path: '/aicam',
+    name: 'aicam',
     components: {
       nonnav: Newaicam
     },
     meta: {
-      title: 'Newaicam',
+      title: 'aicam',
       icon: aibot
     },
 
