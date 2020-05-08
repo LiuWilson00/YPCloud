@@ -13,8 +13,8 @@
         <v-col cols="12">
           <v-text-field
             label="Called ID"
-            v-model="peerTarget"
-            :@change="setData(peerTarget,'peerTarget')"
+            :value="peerTarget"
+            @change="setData($event,'peerTarget')"
           ></v-text-field>
         </v-col>
         <v-col cols="12">
@@ -43,7 +43,7 @@
   display: flex;
   flex: 1;
   background-color: ghostwhite;
-  z-index: 10;
+  z-index: 30;
   width: 80%;
   height: 80%;
   max-width: 768px;
@@ -76,17 +76,17 @@ export default {
   name: "VideoSetting",
   data() {
     return {
-      peerTarget: "",
       useInputAiMod: ""
     };
   },
-  props: ["peerID", "aiModItems", "aiMod"],
+  props: ["peerID", "aiModItems", "aiMod", "peerTarget"],
   computed: {},
   methods: {
     backToAicam() {
       this.$emit("backToAicam");
     },
     setData(value, varName) {
+      console.log(value);
       this.$emit("settingOnAction", {
         model: "set_data",
         type: "header",
@@ -94,6 +94,16 @@ export default {
         dataName: varName,
         dataValue: value
       });
+    },
+    changeTextInput(e) {
+      console.log(e);
+    }
+  },
+  watch: {
+    peerTarget: {
+      handler() {
+        this.subPeerTarget = this.peerTarget;
+      }
     }
   },
   components: {}

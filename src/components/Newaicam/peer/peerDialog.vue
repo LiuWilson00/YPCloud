@@ -19,6 +19,11 @@
 <script>
 export default {
   name: "peer-dialog",
-  props: ["peerDialog", "remotePerrID", "peerID"]
+  props: ["peerDialog", "remotePerrID", "peerID"],
+  methods: {
+    peerDialogClosed(ans) {
+      this.$emit("peerDialogClosed", ans);
+    }
+  }
 };
 </script>

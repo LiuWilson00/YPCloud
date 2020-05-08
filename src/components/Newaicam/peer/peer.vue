@@ -24,7 +24,8 @@ export default {
       callRemote: {},
       calling: false,
       callInterval: {},
-      remoteCaller: {}
+      remoteCaller: {},
+      remoteStream: null
     };
   },
   methods: {
@@ -81,7 +82,7 @@ export default {
             call.answer(vm.videoDom.srcObject);
             call.on("stream", stream => {
               vm.calling = true;
-              vm.remoteVideo.srcObject = stream;
+              vm.remoteStream = stream;
             });
             //STEP4.2 if user not agree,then cloce call
           } else {
@@ -117,7 +118,10 @@ export default {
       });
 
       //STEP3 call remote clinet,and send video stream
-      this.callRemote = this.peer.call(this.peerTarget, this.videoDom.srcObject);
+      this.callRemote = this.peer.call(
+        this.peerTarget,
+        this.videoDom.srcObject
+      );
 
       //STEP4 wait remote answer
       this.waitCall();
@@ -125,7 +129,7 @@ export default {
       //STEP5 get stream,and put on remoteVideo
       this.callRemote.on("stream", remoteStream => {
         vm.callingDialog = false;
-        vm.remoteVideo.srcObject = remoteStream;
+        vm.remoteStream = remoteStream;
         vm.calling = true;
       });
       //STEP5.1 if remote close call some function

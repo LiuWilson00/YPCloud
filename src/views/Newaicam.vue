@@ -1,6 +1,9 @@
 <template>
   <div class="new-aicam">
     <VideoContainer :userVideo="camStream" @videoStart="setVideoToData" ref="clentVideo"></VideoContainer>
+    <transition enter-active-class="fadeInDownBig animated" leave-to-class="fadeOutUpBig animated">
+      <RemoteVideoContainer v-show="remoteStream" :remoteVideo="remoteStream"></RemoteVideoContainer>
+    </transition>
     <PlayerContorls @playerOnAcrion="actionHandler"></PlayerContorls>
 
     <StatusLoader :status="videoStatus"></StatusLoader>
@@ -12,9 +15,15 @@
         :aiModItems="aiModItems"
         :aiMod="aiMod"
         :peerID="peerID"
+        :peerTarget="peerTarget"
       ></more>
     </transition>
-    <PeerDialog :peerDialog="peerDialog" :remotePerrID="remotePerrID" :peerID="peerID"></PeerDialog>
+    <PeerDialog
+      :peerDialog="peerDialog"
+      :remotePerrID="remotePerrID"
+      :peerID="peerID"
+      @peerDialogClosed="peerDialogClosed"
+    ></PeerDialog>
     <CallingDialog
       :callSec="callSec"
       :callingDialog="callingDialog"
@@ -34,6 +43,7 @@
 import VideoContainer from "../components/Newaicam/VideoContainer";
 import PlayerContorls from "../components/Newaicam/PlayerControls";
 import StatusLoader from "../components/Newaicam/StatusLoader";
+import RemoteVideoContainer from "../components/Newaicam/RemoteVideoContainer";
 
 import CamMethods from "../components/Newaicam/CamMethods";
 import PeerDialog from "../components/Newaicam/peer/peerDialog";
@@ -200,7 +210,8 @@ export default {
     StatusLoader,
     more,
     PeerDialog,
-    CallingDialog
+    CallingDialog,
+    RemoteVideoContainer
   }
 };
 </script>

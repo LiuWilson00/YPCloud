@@ -39,6 +39,7 @@
   .controls-footer {
     position: absolute;
     top: 80%;
+    z-index: 20;
     .controls-model-slider {
       transition: all 0.5s;
       position: relative;
