@@ -104,6 +104,7 @@ export default {
         this.lenOriginal == "front"
           ? (this.lenOriginal = "back")
           : (this.lenOriginal = "front");
+        this.rePushStream;
       }
     },
     photoAction(actionObject) {

@@ -25,7 +25,8 @@ export default {
       calling: false,
       callInterval: {},
       remoteCaller: {},
-      remoteStream: null
+      remoteStream: null,
+      remoteCallSocket: null
     };
   },
   methods: {
@@ -66,6 +67,11 @@ export default {
         });
       });
     },
+    rePushStream() {
+      if (this.remoteCallSocket != null) {
+        this.remoteCallSocket.answer(vm.videoDom.srcObject);
+      }
+    },
     peerOnCall() {
       //STEP1 some one call
       const vm = this;
@@ -80,6 +86,7 @@ export default {
           //STEP4.1 if user agree,then
           if (vm.callAns) {
             call.answer(vm.videoDom.srcObject);
+            vm.remoteCallSocket = call;
             call.on("stream", stream => {
               vm.calling = true;
               vm.remoteStream = stream;
