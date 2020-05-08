@@ -29,8 +29,8 @@
     </div>
     <div class="Setting-footer">
       <div class="Setting-model-slider">
-        <v-btn class="mr-2">ok</v-btn>
-        <v-btn>cancel</v-btn>
+        <v-btn class="mr-2" @click="settingOK">ok</v-btn>
+        <v-btn @click="settingCancel">cancel</v-btn>
       </div>
     </div>
   </div>
@@ -86,7 +86,6 @@ export default {
       this.$emit("backToAicam");
     },
     setData(value, varName) {
-      console.log(value);
       this.$emit("settingOnAction", {
         model: "set_data",
         type: "header",
@@ -97,6 +96,24 @@ export default {
     },
     changeTextInput(e) {
       console.log(e);
+    },
+    settingOK() {
+      this.$emit("settingOnAction", {
+        model: "set_data",
+        type: "header",
+        status: "click",
+        dataName: "isSetting",
+        dataValue: false
+      });
+    },
+    settingCancel() {
+      this.$emit("settingOnAction", {
+        model: "set_data",
+        type: "header",
+        status: "click",
+        dataName: "isSetting",
+        dataValue: false
+      });
     }
   },
   watch: {

@@ -79,7 +79,7 @@ export default {
         photo: this.photoAction,
         more_vert: this.moreAction,
         set_data: this.changeDataValue,
-        video: this.peerSubmitHandler
+        video: this.callRemoteUser
       },
       isSetting: false
     };
@@ -173,6 +173,13 @@ export default {
     changeDataValue(actionObject) {
       if ((actionObject.type = "setting")) {
         this[actionObject.dataName] = actionObject.dataValue;
+      }
+    },
+    callRemoteUser() {
+      if (this.peerTarget == "") {
+        this.isSetting = true;
+      } else {
+        this.peerSubmitHandler;
       }
     }
   },
