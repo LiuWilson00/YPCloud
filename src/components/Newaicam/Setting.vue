@@ -15,6 +15,8 @@
             label="Called ID"
             :value="peerTarget"
             @change="setData($event,'peerTarget')"
+            :error="error"
+            @click="setData(false,'settingError')"
           ></v-text-field>
         </v-col>
         <v-col cols="12">
@@ -79,7 +81,7 @@ export default {
       useInputAiMod: ""
     };
   },
-  props: ["peerID", "aiModItems", "aiMod", "peerTarget"],
+  props: ["peerID", "aiModItems", "aiMod", "peerTarget", "error"],
   computed: {},
   methods: {
     backToAicam() {

@@ -16,6 +16,7 @@
         :aiMod="aiMod"
         :peerID="peerID"
         :peerTarget="peerTarget"
+        :error="settingError"
       ></more>
     </transition>
     <PeerDialog
@@ -81,7 +82,8 @@ export default {
         set_data: this.changeDataValue,
         video: this.callRemoteUser
       },
-      isSetting: false
+      isSetting: false,
+      settingError: false
     };
   },
   methods: {
@@ -177,6 +179,7 @@ export default {
     },
     callRemoteUser() {
       if (this.peerTarget == "") {
+        this.settingError = true;
         this.isSetting = true;
       } else {
         this.peerSubmitHandler;
