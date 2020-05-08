@@ -27,6 +27,7 @@
     align-self: flex-end;
     top: calc(100% - 2rem);
     .resize-icon {
+      color: whitesmoke;
       font-size: 1rem;
     }
   }
