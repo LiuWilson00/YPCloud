@@ -21,12 +21,11 @@ export default {
       callingDialog: false,
       callMaxTime: 10000,
       callWaitTime: 0,
-      callRemote: {},
+      callRemote: null,
       calling: false,
       callInterval: {},
-      remoteCaller: {},
-      remoteStream: null,
-      remoteCallSocket: null
+      remoteCaller: null,
+      remoteStream: null
     };
   },
   methods: {
@@ -68,8 +67,11 @@ export default {
       });
     },
     rePushStream() {
-      if (this.remoteCallSocket != null) {
-        this.remoteCallSocket.answer(vm.videoDom.srcObject);
+      if (this.remoteCaller != null) {
+        this.remoteCaller.answer(this.videoDom.srcObject);
+      }
+      if (this.callRemote != null) {
+        this.callRemote.answer(this.videoDom.srcObject);
       }
     },
     peerOnCall() {
