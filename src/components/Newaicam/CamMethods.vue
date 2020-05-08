@@ -7,7 +7,8 @@ export default {
     initDeviceChange() {
       const vm = this;
       var constraints = {
-        video: true
+        video: true,
+        audio: true
       };
       function handleSuccess(stream) {
         // console.log(stream, typeof stream);
@@ -69,7 +70,8 @@ export default {
       var canvas = document.createElement("canvas");
       var scale = 1;
       canvas.width = vm.videoDom == undefined ? 1024 : vm.videoDom.clientWidth;
-      canvas.height = vm.videoDom == undefined ? 1024 : vm.videoDom.clientHeight;
+      canvas.height =
+        vm.videoDom == undefined ? 1024 : vm.videoDom.clientHeight;
       canvas
         .getContext("2d")
         .drawImage(target, 0, 0, canvas.width, canvas.height);
