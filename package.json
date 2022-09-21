@@ -40,7 +40,7 @@
     "vue-touch": "^2.0.0-beta.4",
     "vue2-touch-events": "^2.2.1",
     "vuelidate": "^0.7.5",
-    "vuetify": "^2.1.9",
+    "vuetify": "^2.6.10",
     "vuex": "^3.1.1",
     "webmms-client": "^1.3.1"
   },
